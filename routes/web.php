@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OutletController;
+use App\Http\Controllers\CheckInController;
 
 
 Route::get('/', function () {
@@ -15,6 +16,7 @@ Route::middleware(['auth', 'role:owner'])->group(function () {
     })->name('home');
     Route::resource('users', UserController::class);
     Route::resource('outlets', OutletController::class);
+    Route::resource('checkins', CheckInController::class);
 });
 
 Route::middleware(['auth', 'role:kolektor,owner'])->group(function () {

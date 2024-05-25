@@ -1,6 +1,6 @@
 @extends('owner.layouts.app')
 
-@section('title', 'Outlets')
+@section('title', 'Check In')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -11,14 +11,12 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Outlets</h1>
-                <div class="section-header-button">
-                    <a href="{{ route('outlets.create') }}" class="btn btn-primary">Add New</a>
-                </div>
+                <h1>Check in</h1>
+
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="#">Outlets</a></div>
-                    <div class="breadcrumb-item">All Outlets</div>
+                    <div class="breadcrumb-item"><a href="#">Check In</a></div>
+                    <div class="breadcrumb-item">All Check In</div>
                 </div>
             </div>
             <div class="section-body">
@@ -27,9 +25,9 @@
                         @include('owner.layouts.alert')
                     </div>
                 </div>
-                <h2 class="section-title">Outlets</h2>
+                <h2 class="section-title">Check In</h2>
                 <p class="section-lead">
-                    You can manage all Outlets, such as editing, deleting and more.
+                    You can manage all Check In, such as editing, deleting and more.
                 </p>
 
 
@@ -49,7 +47,7 @@
                                     </select>
                                 </div>
                                 <div class="float-right">
-                                    <form method="GET" action="{{ route('outlets.index') }}">
+                                    <form method="GET" action="{{ route('checkins.index') }}">
                                         <div class="input-group">
                                             <input type="text" class="form-control" placeholder="Search" name="name">
                                             <div class="input-group-append">
@@ -65,32 +63,31 @@
                                     <table class="table-striped table">
                                         <tr>
 
-                                            <th>Name Sales</th>
-                                            <th>Nama Outlet</th>
-                                            <th>Type</th>
-                                            <th>Limit</th>
+                                            <th>Sales</th>
+                                            <th>Nama Outlet </th>
+                                            <th>Tanggal Masuk</th>
+                                            <th>Jam Masuk</th>
+                                            <th>Jam Keluar</th>
                                             <th>Action</th>
                                         </tr>
-                                        @foreach ($outlets as $outlet)
+                                        @foreach ($checkins as $checkin)
                                             <tr>
-                                                <td>{{ $outlet->users->name }}</td>
+                                                <td>{{ $checkin->users->name }}</td>
 
                                                 <td>
-                                                    {{ $outlet->name }}
+                                                    {{ $checkin->outlets->name }}
                                                 </td>
                                                 <td>
-                                                    {{ $outlet->type }}
+                                                    {{ $checkin->date }}
                                                 </td>
-                                                <td>{{ $outlet->limit }}</td>
+                                                <td>
+                                                    {{ $checkin->time }}
+                                                </td>
+                                                <td>{{$checkin->clock_out}}</td>
+
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <a href='{{ route('outlets.edit', $outlet->id) }}'
-                                                            class="btn btn-sm btn-info btn-icon">
-                                                            <i class="fas fa-edit"></i>
-                                                            Edit
-                                                        </a>
-
-                                                        <form action="{{ route('outlets.destroy', $outlet->id) }}"
+                                                        <form action="{{ route('checkins.destroy', $checkins->id) }}"
                                                             method="POST" class="ml-2">
                                                             <input type="hidden" name="_method" value="DELETE" />
                                                             <input type="hidden" name="_token"
@@ -103,10 +100,12 @@
                                                 </td>
                                             </tr>
                                         @endforeach
+
+
                                     </table>
                                 </div>
                                 <div class="float-right">
-                                    {{ $outlets->withQueryString()->links() }}
+                                    {{ $checkins->withQueryString()->links() }}
                                 </div>
                             </div>
                         </div>

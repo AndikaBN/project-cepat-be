@@ -18,6 +18,10 @@ class RoleMiddleware
             if (auth()->user()->role == $role) {
                 return $next($request);
             }
+
+            if ($role == 'owner' && auth()->user()->role == 'kolektor') {
+                return $next($request);
+            }
         }
 
         return abort(403, 'Unauthorized');
