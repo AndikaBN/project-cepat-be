@@ -1,6 +1,6 @@
-@extends('owner.layouts.app')
+@extends('marketings.layouts.app')
 
-@section('title', 'Outlets')
+@section('title', 'Data Otlet')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -11,34 +11,30 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Outlets</h1>
-                <div class="section-header-button">
-                    <a href="{{ route('outlets.create') }}" class="btn btn-primary">Add New</a>
-                </div>
+                <h1>Data Otlet</h1>
+
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="#">Outlets</a></div>
-                    <div class="breadcrumb-item">All Outlets</div>
+                    <div class="breadcrumb-item"><a href="#">Data Otlet</a></div>
+                    <div class="breadcrumb-item">All Data Otlet</div>
                 </div>
             </div>
             <div class="section-body">
                 <div class="row">
                     <div class="col-12">
-                        @include('owner.layouts.alert')
+                        @include('marketings.layouts.alert')
                     </div>
                 </div>
-                <h2 class="section-title">Outlets</h2>
-                <p class="section-lead">
-                    You can manage all Outlets, such as editing, deleting and more.
-                </p>
-
-
                 <div class="row mt-4">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
                                 <h4>All Posts</h4>
+                                <div class="float-right">
+                                    <a href="{{ route('dataOtlet.export') }}" class="btn btn-primary">Export Data</a>
+                                </div>
                             </div>
+
                             <div class="card-body">
                                 <div class="float-left">
                                     <select class="form-control selectric">
@@ -48,8 +44,10 @@
                                         <option>Delete Pemanently</option>
                                     </select>
                                 </div>
+                                {{-- create button export --}}
+
                                 <div class="float-right">
-                                    <form method="GET" action="{{ route('outlets.index') }}">
+                                    <form method="GET" action="{{ route('dataOtlet.index') }}">
                                         <div class="input-group">
                                             <input type="text" class="form-control" placeholder="Search" name="name">
                                             <div class="input-group-append">
@@ -64,33 +62,38 @@
                                 <div class="table-responsive">
                                     <table class="table-striped table">
                                         <tr>
-
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Rule</th>
-                                            <th>Created At</th>
-                                            <th>Action</th>
+                                            <th>Stat</th>
+                                            <th>Bebas Blok</th>
+                                            <th>Kode</th>
+                                            <th>Nama Customer</th>
+                                            <th>Kontak</th>
+                                            <th>Alamat</th>
+                                            <th>Daerah</th>
+                                            <th>Area</th>
+                                            <th>Telepon</th>
+                                            <th>KTP</th>
+                                            <th>NPWP</th>
+                                            {{-- <th>Action</th> --}}
                                         </tr>
-                                        @foreach ($outlets as $outlet)
+                                        @foreach ($dataOtlets as $dataOtlet)
                                             <tr>
-                                                <td>{{ $outlet->users->name }}</td>
+                                                <td>{{ $dataOtlet->stat }}</td>
+                                                <td>{{ $dataOtlet->bebas_blok }}</td>
+                                                <td>{{ $dataOtlet->kode }}</td>
+                                                <td>{{ $dataOtlet->nama_customer }}</td>
+                                                <td>{{ $dataOtlet->kontak }}</td>
+                                                <td>{{ $dataOtlet->alamat }}</td>
+                                                <td>{{ $dataOtlet->daerah }}</td>
+                                                <td>{{ $dataOtlet->area }}</td>
+                                                <td>{{ $dataOtlet->telp }}</td>
+                                                <td>{{ $dataOtlet->ktp }}</td>
+                                                <td>{{ $dataOtlet->npwp }}</td>
+                                                {{-- <td>
 
-                                                <td>
-                                                    {{ $outlet->name }}
-                                                </td>
-                                                <td>
-                                                    {{ $outlet->type }}
-                                                </td>
-                                                <td>{{ $outlet->limit }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <a href='{{ route('outlets.edit', $outlet->id) }}'
-                                                            class="btn btn-sm btn-info btn-icon">
-                                                            <i class="fas fa-edit"></i>
-                                                            Edit
-                                                        </a>
-
-                                                        <form action="{{ route('outlets.destroy', $outlet->id) }}"
+                                                        {{-- <form
+                                                            action="{{ route('salesPiutang.destroy', $piutangSales->id) }}"
                                                             method="POST" class="ml-2">
                                                             <input type="hidden" name="_method" value="DELETE" />
                                                             <input type="hidden" name="_token"
@@ -98,17 +101,34 @@
                                                             <button class="btn btn-sm btn-danger btn-icon confirm-delete">
                                                                 <i class="fas fa-times"></i> Delete
                                                             </button>
-                                                        </form>
+                                                        </form> --}}
                                                     </div>
                                                 </td>
                                             </tr>
                                         @endforeach
 
-
+                                        {{-- create pagination --}}
+                                        <tr>
+                                            <td colspan="9">
+                                                {{ $dataOtlets->links() }}
+                                            </td>
+                                        </tr>
                                     </table>
                                 </div>
+
+                                {{-- create form import --}}
                                 <div class="float-right">
-                                    {{ $outlets->withQueryString()->links() }}
+                                    <form method="POST" action="{{ route('dataOtlet.import') }}"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="input-group">
+                                            <input type="file" class="form-control" name="file">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary"><i class="fas fa-upload"></i>
+                                                    Import</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

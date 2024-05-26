@@ -8,7 +8,8 @@
         </div>
         <ul class="sidebar-menu">
             <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Management Sales</span></a>
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Management
+                        Sales</span></a>
                 <ul class="dropdown-menu">
                     <li class=''>
                         <a class="nav-link" href="{{ route('users.index') }}">Users</a>
@@ -19,10 +20,14 @@
                     <li class=''>
                         <a class="nav-link" href="{{ route('checkins.index') }}">CheckIn Sales</a>
                     </li>
+                    <li class=''>
+                        <a class="nav-link" href="{{ route('salesPiutang.index') }}">Piutang Sales</a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Management Kolektor</span></a>
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Management
+                        Kolektor</span></a>
                 <ul class="dropdown-menu">
                     <li class='{{ Request::is('dashboard-general-dashboard') ? 'active' : '' }}'>
                         <a class="nav-link" href="{{ url('dashboard-general-dashboard') }}">General Dashboard</a>
@@ -39,7 +44,8 @@
                 </ul>
             </li>
             <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Management Inputer</span></a>
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Management
+                        Inputer</span></a>
                 <ul class="dropdown-menu">
                     <li class='{{ Request::is('dashboard-general-dashboard') ? 'active' : '' }}'>
                         <a class="nav-link" href="{{ url('dashboard-general-dashboard') }}">General Dashboard</a>
@@ -56,7 +62,8 @@
                 </ul>
             </li>
             <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Management Gudang</span></a>
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Management
+                        Gudang</span></a>
                 <ul class="dropdown-menu">
                     <li class='{{ Request::is('dashboard-general-dashboard') ? 'active' : '' }}'>
                         <a class="nav-link" href="{{ url('dashboard-general-dashboard') }}">General Dashboard</a>
@@ -73,21 +80,15 @@
                 </ul>
             </li>
             <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Management Marketing</span></a>
-                <ul class="dropdown-menu">
-                    <li class='{{ Request::is('dashboard-general-dashboard') ? 'active' : '' }}'>
-                        <a class="nav-link" href="{{ url('dashboard-general-dashboard') }}">General Dashboard</a>
-                    </li>
-
-                </ul>
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Management
+                        Marketing</span></a>
                 <ul class="dropdown-menu">
                     <li class=''>
-                        <a class="nav-link" href="{{ route('users.index') }}">Users</a>
+                        <a class="nav-link" href="{{ route('stock.index') }}">Stock</a>
                     </li>
                     <li class=''>
-                        <a class="nav-link" href="{{ route('outlets.index') }}">Outlets</a>
+                        <a class="nav-link" href="{{ route('dataOtlet.index') }}">Data Otlet</a>
                     </li>
                 </ul>
             </li>
-
 </div>

@@ -1,6 +1,6 @@
-@extends('owner.layouts.app')
+@extends('marketings.layouts.app')
 
-@section('title', 'Users')
+@section('title', 'Stock MAD')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -11,34 +11,30 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Users</h1>
-                <div class="section-header-button">
-                    <a href="{{ route('users.create') }}" class="btn btn-primary">Add New</a>
-                </div>
+                <h1>Stock MAD</h1>
+
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="#">Users</a></div>
-                    <div class="breadcrumb-item">All Users</div>
+                    <div class="breadcrumb-item"><a href="#">Stock MAD</a></div>
+                    <div class="breadcrumb-item">All Stock MAD</div>
                 </div>
             </div>
             <div class="section-body">
                 <div class="row">
                     <div class="col-12">
-                        @include('owner.layouts.alert')
+                        @include('marketings.layouts.alert')
                     </div>
                 </div>
-                <h2 class="section-title">Users</h2>
-                <p class="section-lead">
-                    You can manage all Users, such as editing, deleting and more.
-                </p>
-
-
                 <div class="row mt-4">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
                                 <h4>All Posts</h4>
+                                <div class="float-right">
+                                    <a href="{{ route('stock.export') }}" class="btn btn-primary">Export Data</a>
+                                </div>
                             </div>
+
                             <div class="card-body">
                                 <div class="float-left">
                                     <select class="form-control selectric">
@@ -48,8 +44,10 @@
                                         <option>Delete Pemanently</option>
                                     </select>
                                 </div>
+                                {{-- create button export --}}
+
                                 <div class="float-right">
-                                    <form method="GET" action="{{ route('users.index') }}">
+                                    <form method="GET" action="{{ route('stock.index') }}">
                                         <div class="input-group">
                                             <input type="text" class="form-control" placeholder="Search" name="name">
                                             <div class="input-group-append">
@@ -64,34 +62,26 @@
                                 <div class="table-responsive">
                                     <table class="table-striped table">
                                         <tr>
-
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Rule</th>
-                                            <th>Created At</th>
-                                            <th>Action</th>
+                                            <th>Kode Barang</th>
+                                            <th>Nama Barang</th>
+                                            <th>Jenis Barang</th>
+                                            <th>Divisi</th>
+                                            <th>Stok</th>
+                                            <th>Satuan</th>
+                                            {{-- <th>Action</th> --}}
                                         </tr>
-                                        @foreach ($users as $user)
+                                        @foreach ($stocks as $stock)
                                             <tr>
-
-                                                <td>{{ $user->name }}
-                                                </td>
-                                                <td>
-                                                    {{ $user->email }}
-                                                </td>
-                                                <td>
-                                                    {{ $user->role }}
-                                                </td>
-                                                <td>{{ $user->created_at }}</td>
+                                                <td>{{ $stock->kode_barang }}</td>
+                                                <td>{{ $stock->nama_barang }}</td>
+                                                <td>{{ $stock->jenis_barang }}</td>
+                                                <td>{{ $stock->divisi }}</td>
+                                                <td>{{ $stock->stock }}</td>
+                                                <td>{{ $stock->satuan }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <a href='{{ route('users.edit', $user->id) }}'
-                                                            class="btn btn-sm btn-info btn-icon">
-                                                            <i class="fas fa-edit"></i>
-                                                            Edit
-                                                        </a>
-
-                                                        <form action="{{ route('users.destroy', $user->id) }}"
+                                                        {{-- <form
+                                                            action="{{ route('salesPiutang.destroy', $piutangSales->id) }}"
                                                             method="POST" class="ml-2">
                                                             <input type="hidden" name="_method" value="DELETE" />
                                                             <input type="hidden" name="_token"
@@ -99,17 +89,34 @@
                                                             <button class="btn btn-sm btn-danger btn-icon confirm-delete">
                                                                 <i class="fas fa-times"></i> Delete
                                                             </button>
-                                                        </form>
+                                                        </form> --}}
                                                     </div>
                                                 </td>
                                             </tr>
                                         @endforeach
 
-
+                                        {{-- create pagination --}}
+                                        <tr>
+                                            <td colspan="9">
+                                                {{ $stocks->links() }}
+                                            </td>
+                                        </tr>
                                     </table>
                                 </div>
+
+                                {{-- create form import --}}
                                 <div class="float-right">
-                                    {{ $users->withQueryString()->links() }}
+                                    <form method="POST" action="{{ route('stock.import') }}"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="input-group">
+                                            <input type="file" class="form-control" name="file">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary"><i class="fas fa-upload"></i>
+                                                    Import</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
