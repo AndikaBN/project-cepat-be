@@ -52,20 +52,17 @@ Route::middleware('auth:sanctum')->put('/checkin/{id}', [App\Http\Controllers\Ap
 // api delete checkin
 Route::middleware('auth:sanctum')->delete('/checkin/{id}', [App\Http\Controllers\Api\CheckInController::class, 'deleteCheckin']);
 
-// api sales
-Route::middleware('auth:sanctum')->get('/sales', [App\Http\Controllers\Api\SaleController::class, 'index']);
+// api salePiutang
+Route::middleware('auth:sanctum')->get('/salePiutang', [App\Http\Controllers\Api\SalePiutangController::class, 'index']);
 
-// api store sales
-Route::middleware('auth:sanctum')->post('/sales', [App\Http\Controllers\Api\SaleController::class, 'store']);
+// api store salePiutang
+Route::middleware('auth:sanctum')->post('/salePiutang', [App\Http\Controllers\Api\SalePiutangController::class, 'store']);
 
-// api get sales by id
-Route::middleware('auth:sanctum')->get('/sales/{id}', [App\Http\Controllers\Api\SaleController::class, 'show']);
+// api update salePiutang
+Route::middleware('auth:sanctum')->put('/salePiutang/{id}', [App\Http\Controllers\Api\SalePiutangController::class, 'update']);
 
-// api update sales
-Route::middleware('auth:sanctum')->put('/sales/{id}', [App\Http\Controllers\Api\SaleController::class, 'update']);
-
-// api delete sales
-Route::middleware('auth:sanctum')->delete('/sales/{id}', [App\Http\Controllers\Api\SaleController::class, 'destroy']);
+// api delete salePiutang
+Route::middleware('auth:sanctum')->delete('/salePiutang/{id}', [App\Http\Controllers\Api\SalePiutangController::class, 'destroy']);
 
 // api get stock
 Route::middleware('auth:sanctum')->get('/stock', [App\Http\Controllers\Api\StockController::class, 'index']);
