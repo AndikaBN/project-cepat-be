@@ -87,3 +87,15 @@ Route::middleware('auth:sanctum')->put('/dataOtlet/{id}', [App\Http\Controllers\
 
 // api delete dataOtlet
 Route::middleware('auth:sanctum')->delete('/dataOtlet/{id}', [App\Http\Controllers\Api\DataOtletController::class, 'destroy']);
+
+// api get order
+Route::middleware('auth:sanctum')->get('/order', [App\Http\Controllers\Api\OrderController::class, 'index']);
+
+// api store order
+Route::middleware('auth:sanctum')->post('/order', [App\Http\Controllers\Api\OrderController::class, 'store']);
+
+// api update order
+Route::middleware('auth:sanctum')->put('/order/{id}', [App\Http\Controllers\Api\OrderController::class, 'update']);
+
+// api delete order
+Route::middleware('auth:sanctum')->delete('/order/{id}', [App\Http\Controllers\Api\OrderController::class, 'destroy']);
