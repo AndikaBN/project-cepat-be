@@ -17,33 +17,6 @@ class DataOtletController extends Controller
         ]);
     }
 
-    /*
-        $table->id();
-        $table->string('stat')->nullable();
-        $table->string('bebas_blok')->nullable();
-        $table->string('kode')->nullable();
-        $table->string('nama_customer')->nullable();
-        $table->string('kontak')->nullable();
-        $table->string('alamat')->nullable();
-        $table->string('daerah')->nullable();
-        $table->string('area')->nullable();
-        $table->string('telp')->nullable();
-        $table->string('keterangan')->nullable();
-        $table->string('ktp')->nullable();
-        $table->string('npwp')->nullable();
-        $table->string('gol')->nullable();
-        $table->date('tgl_input')->nullable();
-        $table->string('set_harga')->nullable();
-        $table->string('area_antaran')->nullable();
-        $table->string('area_tagihan')->nullable();
-        $table->string('type_customer')->nullable();
-        $table->string('limit_kredit')->nullable();
-        $table->string('limit_divisi')->nullable();
-        $table->string('nama_npwp')->nullable();
-        $table->string('alamat_npwp')->nullable();
-        $table->timestamps();
-*/
-
     //send data otlet to server
     public function store(Request $request)
     {
@@ -58,7 +31,7 @@ class DataOtletController extends Controller
             'area' => 'required',
             'telp' => 'required',
             'keterangan' => 'required',
-            'ktp' => 'required',
+            // 'ktp' => 'required',
             'npwp' => 'required',
             'gol' => 'required',
             'tgl_input' => 'required',
@@ -83,7 +56,7 @@ class DataOtletController extends Controller
         $dataOtlet->area = $request->area;
         $dataOtlet->telp = $request->telp;
         $dataOtlet->keterangan = $request->keterangan;
-        $dataOtlet->ktp = $request->ktp;
+        // $dataOtlet->ktp = $request->ktp;
         $dataOtlet->npwp = $request->npwp;
         $dataOtlet->gol = $request->gol;
         $dataOtlet->tgl_input = $request->tgl_input;
@@ -96,6 +69,15 @@ class DataOtletController extends Controller
         $dataOtlet->nama_npwp = $request->nama_npwp;
         $dataOtlet->alamat_npwp = $request->alamat_npwp;
         $dataOtlet->save();
+
+        //save image ktp
+        if ($request->hasFile('ktp')) {
+            $ktp = $request->file('ktp');
+            $ktp->storeAs('public/ktp', $dataOtlet->id . '.' . $ktp->getClientOriginalExtension());
+            $dataOtlet->ktp = $dataOtlet->id . '.' . $ktp->getClientOriginalExtension();
+            $dataOtlet->save();
+        }
+
 
         return response()->json([
             'message' => 'success',

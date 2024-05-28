@@ -68,6 +68,7 @@
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Rule</th>
+                                            <th>Kode Salesman</th>
                                             <th>Created At</th>
                                             <th>Action</th>
                                         </tr>
@@ -81,6 +82,9 @@
                                                 </td>
                                                 <td>
                                                     {{ $user->role }}
+                                                </td>
+                                                <td>
+                                                    {{ $user->kode_salesman }}
                                                 </td>
                                                 <td>{{ $user->created_at }}</td>
                                                 <td>

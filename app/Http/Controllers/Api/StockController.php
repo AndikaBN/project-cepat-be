@@ -11,10 +11,9 @@ class StockController extends Controller
     //api get all stocks
     public function index()
     {
-        return response()->json([
-            'message' => 'success',
-            'data' => Stock::all()
-        ]);
+        $stock = Stock::all();
+
+        return response()->json($stock, 200);
     }
 
     //api send stock to server

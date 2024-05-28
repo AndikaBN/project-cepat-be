@@ -16,6 +16,7 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+            'kode_salesman' => 'nullable',
         ]);
 
         //check if the user exists
@@ -64,6 +65,7 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8',
+            'kode_salesman' => 'nullable',
         ]);
 
         //create a new user

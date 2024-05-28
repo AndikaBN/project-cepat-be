@@ -103,7 +103,7 @@
                                         <input type="radio" name="role" value="inputer" class="selectgroup-input">
                                         <span class="selectgroup-button">inputer</span>
                                     </label>
-                                    
+
                                     <label class="selectgroup-item">
                                         <input type="radio" name="role" value="gudang" class="selectgroup-input">
                                         <span class="selectgroup-button">gudang</span>
@@ -114,6 +114,7 @@
                                     </label>
                                 </div>
                             </div>
+                            
                         </div>
                         <div class="card-footer text-right">
                             <button class="btn btn-primary">Submit</button>

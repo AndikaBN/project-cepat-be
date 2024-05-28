@@ -37,6 +37,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8',
             'role' => 'required|in:owner,sales,marketing,kolektor,inputer,gudang',
+            'kode_salesman' => 'nullable',
         ]);
 
         // store the request...
@@ -45,6 +46,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->role = $request->role;
+        $user->kode_salesman = $request->kode_salesman;
         $user->save();
 
         return redirect()->route('users.index')->with('success', 'User created successfully');
@@ -71,6 +73,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required',
             'role' => 'required|in:owner,sales,marketing,kolektor,inputer,gudang',
+            'kode_salesman' => 'nullable',
         ]);
 
         // update the request...
@@ -78,6 +81,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->role = $request->role;
+        $user->kode_salesman = $request->kode_salesman;
         $user->save();
 
         //if password is not empty

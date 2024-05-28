@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('owner.layouts.app')
 
 @section('title', 'Edit User')
 
@@ -88,23 +88,51 @@
                                 <label class="form-label">Roles</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="role" value="admin" class="selectgroup-input"
-                                            @if ($user->role == 'admin') checked @endif>
-                                        <span class="selectgroup-button">Admin</span>
+                                        <input type="radio" name="role" value="owner" class="selectgroup-input"
+                                            @if ($user->role == 'owner') checked @endif>
+                                        <span class="selectgroup-button">Owner</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="role" value="staff" class="selectgroup-input"
-                                            @if ($user->role == 'staff') checked @endif>
-                                        <span class="selectgroup-button">Staff</span>
+                                        <input type="radio" name="role" value="sales" class="selectgroup-input"
+                                            @if ($user->role == 'sales') checked @endif>
+                                        <span class="selectgroup-button">Sales</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="role" value="user" class="selectgroup-input"
-                                            @if ($user->role == 'user') checked @endif>
-                                        <span class="selectgroup-button">User</span>
+                                        <input type="radio" name="role" value="kolektor" class="selectgroup-input"
+                                            @if ($user->role == 'kolektor') checked @endif>
+                                        <span class="selectgroup-button">Kolektor</span>
                                     </label>
-
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="role" value="inputer" class="selectgroup-input"
+                                            @if ($user->role == 'inputer') checked @endif>
+                                        <span class="selectgroup-button">Inputer</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="role" value="gudang" class="selectgroup-input"
+                                            @if ($user->role == 'gudang') checked @endif>
+                                        <span class="selectgroup-button">Gudang</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="role" value="marketing" class="selectgroup-input"
+                                            @if ($user->role == 'marketing') checked @endif>
+                                        <span class="selectgroup-button">Marketing</span>
+                                    </label>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label>Kode Salesman</label>
+                                <input type="text"
+                                    class="form-control @error('kode_salesman')
+                                is-invalid
+                            @enderror"
+                                    name="kode_salesman" value="{{ $user->kode_salesman }}">
+                                @error('email')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
                         </div>
                         <div class="card-footer text-right">
                             <button class="btn btn-primary">Submit</button>
