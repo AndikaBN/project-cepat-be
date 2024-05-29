@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('data_order', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sale_piutang_id')->constrained('sale_piutangs');
+            $table->string('kode_order');
+            $table->foreignId('outlets_id')->constrained('outlets');
             $table->foreignId('stocks_id')->constrained('stocks');
             $table->string('kode_salesman');
             $table->string('nama_salesman');
             $table->string('nama_barang');
             $table->string('harga_dalam_kota');
+            $table->string('quantity');
             $table->timestamps();
         });
     }
