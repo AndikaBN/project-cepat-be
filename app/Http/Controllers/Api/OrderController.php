@@ -28,25 +28,27 @@ class OrderController extends Controller
             $table->string('harga_dalam_kota');
             $table->string('quantity');
         */
-    //send order to server
+    // api store to server
     public function store(Request $request)
     {
         $request->validate([
-            'sale_piutang_id' => 'required',
+            'outlets_id' => 'required',
             'stocks_id' => 'required',
             'kode_salesman' => 'required',
             'nama_salesman' => 'required',
             'nama_barang' => 'required',
             'harga_dalam_kota' => 'required',
+            'quantity' => 'required',
         ]);
 
         $order = new Order;
-        $order->sale_piutang_id = $request->sale_piutang_id;
+        $order->outlets_id = $request->outlets_id;
         $order->stocks_id = $request->stocks_id;
         $order->kode_salesman = $request->kode_salesman;
         $order->nama_salesman = $request->nama_salesman;
         $order->nama_barang = $request->nama_barang;
         $order->harga_dalam_kota = $request->harga_dalam_kota;
+        $order->quantity = $request->quantity;
         $order->save();
 
         return response()->json([
@@ -54,6 +56,7 @@ class OrderController extends Controller
             'data' => $order
         ]);
     }
+
 
     //api update order
     public function update(Request $request, Order $order)
