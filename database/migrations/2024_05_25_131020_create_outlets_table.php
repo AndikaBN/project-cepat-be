@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->string('name');
-            $table->string('image')->nullable();
+            $table->string('no_telp');
+            $table->string('image_ktp')->nullable();
+            $table->string('image_outlet')->nullable();
             $table->string('type');
             $table->integer('limit');
             $table->timestamps();

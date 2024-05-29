@@ -28,6 +28,15 @@ class OutletController extends Controller
         return view('owner.pages.outlets.create');
     }
 
+    /*
+            $table->foreignId('user_id')->constrained('users');
+            $table->string('name');
+            $table->string('no_telp');
+            $table->string('image_ktp')->nullable();
+            $table->string('image_outlet')->nullable();
+            $table->string('type');
+            $table->integer('limit');
+    */
     //store
     public function store(Request $request)
     {
