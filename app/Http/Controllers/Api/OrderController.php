@@ -21,6 +21,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'kode_order' => 'required',
             'data_otlets_id' => 'required',
             'stocks_id' => 'required',
             'kode_salesman' => 'required',
@@ -31,6 +32,7 @@ class OrderController extends Controller
         ]);
 
         $order = new Order;
+        $order->kode_order = $request->kode_order;
         $order->data_otlets_id = $request->data_otlets_id;
         $order->stocks_id = $request->stocks_id;
         $order->kode_salesman = $request->kode_salesman;
