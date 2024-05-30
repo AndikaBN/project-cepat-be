@@ -19,7 +19,15 @@ class RoleMiddleware
                 return $next($request);
             }
 
-            if ($role == 'owner' && auth()->user()->role == 'kolektor' || auth()->user()->role == 'marketing'){
+            if ($role == 'owner' && auth()->user()->role == 'kolektor') {
+                return $next($request);
+            }
+
+            if ($role == 'owner' && auth()->user()->role == 'marketing') {
+                return $next($request);
+            }
+
+            if ($role == 'owner' && auth()->user()->role == 'inputer') {
                 return $next($request);
             }
         }

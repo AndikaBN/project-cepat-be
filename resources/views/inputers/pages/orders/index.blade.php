@@ -1,6 +1,6 @@
-@extends('owner.layouts.app')
+@extends('inputers.layouts.app')
 
-@section('title', 'Outlets')
+@section('title', 'Orders')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -11,25 +11,25 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Outlets</h1>
+                <h1>Orders</h1>
                 <div class="section-header-button">
-                    <a href="{{ route('outlets.create') }}" class="btn btn-primary">Add New</a>
+                    <a href="{{ route('orders.create') }}" class="btn btn-primary">Add New</a>
                 </div>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="#">Outlets</a></div>
-                    <div class="breadcrumb-item">All Outlets</div>
+                    <div class="breadcrumb-item"><a href="#">Orders</a></div>
+                    <div class="breadcrumb-item">All Orders</div>
                 </div>
             </div>
             <div class="section-body">
                 <div class="row">
                     <div class="col-12">
-                        @include('owner.layouts.alert')
+                        @include('inputers.layouts.alert')
                     </div>
                 </div>
-                <h2 class="section-title">Outlets</h2>
+                <h2 class="section-title">Orders</h2>
                 <p class="section-lead">
-                    You can manage all Outlets, such as editing, deleting and more.
+                    You can manage all Orders, such as editing, deleting and more.
                 </p>
 
 
@@ -49,7 +49,7 @@
                                     </select>
                                 </div>
                                 <div class="float-right">
-                                    <form method="GET" action="{{ route('outlets.index') }}">
+                                    <form method="GET" action="{{ route('orders.index') }}">
                                         <div class="input-group">
                                             <input type="text" class="form-control" placeholder="Search" name="name">
                                             <div class="input-group-append">
@@ -63,34 +63,50 @@
 
                                 <div class="table-responsive">
                                     <table class="table-striped table">
-                                        <tr>
 
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Rule</th>
+                                        <tr>
+                                            {{--
+                                            'kode_order',
+                                            'data_otlets_id',
+                                            'stocks_id',
+                                            'kode_salesman',
+                                            'nama_salesman',
+                                            'nama_barang',
+                                            'harga_dalam_kota',
+                                            'quantity',
+                                            --}}
+                                            <th>Kode Order</th>
+                                            <th>Kode Salesman</th>
+                                            <th>Nama Salesman</th>
+                                            <th>Nama Barang</th>
+                                            <th>Harga Dalam Kota</th>
+                                            <th>Quantity</th>
                                             <th>Created At</th>
+                                            <th>Update At</th>
                                             <th>Action</th>
                                         </tr>
-                                        @foreach ($outlets as $outlet)
+                                        @foreach ($orders as $order)
                                             <tr>
-                                                <td>{{ $outlet->users->name }}</td>
+                                                <td>{{ $order->kode_order }}</td>
 
                                                 <td>
-                                                    {{ $outlet->name }}
+                                                    {{ $order->kode_salesman }}
                                                 </td>
                                                 <td>
-                                                    {{ $outlet->type }}
+                                                    {{ $order->nama_salesman }}
                                                 </td>
-                                                <td>{{ $outlet->limit }}</td>
+                                                <td>{{ $order->stocks->nama_barang }}</td>
+                                                <td>{{ $order->stocks->harga_dalam_kota }}</td>
+                                                <td>{{ $order->quantity }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <a href='{{ route('outlets.edit', $outlet->id) }}'
+                                                        <a href='{{ route('orders.edit', $orders->id) }}'
                                                             class="btn btn-sm btn-info btn-icon">
                                                             <i class="fas fa-edit"></i>
                                                             Edit
                                                         </a>
 
-                                                        <form action="{{ route('outlets.destroy', $outlet->id) }}"
+                                                        <form action="{{ route('orders.destroy', $orders->id) }}"
                                                             method="POST" class="ml-2">
                                                             <input type="hidden" name="_method" value="DELETE" />
                                                             <input type="hidden" name="_token"
@@ -108,7 +124,7 @@
                                     </table>
                                 </div>
                                 <div class="float-right">
-                                    {{ $outlets->withQueryString()->links() }}
+                                    {{ $orders->withQueryString()->links() }}
                                 </div>
                             </div>
                         </div>

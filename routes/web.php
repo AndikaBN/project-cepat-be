@@ -7,7 +7,7 @@ use App\Http\Controllers\CheckInController;
 use App\Http\Controllers\SalePiutangController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\DataOtletController;
-
+use App\Http\Controllers\OrderController;
 
 Route::get('/', function () {
     return view('auth.pages.login');
@@ -45,4 +45,13 @@ Route::middleware(['auth', 'role:marketing,owner'])->group(function () {
     Route::resource('dataOtlet', DataOtletController::class);
     Route::get('export/dataOtlet', [DataOtletController::class, 'export'])->name('dataOtlet.export');
     Route::post('import/dataOtlet', [DataOtletController::class, 'import'])->name('dataOtlet.import');
+});
+
+//create route for role inputers
+Route::middleware(['auth', 'role:inputer,owner'])->group(function(){
+    Route::get('inputers', function(){
+        return view('inputers.pages.dashboard');
+    })->name('inputers');
+
+    Route::resource('orders', OrderController::class);
 });

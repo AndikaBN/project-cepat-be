@@ -73,7 +73,7 @@
                                         </tr>
                                         @foreach ($outlets as $outlet)
                                             <tr>
-                                                <td>{{ $outlet->users->name }}</td>
+                                                <td>{{ auth()->user()->name }}</td>
 
                                                 <td>
                                                     {{ $outlet->name }}

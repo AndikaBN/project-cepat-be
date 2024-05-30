@@ -20,7 +20,7 @@ class OutletController extends Controller
             })
             ->paginate(10);
         return view('owner.pages.outlets.index', compact('outlets'));
-    }
+    }   
 
     //create
     public function create()

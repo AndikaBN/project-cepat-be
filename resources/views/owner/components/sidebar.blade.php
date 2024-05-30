@@ -54,11 +54,9 @@
                 </ul>
                 <ul class="dropdown-menu">
                     <li class=''>
-                        <a class="nav-link" href="{{ route('users.index') }}">Users</a>
+                        <a class="nav-link" href="{{ route('orders.index') }}">Order</a>
                     </li>
-                    <li class=''>
-                        <a class="nav-link" href="{{ route('outlets.index') }}">Outlets</a>
-                    </li>
+
                 </ul>
             </li>
             <li class="nav-item dropdown">
@@ -70,14 +68,7 @@
                     </li>
 
                 </ul>
-                <ul class="dropdown-menu">
-                    <li class=''>
-                        <a class="nav-link" href="{{ route('users.index') }}">Users</a>
-                    </li>
-                    <li class=''>
-                        <a class="nav-link" href="{{ route('outlets.index') }}">Outlets</a>
-                    </li>
-                </ul>
+          
             </li>
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Management
