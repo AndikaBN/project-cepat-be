@@ -95,8 +95,8 @@
                                                 <td>
                                                     {{ $order->nama_salesman }}
                                                 </td>
-                                                <td>{{ $order->stocks->nama_barang }}</td>
-                                                <td>{{ $order->stocks->harga_dalam_kota }}</td>
+                                                <td>{{ $order->nama_barang }}</td>
+                                                <td>{{ $order->harga_dalam_kota }}</td>
                                                 <td>{{ $order->quantity }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
