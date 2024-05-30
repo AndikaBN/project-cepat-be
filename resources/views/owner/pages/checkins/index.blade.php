@@ -39,12 +39,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="float-left">
-                                    <select class="form-control selectric">
-                                        <option>Action For Selected</option>
-                                        <option>Move to Draft</option>
-                                        <option>Move to Pending</option>
-                                        <option>Delete Pemanently</option>
-                                    </select>
+                                   
                                 </div>
                                 <div class="float-right">
                                     <form method="GET" action="{{ route('checkins.index') }}">

@@ -22,6 +22,18 @@ class UserController extends Controller
         return view('owner.pages.users.index', compact('users'));
     }
 
+    public function indexUsersView()
+    {
+        $totalOwner = User::where('role', 'owner')->count();
+        $totalKolektor = User::where('role', 'kolektor')->count();
+        $totalInputer = User::where('role', 'inputer')->count();
+        $totalGudang = User::where('role', 'gudang')->count();
+        $totalMarketing = User::where('role', 'marketing')->count();
+
+        return view('owner.pages.dashboard', compact('totalOwner', 'totalKolektor', 'totalInputer', 'totalGudang', 'totalMarketing'));
+    }
+
+
     // create
     public function create()
     {

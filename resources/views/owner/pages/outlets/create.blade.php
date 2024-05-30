@@ -26,71 +26,61 @@
 
             <div class="section-body">
                 <h2 class="section-title">Outlets</h2>
-
-
-
                 <div class="card">
-                    <form action="{{ route('outlets.store') }}" method="POST">
+                    <form action="{{ route('outlets.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="card-header">
                             <h4>Input Text</h4>
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label>Name</label>
-                                <input type="text"
-                                    class="form-control @error('name')
-                                is-invalid
-                             @enderror"
-                                    name="name">
+                                <label>Nama Outlet</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}">
                                 @error('name')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
-
+                            {{-- no_telp form --}}
                             <div class="form-group
-                                @error('image')
-                                    is-invalid
+                                @error('no_telp')
+                                    has-error
                                 @enderror">
-                                <label>Image</label>
-                                <input type="file"
-                                    class="form-control"
-                                    name="image">
-                                @error('image')
+                                <label>No Telp</label>
+                                <input type="text" class="form-control @error('no_telp') is-invalid @enderror" name="no_telp" value="{{ old('no_telp') }}">
+                                @error('no_telp')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label>Type Outlet</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                        </div>
-                                    </div>
-                                    <input type="text"
-                                        class="form-control @error('gagal')
-                                is-invalid
-                              @enderror"
-                                        name="type">
-                                </div>
-                                @error('password')
+                                <label>Image KTP</label>
+                                <input type="file" class="form-control-file @error('image_ktp') is-invalid @enderror" name="image_ktp">
+                                @error('image_ktp')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Image Outlet</label>
+                                <input type="file" class="form-control-file @error('image_outlet') is-invalid @enderror" name="image_outlet">
+                                @error('image_outlet')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Type</label>
+                                <input type="text" class="form-control @error('type') is-invalid @enderror" name="type" value="{{ old('type') }}">
+                                @error('type')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
-                            <div class="form-group
-                                @error('limit')
-                                    is-invalid
-                                @enderror">
+                            <div class="form-group">
                                 <label>Limit</label>
-                                <input type="number"
-                                    class="form-control"
-                                    name="limit">
+                                <input type="number" class="form-control @error('limit') is-invalid @enderror" name="limit" value="{{ old('limit') }}">
                                 @error('limit')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -103,7 +93,6 @@
                         </div>
                     </form>
                 </div>
-
             </div>
         </section>
     </div>

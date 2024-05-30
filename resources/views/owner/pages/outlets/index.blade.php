@@ -40,14 +40,7 @@
                                 <h4>All Posts</h4>
                             </div>
                             <div class="card-body">
-                                <div class="float-left">
-                                    <select class="form-control selectric">
-                                        <option>Action For Selected</option>
-                                        <option>Move to Draft</option>
-                                        <option>Move to Pending</option>
-                                        <option>Delete Pemanently</option>
-                                    </select>
-                                </div>
+
                                 <div class="float-right">
                                     <form method="GET" action="{{ route('outlets.index') }}">
                                         <div class="input-group">
@@ -67,17 +60,19 @@
 
                                             <th>Name Sales</th>
                                             <th>Nama Outlet</th>
+                                            <th>Nomor Telepon</th>
                                             <th>Type</th>
                                             <th>Limit</th>
                                             <th>Action</th>
                                         </tr>
                                         @foreach ($outlets as $outlet)
                                             <tr>
-                                                <td>{{ auth()->user()->name }}</td>
+                                                <td>{{ $outlet->user ? $outlet->user->name : 'Unknown' }}</td>
 
                                                 <td>
                                                     {{ $outlet->name }}
                                                 </td>
+                                                <td>{{ $outlet->no_telp }}</td>
                                                 <td>
                                                     {{ $outlet->type }}
                                                 </td>

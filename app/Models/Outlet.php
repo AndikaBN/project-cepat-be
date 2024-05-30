@@ -27,4 +27,10 @@ class Outlet extends Model
         'type',
         'limit',
     ];
+
+    // users belongsto user role sales
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

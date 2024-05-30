@@ -12,7 +12,9 @@
         <section class="section">
             <div class="section-header">
                 <h1>Stock MAD</h1>
-
+                <div class="section-header-button">
+                    <a href="{{ route('stock.create') }}" class="btn btn-primary">Add New</a>
+                </div>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
                     <div class="breadcrumb-item"><a href="#">Stock MAD</a></div>
@@ -36,20 +38,13 @@
                             </div>
 
                             <div class="card-body">
-                                <div class="float-left">
-                                    <select class="form-control selectric">
-                                        <option>Action For Selected</option>
-                                        <option>Move to Draft</option>
-                                        <option>Move to Pending</option>
-                                        <option>Delete Pemanently</option>
-                                    </select>
-                                </div>
+
                                 {{-- create button export --}}
 
                                 <div class="float-right">
                                     <form method="GET" action="{{ route('stock.index') }}">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Search" name="name">
+                                            <input type="text" class="form-control" placeholder="Search" name="search">
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                             </div>
@@ -68,7 +63,7 @@
                                             <th>Divisi</th>
                                             <th>Stok</th>
                                             <th>Satuan</th>
-                                            {{-- <th>Action</th> --}}
+                                            <th>Action</th>
                                         </tr>
                                         @foreach ($stocks as $stock)
                                             <tr>
@@ -80,16 +75,14 @@
                                                 <td>{{ $stock->satuan }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        {{-- <form
-                                                            action="{{ route('salesPiutang.destroy', $piutangSales->id) }}"
-                                                            method="POST" class="ml-2">
-                                                            <input type="hidden" name="_method" value="DELETE" />
-                                                            <input type="hidden" name="_token"
-                                                                value="{{ csrf_token() }}" />
-                                                            <button class="btn btn-sm btn-danger btn-icon confirm-delete">
-                                                                <i class="fas fa-times"></i> Delete
-                                                            </button>
-                                                        </form> --}}
+                                                        <a href="{{ route('stock.edit', $stock->id) }}"
+                                                            class="btn btn-warning mr-2">Edit</a>
+                                                        <form action="{{ route('stock.destroy', $stock->id) }}" method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn btn-danger"
+                                                                onclick="return confirm('Are you sure?')">Delete</button>
+                                                        </form>
                                                     </div>
                                                 </td>
                                             </tr>

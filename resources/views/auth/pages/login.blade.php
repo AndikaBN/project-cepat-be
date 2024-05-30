@@ -33,11 +33,11 @@
                 <div class="form-group">
                     <div class="d-block">
                         <label for="password" class="control-label">Password</label>
-                        <div class="float-right">
+                        {{-- <div class="float-right">
                             <a href="auth-forgot-password.html" class="text-small">
                                 Forgot Password?
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
                     <input id="password" type="password"
                         class="form-control @error('password')
@@ -62,9 +62,9 @@
 
         </div>
     </div>
-    <div class="text-muted mt-5 text-center">
+    {{-- <div class="text-muted mt-5 text-center">
         Don't have an account? <a href="{{ route('register') }}">Create One</a>
-    </div>
+    </div> --}}
 @endsection
 
 @push('scripts')

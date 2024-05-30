@@ -11,25 +11,23 @@ class OrderController extends Controller
     //index
     public function index(Request $request)
     {
-        $orders = DB::table('orders')
+        $orders = Order::with('stock')
             ->when($request->input('kode_order'), function ($query, $kode_order) {
                 $query->where('kode_order', 'like', '%' . $kode_order . '%')
-                    ->orWhere('data_otlets_id', 'like', '%' . $kode_order . '%');
+                      ->orWhere('data_otlets_id', 'like', '%' . $kode_order . '%');
             })
             ->paginate(10);
         return view('inputers.pages.orders.index', compact('orders'));
     }
 
-    //create
     public function create()
     {
-        return view('inputers.pages.orders.create');
+        $stock = DB::table('stocks')->get();
+        return view('inputers.pages.orders.create', compact('stock'));
     }
 
-    //store
     public function store(Request $request)
     {
-        //validate the request...
         $request->validate([
             'kode_order' => 'required',
             'data_otlets_id' => 'required',
@@ -41,7 +39,6 @@ class OrderController extends Controller
             'quantity' => 'required',
         ]);
 
-        //store the request...
         $order = new Order;
         $order->kode_order = $request->kode_order;
         $order->data_otlets_id = $request->data_otlets_id;
@@ -56,16 +53,19 @@ class OrderController extends Controller
         return redirect()->route('orders.index');
     }
 
-    //edit
-    public function edit(Order $order)
+    public function show($id)
     {
-        return view('inputers.pages.orders.edit', compact('orders'));
+        $order = Order::with('stock')->find($id);
+        return view('order.show', compact('order'));
     }
 
-    //update
+    public function edit(Order $order)
+    {
+        return view('inputers.pages.orders.edit', compact('order'));
+    }
+
     public function update(Request $request, Order $order)
     {
-        //validate the request...
         $request->validate([
             'kode_order' => 'required',
             'data_otlets_id' => 'required',
@@ -77,7 +77,6 @@ class OrderController extends Controller
             'quantity' => 'required',
         ]);
 
-        //update the request...
         $order->kode_order = $request->kode_order;
         $order->data_otlets_id = $request->data_otlets_id;
         $order->stocks_id = $request->stocks_id;
@@ -91,7 +90,6 @@ class OrderController extends Controller
         return redirect()->route('orders.index');
     }
 
-    //destroy
     public function destroy(Order $order)
     {
         $order->delete();
