@@ -21,7 +21,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'outlets_id' => 'required',
+            'data_otlets_id' => 'required',
             'stocks_id' => 'required',
             'kode_salesman' => 'required',
             'nama_salesman' => 'required',
@@ -31,7 +31,7 @@ class OrderController extends Controller
         ]);
 
         $order = new Order;
-        $order->outlets_id = $request->outlets_id;
+        $order->data_otlets_id = $request->data_otlets_id;
         $order->stocks_id = $request->stocks_id;
         $order->kode_salesman = $request->kode_salesman;
         $order->nama_salesman = $request->nama_salesman;
@@ -51,7 +51,7 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
         $request->validate([
-            'outlets_id' => 'required',
+            'data_otlets_id' => 'required',
             'stocks_id' => 'required',
             'kode_salesman' => 'required',
             'nama_salesman' => 'required',
@@ -59,6 +59,8 @@ class OrderController extends Controller
             'harga_dalam_kota' => 'required',
         ]);
 
+        $order->data_otlets_id = $request->data_otlets_id;
+        $order->stocks_id = $request->stocks_id;
         $order->kode_salesman = $request->kode_salesman;
         $order->nama_salesman = $request->nama_salesman;
         $order->nama_barang = $request->nama_barang;

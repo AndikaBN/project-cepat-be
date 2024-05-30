@@ -32,7 +32,7 @@ class Order extends Model
         */
 
         'kode_order',
-        'outlets_id',
+        'data_otlets_id',
         'stocks_id',
         'kode_salesman',
         'nama_salesman',
