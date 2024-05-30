@@ -65,52 +65,37 @@
                                     <table class="table-striped table">
 
                                         <tr>
-                                            {{--
-                                            'kode_order',
-                                            'data_otlets_id',
-                                            'stocks_id',
-                                            'kode_salesman',
-                                            'nama_salesman',
-                                            'nama_barang',
-                                            'harga_dalam_kota',
-                                            'quantity',
-                                            --}}
                                             <th>Kode Order</th>
                                             <th>Kode Salesman</th>
                                             <th>Nama Salesman</th>
                                             <th>Nama Barang</th>
                                             <th>Harga Dalam Kota</th>
                                             <th>Quantity</th>
-                                            <th>Created At</th>
-                                            <th>Update At</th>
                                             <th>Action</th>
                                         </tr>
                                         @foreach ($orders as $order)
                                             <tr>
                                                 <td>{{ $order->kode_order }}</td>
-
-                                                <td>
-                                                    {{ $order->kode_salesman }}
-                                                </td>
-                                                <td>
-                                                    {{ $order->nama_salesman }}
-                                                </td>
-                                                <td>{{ $order->nama_barang }}</td>
-                                                <td>{{ $order->harga_dalam_kota }}</td>
+                                                <td>{{ $order->kode_salesman }}</td>
+                                                <td>{{ $order->nama_salesman }}</td>
+                                                @if ($order->stock)
+                                                    <td>{{ $order->stock->nama_barang }}</td>
+                                                    <td>{{ $order->stock->harga_dalam_kota }}</td>
+                                                @else
+                                                    <td>Data tidak tersedia</td>
+                                                    <td>Data tidak tersedia</td>
+                                                @endif
                                                 <td>{{ $order->quantity }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <a href='{{ route('orders.edit', $orders->id) }}'
+                                                        <a href='{{ route('orders.edit', $order->id) }}'
                                                             class="btn btn-sm btn-info btn-icon">
-                                                            <i class="fas fa-edit"></i>
-                                                            Edit
+                                                            <i class="fas fa-edit"></i> Edit
                                                         </a>
-
-                                                        <form action="{{ route('orders.destroy', $orders->id) }}"
+                                                        <form action="{{ route('orders.destroy', $order->id) }}"
                                                             method="POST" class="ml-2">
-                                                            <input type="hidden" name="_method" value="DELETE" />
-                                                            <input type="hidden" name="_token"
-                                                                value="{{ csrf_token() }}" />
+                                                            @method('DELETE')
+                                                            @csrf
                                                             <button class="btn btn-sm btn-danger btn-icon confirm-delete">
                                                                 <i class="fas fa-times"></i> Delete
                                                             </button>
@@ -119,6 +104,7 @@
                                                 </td>
                                             </tr>
                                         @endforeach
+
 
 
                                     </table>

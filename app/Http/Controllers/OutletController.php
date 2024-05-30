@@ -12,15 +12,16 @@ class OutletController extends Controller
     //index
     public function index(Request $request)
     {
-        //get all outlets with pagination
-        $outlets = DB::table('outlets')
+        $outlets = Outlet::with('user')
             ->when($request->input('name'), function ($query, $name) {
                 $query->where('name', 'like', '%' . $name . '%')
                     ->orWhere('type', 'like', '%' . $name . '%');
             })
             ->paginate(10);
+
         return view('owner.pages.outlets.index', compact('outlets'));
-    }   
+    }
+
 
     //create
     public function create()
@@ -45,6 +46,7 @@ class OutletController extends Controller
             'name' => 'required',
             'type' => 'required',
             'limit' => 'required|numeric',
+
         ]);
 
         //store the request...
@@ -52,12 +54,20 @@ class OutletController extends Controller
         $outlet->name = $request->name;
         $outlet->type = $request->type;
         $outlet->limit = $request->limit;
+        $outlet->user_id = auth()->user()->id;
         $outlet->save();
 
-        //save the image
-        if ($request->hasFile('image')) {
-            $request->file('image')->storeAs('public/outlets', $outlet->id . '.' . $request->file('image')->extension());
-            $outlet->image = 'storage/outlets/' . $outlet->id . '.' . $request->file('image')->extension();
+        //save the image_ktp
+        if ($request->hasFile('image_ktp')) {
+            $request->file('image_ktp')->storeAs('public/outlets', $outlet->id . '_ktp.' . $request->file('image_ktp')->extension());
+            $outlet->image_ktp = 'storage/outlets/' . $outlet->id . '_ktp.' . $request->file('image_ktp')->extension();
+            $outlet->save();
+        }
+
+        //save the image_outlet
+        if ($request->hasFile('image_outlet')) {
+            $request->file('image_outlet')->storeAs('public/outlets', $outlet->id . '_outlet.' . $request->file('image_outlet')->extension());
+            $outlet->image_outlet = 'storage/outlets/' . $outlet->id . '_outlet.' . $request->file('image_outlet')->extension();
             $outlet->save();
         }
 
@@ -94,12 +104,20 @@ class OutletController extends Controller
         $outlet->limit = $request->limit;
         $outlet->save();
 
-        //save the image
-        if ($request->hasFile('image')) {
-            $request->file('image')->storeAs('public/outlets', $outlet->id . '.' . $request->file('image')->extension());
-            $outlet->image = 'storage/outlets/' . $outlet->id . '.' . $request->file('image')->extension();
+        //save the image_ktp
+        if ($request->hasFile('image_ktp')) {
+            $request->file('image_ktp')->storeAs('public/outlets', $outlet->id . '_ktp.' . $request->file('image_ktp')->extension());
+            $outlet->image_ktp = 'storage/outlets/' . $outlet->id . '_ktp.' . $request->file('image_ktp')->extension();
             $outlet->save();
         }
+
+        //save the image_outlet
+        if ($request->hasFile('image_outlet')) {
+            $request->file('image_outlet')->storeAs('public/outlets', $outlet->id . '_outlet.' . $request->file('image_outlet')->extension());
+            $outlet->image_outlet = 'storage/outlets/' . $outlet->id . '_outlet.' . $request->file('image_outlet')->extension();
+            $outlet->save();
+        }
+
 
         return redirect()->route('outlets.index')->with('success', 'Outlet updated successfully');
     }

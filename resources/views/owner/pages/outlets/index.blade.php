@@ -73,7 +73,7 @@
                                         </tr>
                                         @foreach ($outlets as $outlet)
                                             <tr>
-                                                <td>{{ auth()->user()->name }}</td>
+                                                <td>{{ $outlet->user ? $outlet->user->name : 'Unknown' }}</td>
 
                                                 <td>
                                                     {{ $outlet->name }}
