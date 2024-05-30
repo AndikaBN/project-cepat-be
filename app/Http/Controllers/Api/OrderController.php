@@ -17,17 +17,6 @@ class OrderController extends Controller
         ], 200);
     }
 
-
-    /*
-            $table->string('kode_order');
-            $table->foreignId('outlets_id')->constrained('outlets');
-            $table->foreignId('stocks_id')->constrained('stocks');
-            $table->string('kode_salesman');
-            $table->string('nama_salesman');
-            $table->string('nama_barang');
-            $table->string('harga_dalam_kota');
-            $table->string('quantity');
-        */
     // api store to server
     public function store(Request $request)
     {
@@ -62,7 +51,7 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
         $request->validate([
-            'sale_piutang_id' => 'required',
+            'outlets_id' => 'required',
             'stocks_id' => 'required',
             'kode_salesman' => 'required',
             'nama_salesman' => 'required',
