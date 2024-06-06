@@ -10,10 +10,12 @@ class CheckIn extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'location_id',
+        'day',
+        'status',
+        'latitude',
+        'longitude',
         'outlet_id',
-        'date',
-        'time',
-        'clock_out',
+        'outlet_name',
     ];
 }

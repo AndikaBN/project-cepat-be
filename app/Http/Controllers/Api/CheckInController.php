@@ -8,29 +8,44 @@ use App\Models\CheckIn;
 
 class CheckInController extends Controller
 {
+    /*
+     'location_id',
+        'day',
+        'status',
+        'latitude',
+        'longitude',
+        'outlet_id',
+        'outlet_name',
+    */
     //api post checkin
-    public function checkin(Request $request)
+    public function postCheckin(Request $request)
     {
         $request->validate([
+            'location_id' => 'required',
+            'day' => 'required',
+            'status' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
             'outlet_id' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-            'clock_out' => 'required',
+            'outlet_name' => 'required',
         ]);
 
         $checkin = CheckIn::create([
-            'user_id' => auth()->user()->id,
+            'location_id' => $request->location_id,
+            'day' => $request->day,
+            'status' => $request->status,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
             'outlet_id' => $request->outlet_id,
-            'date' => $request->date,
-            'time' => $request->time,
-            'clock_out' => $request->clock_out,
+            'outlet_name' => $request->outlet_name,
         ]);
 
         return response()->json([
-            'message' => 'Checkin success',
+            'message' => 'Checkin created',
             'data' => $checkin,
         ] , 200);
     }
+
 
     //api get checkin
     public function getCheckin()
@@ -64,10 +79,13 @@ class CheckInController extends Controller
     public function updateCheckin(Request $request, $id)
     {
         $request->validate([
+            'location_id' => 'required',
+            'day' => 'required',
+            'status' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
             'outlet_id' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-            'clock_out' => 'required',
+            'outlet_name' => 'required',
         ]);
 
         $checkin = CheckIn::find($id);
@@ -78,13 +96,14 @@ class CheckInController extends Controller
             ] , 404);
         }
 
-        $checkin->update([
-            'user_id' => auth()->user()->id,
-            'outlet_id' => $request->outlet_id,
-            'date' => $request->date,
-            'time' => $request->time,
-            'clock_out' => $request->clock_out,
-        ]);
+        $checkin->location_id = $request->location_id;
+        $checkin->day = $request->day;
+        $checkin->status = $request->status;
+        $checkin->latitude = $request->latitude;
+        $checkin->longitude = $request->longitude;
+        $checkin->outlet_id = $request->outlet_id;
+        $checkin->outlet_name = $request->outlet_name;
+        $checkin->save();
 
         return response()->json([
             'message' => 'Checkin updated',

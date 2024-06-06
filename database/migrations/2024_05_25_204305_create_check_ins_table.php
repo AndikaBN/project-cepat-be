@@ -12,15 +12,16 @@ return new class extends Migration {
     {
         Schema::create('check_ins', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('outlet_id')->constrained()->onDelete('cascade');
-            $table->date('date');
-            $table->time('time');
-            $table->time('clock_out')->nullable();
+            $table->string('location_id');
+            $table->string('day');
+            $table->enum('status', ['checkin', 'checkout']);
+            $table->string('latitude');
+            $table->string('longitude');
+            $table->foreignId('outlet_id')->constrained('outlets');
+            $table->string('outlet_name');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
