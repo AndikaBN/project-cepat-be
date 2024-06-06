@@ -17,7 +17,7 @@ class CheckInController extends Controller
             'status' => 'required',
             'latitude' => 'required',
             'longitude' => 'required',
-            'outlet_id' => 'required',
+            'data_otlets_id' => 'required',
             'outlet_name' => 'required',
         ]);
 
@@ -27,7 +27,7 @@ class CheckInController extends Controller
             'status' => $request->status,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
-            'outlet_id' => $request->outlet_id,
+            'data_otlets_id' => $request->outlet_id,
             'outlet_name' => $request->outlet_name,
         ]);
 
@@ -75,7 +75,7 @@ class CheckInController extends Controller
             'status' => 'required',
             'latitude' => 'required',
             'longitude' => 'required',
-            'outlet_id' => 'required',
+            'data_otlets_id' => 'required',
             'outlet_name' => 'required',
         ]);
 
@@ -92,7 +92,7 @@ class CheckInController extends Controller
         $checkin->status = $request->status;
         $checkin->latitude = $request->latitude;
         $checkin->longitude = $request->longitude;
-        $checkin->outlet_id = $request->outlet_id;
+        $checkin->data_otlets_id = $request->data_otlets_id;
         $checkin->outlet_name = $request->outlet_name;
         $checkin->save();
 

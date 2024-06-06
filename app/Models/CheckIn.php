@@ -15,7 +15,7 @@ class CheckIn extends Model
         'status',
         'latitude',
         'longitude',
-        'outlet_id',
+        'data_otlets_id',
         'outlet_name',
     ];
 }
