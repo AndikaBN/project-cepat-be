@@ -27,7 +27,7 @@ class CheckInController extends Controller
             'status' => $request->status,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
-            'data_otlets_id' => $request->outlet_id,
+            'data_otlets_id' => $request->data_otlets_id,
             'outlet_name' => $request->outlet_name,
         ]);
 
