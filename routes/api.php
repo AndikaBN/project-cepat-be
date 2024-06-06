@@ -38,9 +38,9 @@ Route::middleware('auth:sanctum')->get('/outlets', [App\Http\Controllers\Api\Out
 Route::middleware('auth:sanctum')->post('/outlets', [App\Http\Controllers\Api\OutletController::class, 'store']);
 
 // api checkin
-Route::middleware('auth:sanctum')->post('/checkin', [App\Http\Controllers\Api\CheckInController::class, 'checkin']);
+Route::middleware('auth:sanctum')->post('/checkin', [App\Http\Controllers\Api\CheckInController::class, 'postCheckin']);
 
-// api get checkin
+// api get checkin    
 Route::middleware('auth:sanctum')->get('/checkin', [App\Http\Controllers\Api\CheckInController::class, 'getCheckin']);
 
 // api get checkin by id

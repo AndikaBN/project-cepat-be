@@ -8,15 +8,6 @@ use App\Models\CheckIn;
 
 class CheckInController extends Controller
 {
-    /*
-     'location_id',
-        'day',
-        'status',
-        'latitude',
-        'longitude',
-        'outlet_id',
-        'outlet_name',
-    */
     //api post checkin
     public function postCheckin(Request $request)
     {
