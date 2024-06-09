@@ -148,6 +148,14 @@ class StockController extends Controller
 
     public function export()
     {
-        return Excel::download(new StockExport, 'stocks.xlsx');
+        $export = Excel::download(new StockExport, 'stocks.xlsx');
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+        DB::table('stocks')->truncate();
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        return $export;
     }
 }

@@ -167,7 +167,15 @@ class SalePiutangController extends Controller
 
     public function export()
     {
-        return Excel::download(new SalePiutangExport, 'sales.xlsx');
+        $export = Excel::download(new SalePiutangExport, 'piutang_sales.xlsx');
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+        DB::table('sale_piutangs')->truncate();
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        return $export;
     }
 }
 

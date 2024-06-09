@@ -6,12 +6,14 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "geocoder-php/google-maps-provider": "^4.7",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/fortify": "^1.20",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
-        "maatwebsite/excel": "^3.1"
+        "maatwebsite/excel": "^3.1",
+        "toin0u/geocoder-laravel": "^4.7"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

@@ -217,6 +217,13 @@ class DataOtletController extends Controller
 
     public function export()
     {
-        return Excel::download(new DataOtletExport, 'data_otlets.xlsx');
+        $export = Excel::download(new DataOtletExport, 'data_otlet.xlsx');
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+        DB::table('data_otlets')->truncate();
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        return $export;
     }
 }
