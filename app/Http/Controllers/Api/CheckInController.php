@@ -12,6 +12,7 @@ class CheckInController extends Controller
     public function postCheckin(Request $request)
     {
         $request->validate([
+            'user_id' => 'required',
             'location_id' => 'required',
             'day' => 'required',
             'status' => 'required',
@@ -22,6 +23,7 @@ class CheckInController extends Controller
         ]);
 
         $checkin = CheckIn::create([
+            'user_id' => $request->user_id,
             'location_id' => $request->location_id,
             'day' => $request->day,
             'status' => $request->status,
@@ -70,6 +72,7 @@ class CheckInController extends Controller
     public function updateCheckin(Request $request, $id)
     {
         $request->validate([
+            'user_id' => 'required',
             'location_id' => 'required',
             'day' => 'required',
             'status' => 'required',

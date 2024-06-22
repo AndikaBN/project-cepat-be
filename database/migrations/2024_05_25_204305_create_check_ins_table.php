@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('check_ins', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
             $table->string('location_id');
             $table->string('day');
             $table->enum('status', ['checkin', 'checkout']);

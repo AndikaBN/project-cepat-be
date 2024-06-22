@@ -63,6 +63,7 @@ class DatabaseSeeder extends Seeder
             StockSeeder::class,
             DataOtletSeeder::class,
             OrderSeeder::class,
+            CheckInSeeder::class,
         ]);
 
 

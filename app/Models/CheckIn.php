@@ -10,6 +10,7 @@ class CheckIn extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'location_id',
         'day',
         'status',
@@ -18,4 +19,14 @@ class CheckIn extends Model
         'data_otlets_id',
         'outlet_name',
     ];
+
+    public function data_otlets()
+    {
+        return $this->belongsTo(DataOtlet::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

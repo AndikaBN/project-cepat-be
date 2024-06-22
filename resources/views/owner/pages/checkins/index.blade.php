@@ -39,7 +39,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="float-left">
-                                   
+
                                 </div>
                                 <div class="float-right">
                                     <form method="GET" action="{{ route('checkins.index') }}">
@@ -56,47 +56,77 @@
 
                                 <div class="table-responsive">
                                     <table class="table-striped table">
-                                        <tr>
+                                        {{--
+                                        public function postCheckin(Request $request)
+                                        {
+                                            $request->validate([
+                                                'location_id' => 'required',
+                                                'day' => 'required',
+                                                'status' => 'required',
+                                                'latitude' => 'required',
+                                                'longitude' => 'required',
+                                                'data_otlets_id' => 'required',
+                                                'outlet_name' => 'required',
+                                            ]);
 
-                                            <th>Sales</th>
-                                            <th>Nama Outlet </th>
-                                            <th>Tanggal Masuk</th>
-                                            <th>Jam Masuk</th>
-                                            <th>Jam Keluar</th>
+                                            $checkin = CheckIn::create([
+                                                'location_id' => $request->location_id,
+                                                'day' => $request->day,
+                                                'status' => $request->status,
+                                                'latitude' => $request->latitude,
+                                                'longitude' => $request->longitude,
+                                                'data_otlets_id' => $request->data_otlets_id,
+                                                'outlet_name' => $request->outlet_name,
+                                            ]);
+
+                                            return response()->json([
+                                                'message' => 'Checkin created',
+                                                'data' => $checkin,
+                                            ] , 200);
+                                        }
+                                        --}}
+                                        <tr>
+                                            <th>Nama Sales</th>
+                                            <th>Location ID</th>
+                                            <th>Day</th>
+                                            <th>Status</th>
+                                            <th>Latitude</th>
+                                            <th>Longitude</th>
+                                            <th>Outlet ID</th>
+                                            <th>Outlet Name</th>
                                             <th>Action</th>
+                                            <th>View Maps</th>
                                         </tr>
+
                                         @foreach ($checkins as $checkin)
                                             <tr>
-                                                <td>{{ $checkin->users->name }}</td>
+                                                <td>{{ $checkin->user ? $checkin->user->name : 'Unknown' }}</td>
+                                                <td>{{ $checkin->location_id }}</td>
+                                                <td>{{ $checkin->day }}</td>
+                                                <td>{{ $checkin->status }}</td>
+                                                <td>{{ $checkin->latitude }}</td>
+                                                <td>{{ $checkin->longitude }}</td>
+                                                <td>{{ $checkin->data_otlets->id }}</td>
+                                                <td>{{ $checkin->data_otlets->nama_customer }}</td>
 
                                                 <td>
-                                                    {{ $checkin->outlets->name }}
+                                                    <a href="{{ route('checkins.edit', $checkin->id) }}"
+                                                        class="btn btn-primary">Edit</a>
+                                                    <form action="{{ route('checkins.destroy', $checkin->id) }}"
+                                                        method="POST" class="d-inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-danger"
+                                                            onclick="return confirm('Are you sure?')">Delete</button>
+                                                    </form>
                                                 </td>
                                                 <td>
-                                                    {{ $checkin->date }}
-                                                </td>
-                                                <td>
-                                                    {{ $checkin->time }}
-                                                </td>
-                                                <td>{{$checkin->clock_out}}</td>
-
-                                                <td>
-                                                    <div class="d-flex justify-content-center">
-                                                        <form action="{{ route('checkins.destroy', $checkins->id) }}"
-                                                            method="POST" class="ml-2">
-                                                            <input type="hidden" name="_method" value="DELETE" />
-                                                            <input type="hidden" name="_token"
-                                                                value="{{ csrf_token() }}" />
-                                                            <button class="btn btn-sm btn-danger btn-icon confirm-delete">
-                                                                <i class="fas fa-times"></i> Delete
-                                                            </button>
-                                                        </form>
-                                                    </div>
+                                                    <a href="https://www.google.com/maps?q={{ $checkin->latitude }},
+                                                        {{ $checkin->longitude }}"
+                                                        target="_blank" class="btn btn-primary">View</a>
                                                 </td>
                                             </tr>
                                         @endforeach
-
-
                                     </table>
                                 </div>
                                 <div class="float-right">

@@ -23,4 +23,17 @@ class CheckInController extends Controller
 
         return redirect()->route('checkins.index')->with('success', 'Checkin deleted');
     }
+
+    //function view maps
+    public function viewMaps()
+    {
+        return view('owner.pages.checkins.maps');
+    }
+
+    //function view maps
+    public function viewMapsById($id)
+    {
+        $checkin = CheckIn::find($id);
+        return view('owner.pages.checkins.maps', compact('checkin'));
+    }
 }
