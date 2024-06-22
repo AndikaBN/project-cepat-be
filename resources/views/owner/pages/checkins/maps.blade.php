@@ -1,93 +1,44 @@
-@push('style')
-    <!-- CSS Libraries -->
-    <link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Laravel Leaflet Maps</title>
     <style>
-        /* Additional CSS for modal and map */
-        #mapModal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            padding-top: 60px;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.4);
-        }
-        #mapModal .modal-content {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-        }
         #map {
             width: 100%;
-            height: 400px;
+            height: 500px;
         }
     </style>
-@endpush
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<body>
+    <h1>Lokasi check in sales {{ $user->name }}</h1>
+    <div id="map"></div>
 
-@section('main')
-    <div class="main-content">
-        <section class="section">
-            <!-- Existing content -->
-
-            <!-- Modal for Google Maps -->
-            <div id="mapModal" class="modal">
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <div id="map"></div>
-                </div>
-            </div>
-        </section>
-    </div>
-@endsection
-
-@push('scripts')
-    <!-- JS Libraries -->
-    <script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
-
-    <!-- Page Specific JS File -->
-    <script src="{{ asset('js/page/features-posts.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
-        // Script to handle modal and map display
-        function initMap(lat, lng) {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: lat, lng: lng},
-                zoom: 15
-            });
-            new google.maps.Marker({
-                position: {lat: lat, lng: lng},
-                map: map
+        var map = L.map('map').setView([-8.609471, 116.135256], 13);
+
+        L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            subdomains:['mt0','mt1','mt2','mt3']
+        }).addTo(map);
+
+        function addMarkers(checkins) {
+            checkins.forEach(function(checkin) {
+                var marker = L.marker([checkin.latitude, checkin.longitude]).addTo(map);
+                marker.bindPopup(`<b>Latitude:</b> ${checkin.latitude}<br><b>Longitude:</b> ${checkin.longitude}`);
             });
         }
 
-        document.addEventListener('DOMContentLoaded', (event) => {
-            var modal = document.getElementById("mapModal");
-            var span = document.getElementsByClassName("close")[0];
+        var checkins = @json($checkins);
 
-            document.querySelectorAll('.btn-view-map').forEach(button => {
-                button.onclick = function() {
-                    var lat = parseFloat(this.getAttribute('data-lat'));
-                    var lng = parseFloat(this.getAttribute('data-lng'));
-                    modal.style.display = "block";
-                    initMap(lat, lng);
-                }
-            });
-
-            span.onclick = function() {
-                modal.style.display = "none";
-            }
-
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            }
+        $(document).ready(function() {
+            addMarkers(checkins);
         });
     </script>
-@endpush
+</body>
+</html>

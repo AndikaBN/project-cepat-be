@@ -56,77 +56,59 @@
 
                                 <div class="table-responsive">
                                     <table class="table-striped table">
-                                        {{--
-                                        public function postCheckin(Request $request)
-                                        {
-                                            $request->validate([
-                                                'location_id' => 'required',
-                                                'day' => 'required',
-                                                'status' => 'required',
-                                                'latitude' => 'required',
-                                                'longitude' => 'required',
-                                                'data_otlets_id' => 'required',
-                                                'outlet_name' => 'required',
-                                            ]);
 
-                                            $checkin = CheckIn::create([
-                                                'location_id' => $request->location_id,
-                                                'day' => $request->day,
-                                                'status' => $request->status,
-                                                'latitude' => $request->latitude,
-                                                'longitude' => $request->longitude,
-                                                'data_otlets_id' => $request->data_otlets_id,
-                                                'outlet_name' => $request->outlet_name,
-                                            ]);
-
-                                            return response()->json([
-                                                'message' => 'Checkin created',
-                                                'data' => $checkin,
-                                            ] , 200);
-                                        }
-                                        --}}
-                                        <tr>
-                                            <th>Nama Sales</th>
-                                            <th>Location ID</th>
-                                            <th>Day</th>
-                                            <th>Status</th>
-                                            <th>Latitude</th>
-                                            <th>Longitude</th>
-                                            <th>Outlet ID</th>
-                                            <th>Outlet Name</th>
-                                            <th>Action</th>
-                                            <th>View Maps</th>
-                                        </tr>
-
-                                        @foreach ($checkins as $checkin)
+                                        <thead>
                                             <tr>
-                                                <td>{{ $checkin->user ? $checkin->user->name : 'Unknown' }}</td>
-                                                <td>{{ $checkin->location_id }}</td>
-                                                <td>{{ $checkin->day }}</td>
-                                                <td>{{ $checkin->status }}</td>
-                                                <td>{{ $checkin->latitude }}</td>
-                                                <td>{{ $checkin->longitude }}</td>
-                                                <td>{{ $checkin->data_otlets->id }}</td>
-                                                <td>{{ $checkin->data_otlets->nama_customer }}</td>
-
-                                                <td>
-                                                    <a href="{{ route('checkins.edit', $checkin->id) }}"
-                                                        class="btn btn-primary">Edit</a>
-                                                    <form action="{{ route('checkins.destroy', $checkin->id) }}"
-                                                        method="POST" class="d-inline">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-danger"
-                                                            onclick="return confirm('Are you sure?')">Delete</button>
-                                                    </form>
-                                                </td>
-                                                <td>
-                                                    <a href="https://www.google.com/maps?q={{ $checkin->latitude }},
-                                                        {{ $checkin->longitude }}"
-                                                        target="_blank" class="btn btn-primary">View</a>
-                                                </td>
+                                                <th>Nama Sales</th>
+                                                <th>Location ID</th>
+                                                <th>Day</th>
+                                                <th>Status</th>
+                                                <th>Latitude</th>
+                                                <th>Longitude</th>
+                                                <th>Outlet ID</th>
+                                                <th>Outlet Name</th>
+                                                <th>Action</th>
+                                                <th>View Maps</th>
                                             </tr>
-                                        @endforeach
+                                        </thead>
+
+                                        <tbody>
+                                            @php
+                                                $previousUser = null;
+                                            @endphp
+
+                                            @foreach ($checkins as $checkin)
+                                                @if (!$previousUser || $checkin->user->name !== $previousUser)
+                                                    <tr>
+                                                        <td>{{ $checkin->user ? $checkin->user->name : 'Unknown' }}</td>
+                                                        <td>{{ $checkin->location_id }}</td>
+                                                        <td>{{ $checkin->day }}</td>
+                                                        <td>{{ $checkin->status }}</td>
+                                                        <td>{{ $checkin->latitude }}</td>
+                                                        <td>{{ $checkin->longitude }}</td>
+                                                        <td>{{ $checkin->data_otlets->id }}</td>
+                                                        <td>{{ $checkin->data_otlets->nama_customer }}</td>
+                                                        <td>
+                                                            <form action="{{ route('checkins.destroy', $checkin->id) }}"
+                                                                method="POST" class="d-inline">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button class="btn btn-danger"
+                                                                    onclick="return confirm('Are you sure?')">Delete</button>
+                                                            </form>
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ route('checkins.user.locations', $checkin->user_id) }}"
+                                                                class="btn btn-primary">View User Check-Ins</a>
+                                                        </td>
+                                                    </tr>
+                                                @endif
+
+                                                @php
+                                                    $previousUser = $checkin->user->name;
+                                                @endphp
+                                            @endforeach
+                                        </tbody>
                                     </table>
                                 </div>
                                 <div class="float-right">
@@ -142,7 +124,7 @@
 @endsection
 
 @push('scripts')
-    <!-- JS Libraies -->
+    <!-- JS Libraries -->
     <script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
 
     <!-- Page Specific JS File -->

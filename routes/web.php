@@ -21,6 +21,14 @@ Route::middleware(['auth', 'role:owner'])->group(function () {
     Route::resource('outlets', OutletController::class);
     Route::resource('checkins', CheckInController::class);
     Route::resource('salesPiutang', SalePiutangController::class);
+
+    Route::get('/user/{userId}/checkins/maps', [CheckInController::class, 'viewMapsByUserId'])->name('user.checkins.maps');
+    Route::get('/ajax/user/{userId}', [CheckInController::class, 'ajaxByUserId'])->name('ajax.user');
+
+    Route::get('/user-checkins-locations/{userId}', [CheckInController::class, 'userCheckinLocations'])->name('checkins.user.locations');
+
+    Route::get('/user-checkins/{userId}', [CheckInController::class, 'viewMapsByUserId'])->name('checkins.user.maps');
+    Route::get('/user-checkins-locations/{userId}', [CheckInController::class, 'userCheckinLocations'])->name('checkins.user.locations');
     Route::get('export/salesPiutang', [SalePiutangController::class, 'export'])->name('salesPiutang.export');
     Route::post('import/salesPiutang', [SalePiutangController::class, 'import'])->name('salesPiutang.import');
 });
@@ -48,8 +56,8 @@ Route::middleware(['auth', 'role:marketing,owner'])->group(function () {
 });
 
 //create route for role inputers
-Route::middleware(['auth', 'role:inputer,owner'])->group(function(){
-    Route::get('inputers', function(){
+Route::middleware(['auth', 'role:inputer,owner'])->group(function () {
+    Route::get('inputers', function () {
         return view('inputers.pages.dashboard');
     })->name('inputers');
 
