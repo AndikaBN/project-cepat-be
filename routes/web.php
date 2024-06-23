@@ -8,6 +8,7 @@ use App\Http\Controllers\SalePiutangController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\DataOtletController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\TagihanController;
 
 Route::get('/', function () {
     return view('auth.pages.login');
@@ -21,6 +22,7 @@ Route::middleware(['auth', 'role:owner'])->group(function () {
     Route::resource('outlets', OutletController::class);
     Route::resource('checkins', CheckInController::class);
     Route::resource('salesPiutang', SalePiutangController::class);
+    Route::resource('tagihan', TagihanController::class);
 
     Route::get('/user/{userId}/checkins/maps', [CheckInController::class, 'viewMapsByUserId'])->name('user.checkins.maps');
     Route::get('/ajax/user/{userId}', [CheckInController::class, 'ajaxByUserId'])->name('ajax.user');
@@ -31,6 +33,7 @@ Route::middleware(['auth', 'role:owner'])->group(function () {
     Route::get('/user-checkins-locations/{userId}', [CheckInController::class, 'userCheckinLocations'])->name('checkins.user.locations');
     Route::get('export/salesPiutang', [SalePiutangController::class, 'export'])->name('salesPiutang.export');
     Route::post('import/salesPiutang', [SalePiutangController::class, 'import'])->name('salesPiutang.import');
+
 });
 
 Route::middleware(['auth', 'role:kolektor,owner'])->group(function () {

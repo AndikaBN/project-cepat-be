@@ -40,7 +40,7 @@ Route::middleware('auth:sanctum')->post('/outlets', [App\Http\Controllers\Api\Ou
 // api checkin
 Route::middleware('auth:sanctum')->post('/checkin', [App\Http\Controllers\Api\CheckInController::class, 'postCheckin']);
 
-// api get checkin    
+// api get checkin
 Route::middleware('auth:sanctum')->get('/checkin', [App\Http\Controllers\Api\CheckInController::class, 'getCheckin']);
 
 // api get checkin by id
@@ -99,3 +99,12 @@ Route::middleware('auth:sanctum')->put('/order/{id}', [App\Http\Controllers\Api\
 
 // api delete order
 Route::middleware('auth:sanctum')->delete('/order/{id}', [App\Http\Controllers\Api\OrderController::class, 'destroy']);
+
+// api get tagihan
+Route::middleware('auth:sanctum')->get('/tagihan', [App\Http\Controllers\Api\TagihanController::class, 'getTagihan']);
+
+// api store tagihan
+Route::middleware('auth:sanctum')->post('/tagihan', [App\Http\Controllers\Api\TagihanController::class, 'store']);
+
+// api update tagihan
+Route::middleware('auth:sanctum')->put('/tagihan/{id}', [App\Http\Controllers\Api\TagihanController::class, 'update']);
