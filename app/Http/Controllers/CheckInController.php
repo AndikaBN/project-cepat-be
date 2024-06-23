@@ -10,11 +10,17 @@ use App\Models\User;
 class CheckInController extends Controller
 {
     //index
+    // In your CheckInController
     public function index()
     {
-        $checkins = CheckIn::paginate(10);
+        $checkins = CheckIn::selectRaw('user_id, DATE(created_at) as date, MAX(created_at) as latest_checkin')
+            ->groupBy('user_id', 'date')
+            ->orderBy('latest_checkin', 'desc')
+            ->paginate(10);
+
         return view('owner.pages.checkins.index', compact('checkins'));
     }
+
 
     //destroy
     public function destroy($id)
@@ -45,13 +51,22 @@ class CheckInController extends Controller
         return view('owner.pages.checkins.maps', compact('checkins'));
     }
 
-    public function userCheckinLocations($userId)
+    public function userCheckinLocations($userId, Request $request)
     {
-        $checkins = CheckIn::where('user_id', $userId)->select('latitude', 'longitude')->get();
-        $user = User::find($userId); // Mendapatkan data pengguna berdasarkan ID
+        $date = $request->input('date'); // Retrieve date from query parameters
 
-        return view('owner.pages.checkins.maps', compact('checkins', 'user'));
+        $query = CheckIn::where('user_id', $userId);
+
+        if ($date) {
+            $query->whereDate('created_at', $date);
+        }
+
+        $checkins = $query->select('latitude', 'longitude', 'created_at')->get();
+        $user = User::find($userId);
+
+        return view('owner.pages.checkins.maps', compact('checkins', 'user', 'date'));
     }
+
 
     public function viewMapsByUserId($userId)
     {
@@ -59,8 +74,6 @@ class CheckInController extends Controller
         $checkins = $user->checkIns()->select('latitude', 'longitude')->get();
         return view('owner.pages.checkins.maps', compact('checkins', 'user'));
     }
-
-
 
     public function ajaxByUserId($userId)
     {

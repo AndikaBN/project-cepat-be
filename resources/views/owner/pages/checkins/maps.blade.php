@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 </head>
 <body>
-    <h1>Lokasi check in sales {{ $user->name }}</h1>
+    <h1>Lokasi check in sales {{ $user->name }} pada tanggal {{ $date }}</h1>
     <div id="map"></div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
