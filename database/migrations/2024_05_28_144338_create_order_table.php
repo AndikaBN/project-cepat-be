@@ -22,6 +22,11 @@ return new class extends Migration
             $table->string('nama_barang');
             $table->string('harga_dalam_kota');
             $table->string('quantity');
+            $table->enum('status', [
+                'pending',
+                'canceled',
+                'completed',
+            ])->default('pending');
             $table->timestamps();
         });
     }

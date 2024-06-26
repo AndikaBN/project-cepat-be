@@ -45,6 +45,10 @@
                                 <label for="jumlah_tagihan">Jumlah Tagihan</label>
                                 <input type="text" id="jumlah_tagihan" name="jumlah_tagihan" class="form-control" required>
                             </div>
+                            <div class="form-group
+                                <label for="jumlah_tagihan">Status</label>
+                                <input type="text" id="status" name="status" class="form-control" required>
+                            </div>
                         </div>
                         <div class="card-footer text-right">
                             <button class="btn btn-primary">Submit</button>

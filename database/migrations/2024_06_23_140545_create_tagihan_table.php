@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nama_outlet');
             $table->string('nomor_nota');
             $table->decimal('jumlah_tagihan', 15, 2);
+            $table->string('status')->default('succes');
             $table->timestamps();
         });
     }

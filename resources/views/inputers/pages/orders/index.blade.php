@@ -12,9 +12,9 @@
         <section class="section">
             <div class="section-header">
                 <h1>Orders</h1>
-                <div class="section-header-button">
+                {{-- <div class="section-header-button">
                     <a href="{{ route('orders.create') }}" class="btn btn-primary">Add New</a>
-                </div>
+                </div> --}}
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
                     <div class="breadcrumb-item"><a href="#">Orders</a></div>
@@ -40,7 +40,7 @@
                                 <h4>All Posts</h4>
                             </div>
                             <div class="card-body">
-                              
+
                                 <div class="float-right">
                                     <form method="GET" action="{{ route('orders.index') }}">
                                         <div class="input-group">
@@ -64,6 +64,7 @@
                                             <th>Nama Barang</th>
                                             <th>Harga Dalam Kota</th>
                                             <th>Quantity</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                         @foreach ($orders as $order)
@@ -79,6 +80,7 @@
                                                     <td>Data tidak tersedia</td>
                                                 @endif
                                                 <td>{{ $order->quantity }}</td>
+                                                <td>{{ $order->status }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <a href='{{ route('orders.edit', $order->id) }}'

@@ -14,6 +14,7 @@ class Tagihan extends Model
         'nama_outlet',
         'nomor_nota',
         'jumlah_tagihan',
+        'status'
     ];
 
     public function user()

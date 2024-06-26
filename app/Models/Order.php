@@ -17,7 +17,8 @@ class Order extends Model
         'nama_salesman',
         'nama_barang',
         'harga_dalam_kota',
-        'quantity'
+        'quantity',
+        'status'
     ];
 
     public function stock()

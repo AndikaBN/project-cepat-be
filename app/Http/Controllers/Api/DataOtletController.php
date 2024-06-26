@@ -158,6 +158,4 @@ class DataOtletController extends Controller
             'data' => $dataOtlet
         ]);
     }
-
-
 }

@@ -29,6 +29,7 @@ class OrderController extends Controller
             'nama_barang' => 'required',
             'harga_dalam_kota' => 'required',
             'quantity' => 'required',
+            'status' => 'required',
         ]);
 
         $order = new Order;
@@ -40,40 +41,50 @@ class OrderController extends Controller
         $order->nama_barang = $request->nama_barang;
         $order->harga_dalam_kota = $request->harga_dalam_kota;
         $order->quantity = $request->quantity;
+        $order->status = $request->status;
         $order->save();
 
         return response()->json([
             'message' => 'success',
             'data' => $order
-        ]);
+        ], 201);
     }
 
 
     //api update order
-    public function update(Request $request, Order $order)
+    public function update(Request $request, $id)
     {
+        // Pastikan Anda memvalidasi data dengan benar
         $request->validate([
+            'kode_order' => 'required',
             'data_otlets_id' => 'required',
             'stocks_id' => 'required',
             'kode_salesman' => 'required',
             'nama_salesman' => 'required',
             'nama_barang' => 'required',
             'harga_dalam_kota' => 'required',
+            'quantity' => 'required',
+            'status' => 'required',
         ]);
 
+        $order = Order::find($id);
+        $order->kode_order = $request->kode_order;
         $order->data_otlets_id = $request->data_otlets_id;
         $order->stocks_id = $request->stocks_id;
         $order->kode_salesman = $request->kode_salesman;
         $order->nama_salesman = $request->nama_salesman;
         $order->nama_barang = $request->nama_barang;
         $order->harga_dalam_kota = $request->harga_dalam_kota;
+        $order->quantity = $request->quantity;
+        $order->status = $request->status;
         $order->save();
 
         return response()->json([
-            'message' => 'success',
+            'message' => 'Upgrade success',
             'data' => $order
-        ]);
+        ], 201);
     }
+
 
     //api delete order
     public function destroy($id)
@@ -83,8 +94,7 @@ class OrderController extends Controller
 
         return response()->json([
             'message' => 'success',
-            'data' => null
-        ]);
+        ], 200);
     }
 
 }

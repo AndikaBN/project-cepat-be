@@ -67,6 +67,7 @@
                                             <th>Nama Outlet</th>
                                             <th>Nomor Nota</th>
                                             <th>Jumlah Tagihan</th>
+                                            <th>Status</th>
 
                                         </tr>
                                         @foreach ($tagihan as $tagih)
@@ -79,6 +80,9 @@
                                                 <td>{{ $tagih->nomor_nota }}</td>
                                                 <td>
                                                     {{ $tagih->jumlah_tagihan }}
+                                                </td>
+                                                <td>
+                                                    {{ $tagih->status }}
                                                 </td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">

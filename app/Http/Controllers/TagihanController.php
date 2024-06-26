@@ -35,6 +35,7 @@ class TagihanController extends Controller
             'nama_outlet' => 'required',
             'nomor_nota' => 'required',
             'jumlah_tagihan' => 'required|numeric',
+            'status' => 'required'
         ]);
 
         //store the request...
@@ -43,6 +44,7 @@ class TagihanController extends Controller
         $tagihan->nama_outlet = $request->nama_outlet;
         $tagihan->nomor_nota = $request->nomor_nota;
         $tagihan->jumlah_tagihan = $request->jumlah_tagihan;
+        $tagihan->status = $request->status;
         $tagihan->save();
 
         return redirect()->route('tagihan.index')->with('success', 'Tagihan berhasil ditambahkan');
@@ -63,6 +65,7 @@ class TagihanController extends Controller
             'nama_outlet' => 'required',
             'nomor_nota' => 'required',
             'jumlah_tagihan' => 'required|numeric',
+            'status' => 'required'
         ]);
 
         //update the request...
@@ -70,6 +73,7 @@ class TagihanController extends Controller
         $tagihan->nama_outlet = $request->nama_outlet;
         $tagihan->nomor_nota = $request->nomor_nota;
         $tagihan->jumlah_tagihan = $request->jumlah_tagihan;
+        $tagihan->status = $request->status;
         $tagihan->user_id = auth()->user()->id;
         $tagihan->save();
 
