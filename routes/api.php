@@ -111,3 +111,6 @@ Route::middleware('auth:sanctum')->post('/tagihan', [App\Http\Controllers\Api\Ta
 
 // api update tagihan
 Route::middleware('auth:sanctum')->put('/tagihan/{id}', [App\Http\Controllers\Api\TagihanController::class, 'update']);
+
+// api delete tagihan
+Route::middleware('auth:sanctum')->delete('/tagihan/{id}', [App\Http\Controllers\Api\TagihanController::class, 'destroy']);

@@ -25,4 +25,9 @@ class Order extends Model
     {
         return $this->belongsTo(Stock::class, 'stocks_id');
     }
+
+    public function outlet()
+    {
+        return $this->belongsTo(DataOtlet::class, 'data_otlets_id', 'id');
+    }
 }

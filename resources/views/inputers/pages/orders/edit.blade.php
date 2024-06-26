@@ -26,9 +26,6 @@
 
             <div class="section-body">
                 <h2 class="section-title">Outlet</h2>
-
-
-
                 <div class="card">
                     <form action="{{ route('outlets.update', $outlets) }}" method="POST">
                         @csrf

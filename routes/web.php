@@ -23,6 +23,7 @@ Route::middleware(['auth', 'role:owner'])->group(function () {
     Route::resource('checkins', CheckInController::class);
     Route::resource('salesPiutang', SalePiutangController::class);
     Route::resource('tagihan', TagihanController::class);
+    Route::resource('checkin',CheckInController::class);
 
     Route::get('/user/{userId}/checkins/maps', [CheckInController::class, 'viewMapsByUserId'])->name('user.checkins.maps');
     Route::get('/ajax/user/{userId}', [CheckInController::class, 'ajaxByUserId'])->name('ajax.user');
@@ -31,6 +32,9 @@ Route::middleware(['auth', 'role:owner'])->group(function () {
     Route::get('checkins/user/{userId}/locations', [CheckInController::class, 'userCheckinLocations'])->name('checkins.user.locations');
 
     Route::get('/user-checkins/{userId}', [CheckInController::class, 'viewMapsByUserId'])->name('checkins.user.maps');
+    Route::delete('/checkins/{id}', [CheckInController::class, 'hapus'])->name('checkins.hapus');
+
+
     // Route::get('/user-checkins-locations/{userId}', [CheckInController::class, 'userCheckinLocations'])->name('checkins.user.locations');
     Route::get('export/salesPiutang', [SalePiutangController::class, 'export'])->name('salesPiutang.export');
     Route::post('import/salesPiutang', [SalePiutangController::class, 'import'])->name('salesPiutang.import');

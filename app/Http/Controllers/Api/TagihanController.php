@@ -11,10 +11,25 @@ class TagihanController extends Controller
     //get tagihan
     public function getTagihan()
     {
+        $tagihan = Tagihan::with('user')->get()->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'user_id' => $item->user_id,
+                'nama_sales' => $item->user->name,
+                'kode_sales' => $item->user->kode_salesman,
+                'nama_outlet' => $item->nama_outlet,
+                'nomor_nota' => $item->nomor_nota,
+                'jumlah_tagihan' => $item->jumlah_tagihan,
+                'status'=>$item->status,
+                'created_at' => $item->created_at,
+                'updated_at' => $item->updated_at,
+            ];
+        });
+
         return response()->json([
-            'status' => 'success',
-            'data' => Tagihan::all()
-        ]);
+            'message' => 'success',
+            'data' => $tagihan
+        ], 200);
     }
 
     //store data tagihan to server
@@ -67,6 +82,17 @@ class TagihanController extends Controller
             'status' => 'success',
             'message' => 'Tagihan berhasil diupdate'
         ]);
+    }
+
+    //delete api tagihan
+    public function destroy($id)
+    {
+        $tagihan = Tagihan::find($id);
+        $tagihan->delete();
+
+        return response()->json([
+           'message' => 'success',
+        ], 200);
     }
 
 }

@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use App\Models\CheckIn;
 use App\Models\User;
 
 class CheckInController extends Controller
 {
-    //index
-    // In your CheckInController
+    // index
     public function index()
     {
         $checkins = CheckIn::selectRaw('user_id, DATE(created_at) as date, MAX(created_at) as latest_checkin')
@@ -21,30 +19,20 @@ class CheckInController extends Controller
         return view('owner.pages.checkins.index', compact('checkins'));
     }
 
-
-    //destroy
-    public function destroy($id)
-    {
-        $checkin = CheckIn::find($id);
-        $checkin->delete();
-
-        return redirect()->route('checkins.index')->with('success', 'Checkin deleted');
-    }
-
-    //function view maps
+    // function view maps
     public function viewMaps()
     {
         return view('owner.pages.checkins.maps');
     }
 
-    //function view maps
+    // function view maps
     public function viewMapsById($id)
     {
         $checkin = CheckIn::find($id);
         return view('owner.pages.checkins.maps', compact('checkin'));
     }
 
-    //function view maps
+    // function view maps
     public function viewMapsByDay($day)
     {
         $checkins = CheckIn::where('day', $day)->get();
@@ -66,7 +54,6 @@ class CheckInController extends Controller
 
         return view('owner.pages.checkins.maps', compact('checkins', 'user', 'date'));
     }
-
 
     public function viewMapsByUserId($userId)
     {
@@ -92,5 +79,12 @@ class CheckInController extends Controller
         }
     }
 
+    // method hapus
+    public function hapus($id)
+    {
+        $checkin = CheckIn::findOrFail($id);
+        $checkin->delete();
 
+        return redirect()->route('checkin.index')->with('success', 'Data deleted successfully');
+    }
 }

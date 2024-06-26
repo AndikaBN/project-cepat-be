@@ -15,8 +15,8 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('kode_order');
-            $table->foreignId('data_otlets_id')->constrained('data_otlets');
-            $table->foreignId('stocks_id')->constrained('stocks');
+            $table->foreignId('data_otlets_id')->constrained('data_otlets')->onDelete('cascade');
+            $table->foreignId('stocks_id')->constrained('stocks')->onDelete('cascade');
             $table->string('kode_salesman');
             $table->string('nama_salesman');
             $table->string('nama_barang');

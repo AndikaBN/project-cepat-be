@@ -97,37 +97,6 @@
                                             </div>
                                         @enderror
                                     </div>
-                                    {{--
-                                        $dataOtlets->stat = $request->stat;
-        $dataOtlets->bebas_blok = $request->bebas_blok;
-        $dataOtlets->kode = $request->kode;
-        $dataOtlets->nama_customer = $request->nama_customer;
-        $dataOtlets->kontak = $request->kontak;
-        $dataOtlets->alamat = $request->alamat;
-        $dataOtlets->daerah = $request->daerah;
-        $dataOtlets->area = $request->area;
-        $dataOtlets->telp = $request->telp;
-        $dataOtlets->keterangan = $request->keterangan;
-        $dataOtlets->npwp = $request->npwp;
-        $dataOtlets->gol = $request->gol;
-        $dataOtlets->tgl_input = $request->tgl_input;
-        $dataOtlets->set_harga = $request->set_harga;
-        $dataOtlets->area_antaran = $request->area_antaran;
-        $dataOtlets->area_tagihan = $request->area_tagihan;
-        $dataOtlets->type_customer = $request->type_customer;
-        $dataOtlets->limit_kredit = $request->limit_kredit;
-        $dataOtlets->limit_divisi = $request->limit_divisi;
-        $dataOtlets->nama_npwp = $request->nama_npwp;
-        $dataOtlets->alamat_npwp = $request->alamat_npwp;
-        $dataOtlets->save();
-
-        // Menyimpan gambar KTP
-        if ($request->hasFile('ktp')) {
-            $ktpPath = $request->file('ktp')->store('images', 'public');
-            $dataOtlets->ktp = $ktpPath;
-            $dataOtlets->save();
-        }
-                                        --}}
                                     <div class="form-group
                                         @error('daerah') is-invalid @enderror">
                                         <label>Daerah</label>

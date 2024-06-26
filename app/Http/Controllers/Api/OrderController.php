@@ -11,9 +11,26 @@ class OrderController extends Controller
     //get api orders
     public function index(Request $request)
     {
+        $orders = Order::with('outlet')->get()->map(function ($order) {
+            return [
+                'id' => $order->id,
+                'kode_order' => $order->kode_order,
+                'id_outlet' => $order->data_otlets_id,
+                'nama_outlet' => $order->outlet->nama_customer,
+                'stocks_id' => $order->stocks_id,
+                'kode_salesman' => $order->kode_salesman,
+                'nama_salesman' => $order->nama_salesman,
+                'nama_barang' => $order->nama_barang,
+                'harga_dalam_kota' => $order->harga_dalam_kota,
+                'quantity' => $order->quantity,
+                'created_at' => $order->created_at,
+                'updated_at' => $order->updated_at,
+            ];
+        });
+
         return response()->json([
             'message' => 'success',
-            'data' => Order::all()
+            'data' => $orders,
         ], 200);
     }
 

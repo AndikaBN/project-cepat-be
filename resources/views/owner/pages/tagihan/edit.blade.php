@@ -32,13 +32,6 @@
                     <div class="card-header">
                         <h4>Edit Tagihan</h4>
                     </div>
-
-                    {{--
-                    'nama_outlet',
-                    'nomor_nota',
-                    'jumlah_tagihan',
-                    create form edti for tagihan
-                    --}}
                     <div class="card-body">
                         <div class="form-group
                             <label for="nama_outlet">Nama Outlet</label>

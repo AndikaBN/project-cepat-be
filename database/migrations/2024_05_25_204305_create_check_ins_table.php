@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->enum('status', ['checkin', 'checkout']);
             $table->string('latitude');
             $table->string('longitude');
-            $table->foreignId('data_otlets_id')->constrained('data_otlets');
+            $table->foreignId('data_otlets_id')->constrained('data_otlets')->onDelete('cascade');
             $table->string('outlet_name');
             $table->timestamps();
         });

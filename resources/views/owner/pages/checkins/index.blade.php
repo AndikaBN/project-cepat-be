@@ -53,27 +53,34 @@
                                             <tr>
                                                 <th>Nama Sales</th>
                                                 <th>Tanggal</th>
-                                                <th>Action</th>
+                                                {{-- <th>Action</th> --}}
                                                 <th>View Maps</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($checkins as $checkin)
                                                 <tr>
-                                                    <td>{{ $checkin->user->role === 'sales' ? $checkin->user->name : 'Unknown' }}</td>
+                                                    <td>{{ $checkin->user->role === 'sales' ? $checkin->user->name : 'Unknown' }}
+                                                    </td>
                                                     <td>{{ $checkin->date }}</td>
                                                     <td>
-                                                        {{-- <form action="{{ route('checkins.destroy', $checkin->id) }}" method="POST" class="d-inline">
+                                                        <!-- Data check-in -->
+                                                        {{-- <form action="{{ route('checkins.hapus', $checkin->id) }}"
+                                                            method="POST">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                                            <button type="submit"
+                                                                onclick="return confirm('Apakah Anda yakin ingin menghapus check-in ini?')">Hapus
+                                                            </button>
                                                         </form> --}}
+                                                        <a href="{{ route('checkins.user.locations', ['userId' => $checkin->user_id, 'date' => $checkin->date]) }}"
+                                                            class="btn btn-primary">View User Check-Ins</a>
                                                     </td>
                                                     <td>
-                                                        <a href="{{ route('checkins.user.locations', ['userId' => $checkin->user_id, 'date' => $checkin->date]) }}" class="btn btn-primary">View User Check-Ins</a>
                                                     </td>
                                                 </tr>
                                             @endforeach
+
                                         </tbody>
                                     </table>
                                 </div>

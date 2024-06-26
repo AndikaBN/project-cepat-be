@@ -32,9 +32,6 @@
 
                 <ul class="dropdown-menu">
                     <li class=''>
-                        <a class="nav-link" href="{{ route('outlets.index') }}">Outlets</a>
-                    </li>
-                    <li class=''>
                         <a class="nav-link" href="{{ route('tagihan.index') }}">Tagihan</a>
                     </li>
                 </ul>
