@@ -55,6 +55,7 @@ Route::middleware(['auth', 'role:marketing,owner'])->group(function () {
     })->name('marketing');
 
     Route::resource('stock', StockController::class);
+    Route::delete('/stock/hapus-semua', 'StockController@hapusSemua')->name('stock.hapusSemua');
     Route::resource('toko', TokoController::class);
     Route::get('export/stock', [StockController::class, 'export'])->name('stock.export');
     Route::post('import/stock', [StockController::class, 'import'])->name('stock.import');

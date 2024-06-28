@@ -38,9 +38,6 @@
                             </div>
 
                             <div class="card-body">
-
-                                {{-- create button export --}}
-
                                 <div class="float-right">
                                     <form method="GET" action="{{ route('stock.index') }}">
                                         <div class="input-group">
@@ -77,7 +74,8 @@
                                                     <div class="d-flex justify-content-center">
                                                         <a href="{{ route('stock.edit', $stock->id) }}"
                                                             class="btn btn-warning mr-2">Edit</a>
-                                                        <form action="{{ route('stock.destroy', $stock->id) }}" method="POST">
+                                                        <form action="{{ route('stock.destroy', $stock->id) }}"
+                                                            method="POST">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button class="btn btn-danger"
@@ -88,7 +86,6 @@
                                             </tr>
                                         @endforeach
 
-                                        {{-- create pagination --}}
                                         <tr>
                                             <td colspan="9">
                                                 {{ $stocks->links() }}
@@ -97,7 +94,6 @@
                                     </table>
                                 </div>
 
-                                {{-- create form import --}}
                                 <div class="float-right">
                                     <form method="POST" action="{{ route('stock.import') }}"
                                         enctype="multipart/form-data">
@@ -111,7 +107,19 @@
                                         </div>
                                     </form>
                                 </div>
+
+                                <!-- Button untuk menghapus semua data -->
+                                <form action="{{ route('stock.hapusSemua') }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger"
+                                        onclick="return confirm('Apakah Anda yakin ingin menghapus semua data?')">
+                                        <i class="fas fa-trash"></i> Hapus Semua Data
+                                    </button>
+                                </form>
+
                             </div>
+
                         </div>
                     </div>
                 </div>

@@ -11,19 +11,6 @@ use App\Exports\StockExport;
 
 class StockController extends Controller
 {
-    /*
- $table->id();
-            $table->string('kode_barang');
-            $table->string('nama_barang');
-            $table->string('jenis_barang');
-            $table->string('divisi');
-            $table->string('stock');
-            $table->string('satuan');
-            $table->string('keterangan_isi_1');
-            $table->string('keterangan_isi_2');
-            $table->string('harga_dalam_kota');
-            $table->timestamps();
-    */
     public function index(Request $request)
     {
         $search = $request->input('search');
@@ -158,4 +145,12 @@ class StockController extends Controller
 
         return $export;
     }
+
+    public function hapusSemua()
+    {
+        Stock::truncate();
+
+        return redirect()->route('stock.index')->with('success', 'Data deleted successfully');
+    }
+
 }

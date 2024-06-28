@@ -1,13 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
-
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Outlet;
 use Illuminate\Support\Facades\Log;
-
 
 class OutletController extends Controller
 {
@@ -23,7 +20,6 @@ class OutletController extends Controller
 
         return view('owner.pages.outlets.index', compact('outlets'));
     }
-
 
     //create
     public function create()
@@ -49,7 +45,8 @@ class OutletController extends Controller
             'no_telp' => 'required',
             'type' => 'required',
             'limit' => 'required|numeric',
-
+            'image_ktp' => 'nullable|image',
+            'image_outlet' => 'nullable|image',
         ]);
 
         //store the request...
@@ -63,15 +60,17 @@ class OutletController extends Controller
 
         //save the image_ktp
         if ($request->hasFile('image_ktp')) {
-            $request->file('image_ktp')->storeAs('public/outlets', $outlet->id . '_ktp.' . $request->file('image_ktp')->extension());
-            $outlet->image_ktp = 'storage/outlets/' . $outlet->id . '_ktp.' . $request->file('image_ktp')->extension();
+            $filename = $outlet->id . '_ktp.' . $request->file('image_ktp')->extension();
+            $request->file('image_ktp')->move(public_path('img'), $filename);
+            $outlet->image_ktp = 'img/' . $filename;
             $outlet->save();
         }
 
         //save the image_outlet
         if ($request->hasFile('image_outlet')) {
-            $request->file('image_outlet')->storeAs('public/outlets', $outlet->id . '_outlet.' . $request->file('image_outlet')->extension());
-            $outlet->image_outlet = 'storage/outlets/' . $outlet->id . '_outlet.' . $request->file('image_outlet')->extension();
+            $filename = $outlet->id . '_outlet.' . $request->file('image_outlet')->extension();
+            $request->file('image_outlet')->move(public_path('img'), $filename);
+            $outlet->image_outlet = 'img/' . $filename;
             $outlet->save();
         }
 
@@ -100,10 +99,11 @@ class OutletController extends Controller
             'no_telp' => 'required',
             'type' => 'required',
             'limit' => 'required|numeric',
+            'image_ktp' => 'nullable|image',
+            'image_outlet' => 'nullable|image',
         ]);
 
         try {
-            error_log('Update method called');
             $outlet = Outlet::findOrFail($id);
             $outlet->name = $request->name;
             $outlet->no_telp = $request->no_telp;
@@ -111,31 +111,27 @@ class OutletController extends Controller
             $outlet->limit = $request->limit;
             $outlet->save();
 
-            error_log('Outlet updated: ' . $outlet->id);
-
             //save the image_ktp
             if ($request->hasFile('image_ktp')) {
-                $request->file('image_ktp')->storeAs('public/outlets', $outlet->id . '_ktp.' . $request->file('image_ktp')->extension());
-                $outlet->image_ktp = 'storage/outlets/' . $outlet->id . '_ktp.' . $request->file('image_ktp')->extension();
+                $filename = $outlet->id . '_ktp.' . $request->file('image_ktp')->extension();
+                $request->file('image_ktp')->move(public_path('img'), $filename);
+                $outlet->image_ktp = 'img/' . $filename;
                 $outlet->save();
             }
 
             //save the image_outlet
             if ($request->hasFile('image_outlet')) {
-                $request->file('image_outlet')->storeAs('public/outlets', $outlet->id . '_outlet.' . $request->file('image_outlet')->extension());
-                $outlet->image_outlet = 'storage/outlets/' . $outlet->id . '_outlet.' . $request->file('image_outlet')->extension();
+                $filename = $outlet->id . '_outlet.' . $request->file('image_outlet')->extension();
+                $request->file('image_outlet')->move(public_path('img'), $filename);
+                $outlet->image_outlet = 'img/' . $filename;
                 $outlet->save();
             }
 
             return redirect()->route('outlets.index')->with('success', 'Outlet updated successfully');
         } catch (\Exception $e) {
-            error_log('Error updating outlet: ' . $e->getMessage());
             return redirect()->back()->withErrors('An error occurred while updating the outlet: ' . $e->getMessage());
         }
     }
-
-
-
 
     //destroy
     public function destroy($id)

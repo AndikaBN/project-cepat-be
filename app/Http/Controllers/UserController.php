@@ -50,7 +50,7 @@ class UserController extends Controller
             'password' => 'required|min:8',
             'role' => 'required|in:owner,sales,marketing,kolektor,inputer,gudang',
             'kode_salesman' => 'nullable',
-            'image_url' => 'nullable',
+            'image_url' => 'nullable|image',
         ]);
 
         // store the request...
@@ -62,15 +62,14 @@ class UserController extends Controller
         $user->kode_salesman = $request->kode_salesman;
         $user->save();
 
-        //save image
+        // save image
         if ($request->hasFile('image_url')) {
-
             $image_url = $request->file('image_url');
-            $image_url->storeAs('public/users', $user->id . '.' . $image_url->getClientOriginalExtension());
-            $user->image_url = 'storage/users/' . $user->id . '.' . $image_url->getClientOriginalExtension();
+            $filename = $user->id . '.' . $image_url->getClientOriginalExtension();
+            $image_url->move(public_path('img'), $filename);
+            $user->image_url = 'img/' . $filename;
             $user->save();
         }
-
 
         return redirect()->route('users.index')->with('success', 'User created successfully');
     }
@@ -91,38 +90,38 @@ class UserController extends Controller
     // update
     public function update(Request $request, $id)
     {
-        // validate the request...
+        // Validasi permintaan
         $request->validate([
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'required|email|unique:users,email,' . $id,
             'role' => 'required|in:owner,sales,marketing,kolektor,inputer,gudang',
             'kode_salesman' => 'nullable',
-            'image_url' => 'nullable',
+            'image_url' => 'nullable|image',
+            'password' => 'nullable|min:8',
         ]);
 
-        // update the request...
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
         $user->role = $request->role;
         $user->kode_salesman = $request->kode_salesman;
-        $user->save();
 
-        if ($request->hasfile('image_url')) {
+        if ($request->hasFile('image_url')) {
             $image_url = $request->file('image_url');
-            $image_url->storeAs('public/users', $user->id . '.' . $image_url->getClientOriginalExtension());
-            $user->image = 'storage/productd/' . $user->id . '.' . $image_url->getClientOriginalExtension();
-            $user->save();
+            $filename = $user->id . '.' . $image_url->getClientOriginalExtension();
+            $image_url->move(public_path('img'), $filename);
+            $user->image_url = 'img/' . $filename;
         }
 
-        //if password is not empty
         if ($request->password) {
             $user->password = Hash::make($request->password);
-            $user->save();
         }
+
+        $user->save();
 
         return redirect()->route('users.index')->with('success', 'User updated successfully');
     }
+
 
     // destroy
     public function destroy($id)

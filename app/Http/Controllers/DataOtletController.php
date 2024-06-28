@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -39,7 +38,6 @@ class DataOtletController extends Controller
 
         return view('marketings.pages.dataOtlets.index', compact('dataOtlets'));
     }
-
 
     //show
     public function show($id)
@@ -105,10 +103,10 @@ class DataOtletController extends Controller
 
         // save image ktp
         if ($request->hasFile('ktp')) {
-
             $ktp = $request->file('ktp');
-            $ktp->storeAs('public/ktp', $dataOtlets->id . '.' . $ktp->getClientOriginalExtension());
-            $dataOtlets->ktp = 'storage/ktp/' . $dataOtlets->id . '.' . $ktp->getClientOriginalExtension();
+            $filename = $dataOtlets->id . '.' . $ktp->getClientOriginalExtension();
+            $ktp->move(public_path('img/ktp'), $filename);
+            $dataOtlets->ktp = 'img/ktp/' . $filename;
             $dataOtlets->save();
         }
 
@@ -185,15 +183,14 @@ class DataOtletController extends Controller
 
         // save image ktp
         if ($request->hasFile('ktp')) {
-
             $ktp = $request->file('ktp');
-            $ktp->storeAs('public/ktp', $dataOtlets->id . '.' . $ktp->getClientOriginalExtension());
-            $dataOtlets->ktp = 'storage/ktp/' . $dataOtlets->id . '.' . $ktp->getClientOriginalExtension();
+            $filename = $dataOtlets->id . '.' . $ktp->getClientOriginalExtension();
+            $ktp->move(public_path('img/ktp'), $filename);
+            $dataOtlets->ktp = 'img/ktp/' . $filename;
             $dataOtlets->save();
         }
 
         return redirect()->route('dataOtlet.index')->with('success', 'Data updated successfully');
-
     }
 
     // destroy
@@ -204,6 +201,7 @@ class DataOtletController extends Controller
 
         return redirect()->route('dataOtlets.index')->with('success', 'Data deleted successfully');
     }
+
     public function import(Request $request)
     {
         $file = $request->file('file');

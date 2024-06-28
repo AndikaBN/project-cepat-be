@@ -55,5 +55,5 @@ class OutletController extends Controller
             'data' => $outlet
         ]);
     }
-    
+
 }

@@ -42,7 +42,7 @@ class CheckInController extends Controller
 
     public function userCheckinLocations($userId, Request $request)
     {
-        $date = $request->input('date'); // Retrieve date from query parameters
+        $date = $request->input('date');
 
         $query = CheckIn::where('user_id', $userId);
 

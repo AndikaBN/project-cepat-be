@@ -9,7 +9,8 @@
         <ul class="sidebar-menu">
 
             <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Management Sales</span></a>
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Management
+                        Sales</span></a>
                 <ul class="dropdown-menu">
                     <li class=''>
                         <a class="nav-link" href="{{ route('stock.index') }}">Users</a>
