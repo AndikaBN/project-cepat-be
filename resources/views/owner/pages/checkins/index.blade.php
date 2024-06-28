@@ -64,15 +64,6 @@
                                                     </td>
                                                     <td>{{ $checkin->date }}</td>
                                                     <td>
-                                                        <!-- Data check-in -->
-                                                        {{-- <form action="{{ route('checkins.hapus', $checkin->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit"
-                                                                onclick="return confirm('Apakah Anda yakin ingin menghapus check-in ini?')">Hapus
-                                                            </button>
-                                                        </form> --}}
                                                         <a href="{{ route('checkins.user.locations', ['userId' => $checkin->user_id, 'date' => $checkin->date]) }}"
                                                             class="btn btn-primary">View User Check-Ins</a>
                                                     </td>

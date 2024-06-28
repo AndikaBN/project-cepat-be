@@ -17,6 +17,9 @@
                     <li class=''>
                         <a class="nav-link" href="{{ route('dataOtlet.index') }}">Outlets</a>
                     </li>
+                    <li class=''>
+                        <a class="nav-link" href="{{ route('toko.index') }}">Outlets</a>
+                    </li>
                 </ul>
             </li>
 </div>

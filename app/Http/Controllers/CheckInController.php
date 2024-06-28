@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\CheckIn;
 use App\Models\User;
+use App\Models\Toko;
 
 class CheckInController extends Controller
 {
@@ -52,7 +53,9 @@ class CheckInController extends Controller
         $checkins = $query->select('latitude', 'longitude', 'created_at')->get();
         $user = User::find($userId);
 
-        return view('owner.pages.checkins.maps', compact('checkins', 'user', 'date'));
+        $tokos = Toko::select('latitude', 'longitude', 'nama_toko', 'area')->get();
+
+        return view('owner.pages.checkins.maps', compact('checkins', 'user', 'date', 'tokos'));
     }
 
     public function viewMapsByUserId($userId)

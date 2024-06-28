@@ -19,7 +19,6 @@
     <div id="map"></div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
         // Initialize the map with the desired view and zoom level
@@ -49,12 +48,33 @@
             }
         }
 
-        // Retrieve the check-ins data from the backend
+        // Function to add toko markers
+        function addTokoMarkers(tokos) {
+            tokos.forEach(function(toko) {
+                // Create a marker for each toko
+                var marker = L.marker([toko.latitude, toko.longitude], { icon: redIcon }).addTo(map);
+                // Bind a popup to the marker displaying toko information
+                marker.bindPopup(`<b>Nama Toko:</b> ${toko.nama_toko}<br><b>Area:</b> ${toko.area}`);
+            });
+        }
+
+        // Define red icon for toko markers
+        var redIcon = new L.Icon({
+            iconUrl: '/img/departmentstore.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+
+        // Retrieve the check-ins and toko data from the backend
         var checkins = @json($checkins);
+        var tokos = @json($tokos);
 
         // Wait for the document to be fully loaded before adding markers and lines
         $(document).ready(function() {
             addMarkersAndLines(checkins);
+            addTokoMarkers(tokos);
         });
     </script>
 </body>

@@ -2,10 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\OutletController;
-use App\Http\Controllers\Api\CheckInController;
-use App\Http\Controllers\Api\SaleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -114,3 +110,15 @@ Route::middleware('auth:sanctum')->put('/tagihan/{id}', [App\Http\Controllers\Ap
 
 // api delete tagihan
 Route::middleware('auth:sanctum')->delete('/tagihan/{id}', [App\Http\Controllers\Api\TagihanController::class, 'destroy']);
+
+//api get toko
+Route::middleware('auth:sanctum')->get('/tokos', [App\Http\Controllers\Api\TokoController::class, 'index']);
+
+//api store toko
+Route::middleware('auth:sanctum')->post('/tokos', [App\Http\Controllers\Api\TokoController::class,'store']);
+
+//api update toko
+Route::middleware('auth:sanctum')->put('/tokos/{id}', [App\Http\Controllers\Api\TokoController::class, 'update']);
+
+//api delete toko
+Route::middleware('auth:sanctum')->delete('/tokos/{id}', [App\Http\Controllers\Api\TokoController::class, 'destroy']);

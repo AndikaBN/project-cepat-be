@@ -27,10 +27,8 @@
             <div class="section-body">
                 <h2 class="section-title">Users</h2>
 
-
-
                 <div class="card">
-                    <form action="{{ route('users.store') }}" method="POST">
+                    <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="card-header">
                             <h4>Input Text</h4>
@@ -39,9 +37,7 @@
                             <div class="form-group">
                                 <label>Name</label>
                                 <input type="text"
-                                    class="form-control @error('name')
-                                is-invalid
-                            @enderror"
+                                    class="form-control @error('name') is-invalid @enderror"
                                     name="name">
                                 @error('name')
                                     <div class="invalid-feedback">
@@ -52,9 +48,7 @@
                             <div class="form-group">
                                 <label>Email</label>
                                 <input type="email"
-                                    class="form-control @error('email')
-                                is-invalid
-                            @enderror"
+                                    class="form-control @error('email') is-invalid @enderror"
                                     name="email">
                                 @error('email')
                                     <div class="invalid-feedback">
@@ -71,9 +65,7 @@
                                         </div>
                                     </div>
                                     <input type="password"
-                                        class="form-control @error('password')
-                                is-invalid
-                            @enderror"
+                                        class="form-control @error('password') is-invalid @enderror"
                                         name="password">
                                 </div>
                                 @error('password')
@@ -87,8 +79,7 @@
                                 <label class="form-label">Role</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="role" value="owner" class="selectgroup-input"
-                                            checked="">
+                                        <input type="radio" name="role" value="owner" class="selectgroup-input" checked="">
                                         <span class="selectgroup-button">Owner</span>
                                     </label>
                                     <label class="selectgroup-item">
@@ -103,7 +94,6 @@
                                         <input type="radio" name="role" value="inputer" class="selectgroup-input">
                                         <span class="selectgroup-button">inputer</span>
                                     </label>
-
                                     <label class="selectgroup-item">
                                         <input type="radio" name="role" value="gudang" class="selectgroup-input">
                                         <span class="selectgroup-button">gudang</span>
@@ -114,14 +104,25 @@
                                     </label>
                                 </div>
                             </div>
-                            
+
+                            <div class="form-group">
+                                <label>Image</label>
+                                <input type="file"
+                                    class="form-control @error('image_url') is-invalid @enderror"
+                                    name="image_url">
+                                @error('image_url')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
                         </div>
                         <div class="card-footer text-right">
                             <button class="btn btn-primary">Submit</button>
                         </div>
                     </form>
                 </div>
-
             </div>
         </section>
     </div>

@@ -50,8 +50,6 @@
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Management
                         Gudang</span></a>
-
-
             </li>
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Management
@@ -62,6 +60,9 @@
                     </li>
                     <li class=''>
                         <a class="nav-link" href="{{ route('dataOtlet.index') }}">Data Otlet</a>
+                    </li>
+                    <li class=''>
+                        <a class="nav-link" href="{{ route('toko.index') }}">Toko</a>
                     </li>
                 </ul>
             </li>

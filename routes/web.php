@@ -9,6 +9,7 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\DataOtletController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TagihanController;
+use App\Http\Controllers\TokoController;
 
 Route::get('/', function () {
     return view('auth.pages.login');
@@ -54,6 +55,7 @@ Route::middleware(['auth', 'role:marketing,owner'])->group(function () {
     })->name('marketing');
 
     Route::resource('stock', StockController::class);
+    Route::resource('toko', TokoController::class);
     Route::get('export/stock', [StockController::class, 'export'])->name('stock.export');
     Route::post('import/stock', [StockController::class, 'import'])->name('stock.import');
 

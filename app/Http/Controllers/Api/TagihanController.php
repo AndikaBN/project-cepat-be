@@ -45,7 +45,7 @@ class TagihanController extends Controller
 
         //store the request...
         $tagihan = new Tagihan;
-        $tagihan->user_id = auth()->user()->id;
+        $tagihan->user_id = $request->user_id;
         $tagihan->nama_outlet = $request->nama_outlet;
         $tagihan->nomor_nota = $request->nomor_nota;
         $tagihan->jumlah_tagihan = $request->jumlah_tagihan;
@@ -63,6 +63,7 @@ class TagihanController extends Controller
     {
         //validate the request...
         $request->validate([
+            'user_id' => 'required',
             'nama_outlet' => 'required',
             'nomor_nota' => 'required',
             'jumlah_tagihan' => 'required|numeric',
@@ -71,7 +72,7 @@ class TagihanController extends Controller
 
         //store the request...
         $tagihan = Tagihan::find($id);
-        $tagihan->user_id = auth()->user()->id;
+        $tagihan->user_id = $request->user_id;
         $tagihan->nama_outlet = $request->nama_outlet;
         $tagihan->nomor_nota = $request->nomor_nota;
         $tagihan->jumlah_tagihan = $request->jumlah_tagihan;
@@ -94,5 +95,4 @@ class TagihanController extends Controller
            'message' => 'success',
         ], 200);
     }
-
 }

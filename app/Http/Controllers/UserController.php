@@ -50,6 +50,7 @@ class UserController extends Controller
             'password' => 'required|min:8',
             'role' => 'required|in:owner,sales,marketing,kolektor,inputer,gudang',
             'kode_salesman' => 'nullable',
+            'image_url' => 'nullable',
         ]);
 
         // store the request...
@@ -60,6 +61,16 @@ class UserController extends Controller
         $user->role = $request->role;
         $user->kode_salesman = $request->kode_salesman;
         $user->save();
+
+        //save image
+        if ($request->hasFile('image_url')) {
+
+            $image_url = $request->file('image_url');
+            $image_url->storeAs('public/users', $user->id . '.' . $image_url->getClientOriginalExtension());
+            $user->image_url = 'storage/users/' . $user->id . '.' . $image_url->getClientOriginalExtension();
+            $user->save();
+        }
+
 
         return redirect()->route('users.index')->with('success', 'User created successfully');
     }
@@ -86,6 +97,7 @@ class UserController extends Controller
             'email' => 'required',
             'role' => 'required|in:owner,sales,marketing,kolektor,inputer,gudang',
             'kode_salesman' => 'nullable',
+            'image_url' => 'nullable',
         ]);
 
         // update the request...
@@ -95,6 +107,13 @@ class UserController extends Controller
         $user->role = $request->role;
         $user->kode_salesman = $request->kode_salesman;
         $user->save();
+
+        if ($request->hasfile('image_url')) {
+            $image_url = $request->file('image_url');
+            $image_url->storeAs('public/users', $user->id . '.' . $image_url->getClientOriginalExtension());
+            $user->image = 'storage/productd/' . $user->id . '.' . $image_url->getClientOriginalExtension();
+            $user->save();
+        }
 
         //if password is not empty
         if ($request->password) {

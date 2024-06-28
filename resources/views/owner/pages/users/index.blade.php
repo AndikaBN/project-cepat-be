@@ -40,7 +40,7 @@
                                 <h4>All Posts</h4>
                             </div>
                             <div class="card-body">
-                                
+
                                 <div class="float-right">
                                     <form method="GET" action="{{ route('users.index') }}">
                                         <div class="input-group">

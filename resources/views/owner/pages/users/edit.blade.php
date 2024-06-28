@@ -27,22 +27,17 @@
             <div class="section-body">
                 <h2 class="section-title">Users</h2>
 
-
-
                 <div class="card">
-                    <form action="{{ route('users.update', $user) }}" method="POST">
+                    <form action="{{ route('users.update', $user) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-header">
-                            <h4>Input Text</h4>
+                            <h4>Edit User</h4>
                         </div>
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text"
-                                    class="form-control @error('name')
-                                is-invalid
-                            @enderror"
+                                <input type="text" class="form-control @error('name') is-invalid @enderror"
                                     name="name" value="{{ $user->name }}">
                                 @error('name')
                                     <div class="invalid-feedback">
@@ -52,10 +47,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="email"
-                                    class="form-control @error('email')
-                                is-invalid
-                            @enderror"
+                                <input type="email" class="form-control @error('email') is-invalid @enderror"
                                     name="email" value="{{ $user->email }}">
                                 @error('email')
                                     <div class="invalid-feedback">
@@ -71,10 +63,7 @@
                                             <i class="fas fa-lock"></i>
                                         </div>
                                     </div>
-                                    <input type="password"
-                                        class="form-control @error('password')
-                                is-invalid
-                            @enderror"
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror"
                                         name="password">
                                 </div>
                                 @error('password')
@@ -121,25 +110,35 @@
                             </div>
                             <div class="form-group">
                                 <label>Kode Salesman</label>
-                                <input type="text"
-                                    class="form-control @error('kode_salesman')
-                                is-invalid
-                            @enderror"
+                                <input type="text" class="form-control @error('kode_salesman') is-invalid @enderror"
                                     name="kode_salesman" value="{{ $user->kode_salesman }}">
-                                @error('email')
+                                @error('kode_salesman')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
 
+                            <div class="form-group">
+                                <label>Image</label>
+                                <input type="file" class="form-control @error('image_url') is-invalid @enderror"
+                                    name="image_url">
+                                @error('image_url')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                                @if ($user->image_url)
+                                    <img src="{{ asset('storage/' . $user->image_url) }}" alt="User Image"
+                                        class="img-thumbnail mt-2" width="150">
+                                @endif
+                            </div>
                         </div>
                         <div class="card-footer text-right">
                             <button class="btn btn-primary">Submit</button>
                         </div>
                     </form>
                 </div>
-
             </div>
         </section>
     </div>

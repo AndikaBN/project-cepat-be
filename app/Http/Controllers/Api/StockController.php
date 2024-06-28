@@ -82,13 +82,13 @@ class StockController extends Controller
     }
 
     //api delete stock
-    public function destroy(Stock $stock)
+    public function destroy($id)
     {
+        $stock = Stock::find($id);
         $stock->delete();
 
         return response()->json([
             'message' => 'success',
-            'data' => null
         ], 200);
     }
 }
