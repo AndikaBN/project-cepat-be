@@ -24,8 +24,9 @@ Route::middleware(['auth', 'role:owner'])->group(function () {
     Route::resource('checkins', CheckInController::class);
     Route::resource('salesPiutang', SalePiutangController::class);
     Route::resource('tagihan', TagihanController::class);
-    Route::resource('checkin',CheckInController::class);
+    Route::resource('checkin', CheckInController::class);
 
+    Route::get('/sale-piutang/truncate', [SalePiutangController::class, 'truncate'])->name('salePiutang.truncate');
     Route::get('/user/{userId}/checkins/maps', [CheckInController::class, 'viewMapsByUserId'])->name('user.checkins.maps');
     Route::get('/ajax/user/{userId}', [CheckInController::class, 'ajaxByUserId'])->name('ajax.user');
 
@@ -55,12 +56,13 @@ Route::middleware(['auth', 'role:marketing,owner'])->group(function () {
     })->name('marketing');
 
     Route::resource('stock', StockController::class);
-    Route::delete('/stock/hapus-semua', 'StockController@hapusSemua')->name('stock.hapusSemua');
+    Route::get('/stocks/truncate', [StockController::class, 'truncateTable'])->name('stocks.truncate');
     Route::resource('toko', TokoController::class);
     Route::get('export/stock', [StockController::class, 'export'])->name('stock.export');
     Route::post('import/stock', [StockController::class, 'import'])->name('stock.import');
 
     //create route dataotlet
+    Route::get('/data-otlet/truncate', [DataOtletController::class, 'truncate'])->name('dataOtlet.truncate');
     Route::resource('dataOtlet', DataOtletController::class);
     Route::get('export/dataOtlet', [DataOtletController::class, 'export'])->name('dataOtlet.export');
     Route::post('import/dataOtlet', [DataOtletController::class, 'import'])->name('dataOtlet.import');

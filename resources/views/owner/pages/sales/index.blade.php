@@ -40,11 +40,14 @@
                                 <h4>All Posts</h4>
                                 <div class="float-right">
                                     <a href="{{ route('salesPiutang.export') }}" class="btn btn-primary">Export Data</a>
+                                    <a href="{{ route('salePiutang.truncate') }}" class="btn btn-danger"
+                                        onclick="return confirm('Are you sure you want to delete all records?')">Delete All
+                                        Data</a>
                                 </div>
                             </div>
 
                             <div class="card-body">
-                               
+
                                 {{-- create button export --}}
 
                                 <div class="float-right">
@@ -110,10 +113,12 @@
                                                             Edit
                                                         </a>
 
-                                                        <form action="{{ route('salesPiutang.destroy', $piutangSale->id) }}"
+                                                        <form
+                                                            action="{{ route('salesPiutang.destroy', $piutangSale->id) }}"
                                                             method="POST" class="ml-2">
                                                             <input type="hidden" name="_method" value="DELETE" />
-                                                            <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                                                            <input type="hidden" name="_token"
+                                                                value="{{ csrf_token() }}" />
                                                             <button class="btn btn-sm btn-danger btn-icon confirm-delete">
                                                                 <i class="fas fa-times"></i> Delete
                                                             </button>

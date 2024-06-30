@@ -33,7 +33,9 @@
                             <div class="card-header">
                                 <h4>All Posts</h4>
                                 <div class="float-right">
-                                    <a href="{{ route('stock.export') }}" class="btn btn-primary">Export Data</a>
+                                    <a href="{{ route('stock.export') }}" class="btn btn-primary mr-2">Export Data</a>
+                                    <a href="{{ route('stocks.truncate') }}" class="btn btn-danger"
+                                       onclick="return confirm('Are you sure you want to delete all records?')">Delete All Data</a>
                                 </div>
                             </div>
 
@@ -73,13 +75,13 @@
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <a href="{{ route('stock.edit', $stock->id) }}"
-                                                            class="btn btn-warning mr-2">Edit</a>
+                                                           class="btn btn-warning mr-2">Edit</a>
                                                         <form action="{{ route('stock.destroy', $stock->id) }}"
-                                                            method="POST">
+                                                              method="POST">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button class="btn btn-danger"
-                                                                onclick="return confirm('Are you sure?')">Delete</button>
+                                                                    onclick="return confirm('Are you sure?')">Delete</button>
                                                         </form>
                                                     </div>
                                                 </td>
@@ -96,30 +98,18 @@
 
                                 <div class="float-right">
                                     <form method="POST" action="{{ route('stock.import') }}"
-                                        enctype="multipart/form-data">
+                                          enctype="multipart/form-data">
                                         @csrf
                                         <div class="input-group">
                                             <input type="file" class="form-control" name="file">
                                             <div class="input-group-append">
-                                                <button class="btn btn-primary"><i class="fas fa-upload"></i>
-                                                    Import</button>
+                                                <button class="btn btn-primary"><i class="fas fa-upload"></i> Import
+                                                </button>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
-
-                                <!-- Button untuk menghapus semua data -->
-                                <form action="{{ route('stock.hapusSemua') }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger"
-                                        onclick="return confirm('Apakah Anda yakin ingin menghapus semua data?')">
-                                        <i class="fas fa-trash"></i> Hapus Semua Data
-                                    </button>
-                                </form>
-
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -129,7 +119,7 @@
 @endsection
 
 @push('scripts')
-    <!-- JS Libraies -->
+    <!-- JS Libraries -->
     <script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
 
     <!-- Page Specific JS File -->

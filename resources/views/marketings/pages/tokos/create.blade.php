@@ -23,29 +23,6 @@
 <body>
     <h1 class='text-center'>Tambah Toko</h1>
     <div id='map'></div>
-    <form method="POST" action="{{ route('toko.store') }}">
-        @csrf
-        <div>
-            <label for="latitude">Latitude:</label>
-            <input type="text" id="latitude" name="latitude" readonly>
-        </div>
-        <div>
-            <label for="longitude">Longitude:</label>
-            <input type="text" id="longitude" name="longitude" readonly>
-        </div>
-        <div>
-            <label for="nama_toko">Nama Toko:</label>
-            <input type="text" id="nama_toko" name="nama_toko" required>
-        </div>
-        <div>
-            <label for="area">Area:</label>
-            <input type="text" id="area" name="area" required>
-        </div>
-        <div>
-            <button type="submit">Simpan Toko</button>
-        </div>
-    </form>
-
     <!-- Modal Bootstrap -->
     <div class="modal fade" id="tokoModal" tabindex="-1" role="dialog" aria-labelledby="tokoModalLabel"
         aria-hidden="true">
@@ -58,29 +35,31 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="modalForm" method="POST" action="{{ route('toko.store') }}">
+                        @csrf
                         <div class="form-group">
                             <label for="modalLatitude">Latitude</label>
-                            <input type="text" class="form-control" id="modalLatitude" readonly>
+                            <input type="text" class="form-control" id="modalLatitude" name="latitude" readonly>
                         </div>
                         <div class="form-group">
                             <label for="modalLongitude">Longitude</label>
-                            <input type="text" class="form-control" id="modalLongitude" readonly>
+                            <input type="text" class="form-control" id="modalLongitude" name="longitude" readonly>
                         </div>
                         <div class="form-group">
                             <label for="modalNamaToko">Nama Toko</label>
-                            <input type="text" class="form-control" id="modalNamaToko" required>
+                            <input type="text" class="form-control" id="modalNamaToko" name="nama_toko" required>
                         </div>
                         <div class="form-group">
                             <label for="modalArea">Area</label>
-                            <input type="text" class="form-control" id="modalArea" required>
+                            <input type="text" class="form-control" id="modalArea" name="area" required>
                         </div>
-                        <button type="button" class="btn btn-primary" id="saveToko">Simpan Toko</button>
+                        <button type="submit" class="btn btn-primary">Simpan Toko</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -104,20 +83,12 @@
             $('#tokoModal').modal('show');
         });
 
-        document.getElementById('saveToko').addEventListener('click', function() {
-            const latitude = document.getElementById('modalLatitude').value;
-            const longitude = document.getElementById('modalLongitude').value;
-            const namaToko = document.getElementById('modalNamaToko').value;
-            const area = document.getElementById('modalArea').value;
-
-            document.getElementById('latitude').value = latitude;
-            document.getElementById('longitude').value = longitude;
-            document.getElementById('nama_toko').value = namaToko;
-            document.getElementById('area').value = area;
-
-            $('#tokoModal').modal('hide');
+        document.getElementById('modalForm').addEventListener('submit', function(event) {
+            // Optionally add any additional validation or actions before submitting the form
+            // event.preventDefault(); // Use this if you need to handle submission via AJAX
         });
     </script>
+
 </body>
 
 </html>

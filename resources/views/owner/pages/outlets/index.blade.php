@@ -32,12 +32,11 @@
                     You can manage all Outlets, such as editing, deleting and more.
                 </p>
 
-
                 <div class="row mt-4">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>All Posts</h4>
+                                <h4>All Outlets</h4>
                             </div>
                             <div class="card-body">
 
@@ -57,7 +56,6 @@
                                 <div class="table-responsive">
                                     <table class="table-striped table">
                                         <tr>
-
                                             <th>Name Sales</th>
                                             <th>Nama Outlet</th>
                                             <th>Nomor Telepon</th>
@@ -68,28 +66,18 @@
                                         @foreach ($outlets as $outlet)
                                             <tr>
                                                 <td>{{ $outlet->user ? $outlet->user->name : 'Unknown' }}</td>
-
-                                                <td>
-                                                    {{ $outlet->name }}
-                                                </td>
+                                                <td>{{ $outlet->name }}</td>
                                                 <td>{{ $outlet->no_telp }}</td>
-                                                <td>
-                                                    {{ $outlet->type }}
-                                                </td>
+                                                <td>{{ $outlet->type }}</td>
                                                 <td>{{ $outlet->limit }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <a href='{{ route('outlets.edit', $outlet->id) }}'
-                                                            class="btn btn-sm btn-info btn-icon">
-                                                            <i class="fas fa-edit"></i>
-                                                            Edit
+                                                        <a href="{{ route('outlets.edit', $outlet->id) }}" class="btn btn-sm btn-info btn-icon">
+                                                            <i class="fas fa-edit"></i> Edit
                                                         </a>
-
-                                                        <form action="{{ route('outlets.destroy', $outlet->id) }}"
-                                                            method="POST" class="ml-2">
-                                                            <input type="hidden" name="_method" value="DELETE" />
-                                                            <input type="hidden" name="_token"
-                                                                value="{{ csrf_token() }}" />
+                                                        <form action="{{ route('outlets.destroy', $outlet->id) }}" method="POST" class="ml-2">
+                                                            @csrf
+                                                            @method('DELETE')
                                                             <button class="btn btn-sm btn-danger btn-icon confirm-delete">
                                                                 <i class="fas fa-times"></i> Delete
                                                             </button>
@@ -113,9 +101,7 @@
 @endsection
 
 @push('scripts')
-    <!-- JS Libraies -->
+    <!-- JS Libraries -->
     <script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
-
-    <!-- Page Specific JS File -->
     <script src="{{ asset('js/page/features-posts.js') }}"></script>
 @endpush

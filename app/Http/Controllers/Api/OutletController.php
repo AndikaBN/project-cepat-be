@@ -39,13 +39,15 @@ class OutletController extends Controller
 
         // Simpan gambar KTP dan gambar outlet
         if ($request->hasFile('image_ktp')) {
-            $ktpPath = $request->file('image_ktp')->storeAs('public/outlets', $outlet->id . '_ktp.' . $request->file('image_ktp')->extension());
-            $outlet->image_ktp = Storage::url($ktpPath);
+            $filename = $outlet->id . '_ktp.' . $request->file('image_ktp')->extension();
+            $request->file('image_ktp')->move(public_path('img'), $filename);
+            $outlet->image_ktp = 'img/' . $filename;
         }
 
         if ($request->hasFile('image_outlet')) {
-            $outletPath = $request->file('image_outlet')->storeAs('public/outlets', $outlet->id . '_outlet.' . $request->file('image_outlet')->extension());
-            $outlet->image_outlet = Storage::url($outletPath);
+             $filename = $outlet->id . '_outlet.' . $request->file('image_outlet')->extension();
+            $request->file('image_outlet')->move(public_path('img'), $filename);
+            $outlet->image_outlet = 'img/' . $filename;
         }
 
         $outlet->save();

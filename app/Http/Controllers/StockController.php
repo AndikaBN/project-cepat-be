@@ -146,11 +146,12 @@ class StockController extends Controller
         return $export;
     }
 
-    public function hapusSemua()
+    public function truncateTable()
     {
-        Stock::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('stocks')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        return redirect()->route('stock.index')->with('success', 'Data deleted successfully');
+        return redirect()->route('stock.index')->with('success', 'All records deleted successfully');
     }
-
 }

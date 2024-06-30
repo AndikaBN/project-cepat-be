@@ -31,13 +31,14 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-
                                 <h4>All Posts</h4>
                                 <div class="float-right">
                                     <a href="{{ route('dataOtlet.export') }}" class="btn btn-primary">Export Data</a>
+                                    <a href="{{ route('dataOtlet.truncate') }}" class="btn btn-danger"
+                                        onclick="return confirm('Are you sure you want to delete all records?')">Delete All
+                                        Data</a>
                                 </div>
                             </div>
-
                             <div class="card-body">
 
                                 {{-- create button export --}}

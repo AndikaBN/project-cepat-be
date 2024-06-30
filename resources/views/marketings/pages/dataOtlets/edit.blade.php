@@ -28,7 +28,8 @@
                 <h2 class="section-title">Edit Data Otlet</h2>
 
                 <div class="card">
-                    <form action="{{ route('dataOtlet.update', $dataOtlets->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('dataOtlet.update', $dataOtlets->id) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-header">
@@ -69,7 +70,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Nama Customer</label>
-                                        <input type="text" class="form-control @error('nama_customer') is-invalid @enderror"
+                                        <input type="text"
+                                            class="form-control @error('nama_customer') is-invalid @enderror"
                                             name="nama_customer" value="{{ $dataOtlets->nama_customer }}">
                                         @error('nama_customer')
                                             <div class="invalid-feedback">
@@ -97,37 +99,44 @@
                                             </div>
                                         @enderror
                                     </div>
-                                    <div class="form-group
+                                    <div
+                                        class="form-group
                                         @error('daerah') is-invalid @enderror">
                                         <label>Daerah</label>
-                                        <input type="text" class="form-control" name="daerah" value="{{ $dataOtlets->daerah }}">
+                                        <input type="text" class="form-control" name="daerah"
+                                            value="{{ $dataOtlets->daerah }}">
                                         @error('daerah')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
-                                    <div class="form-group
+                                    <div
+                                        class="form-group
                                         @error('area') is-invalid @enderror">
                                         <label>Area</label>
-                                        <input type="text" class="form-control" name="area" value="{{ $dataOtlets->area }}">
+                                        <input type="text" class="form-control" name="area"
+                                            value="{{ $dataOtlets->area }}">
                                         @error('area')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
-                                    <div class="form-group
+                                    <div
+                                        class="form-group
                                         @error('telp') is-invalid @enderror">
                                         <label>Telepon</label>
-                                        <input type="text" class="form-control" name="telp" value="{{ $dataOtlets->telp }}">
+                                        <input type="text" class="form-control" name="telp"
+                                            value="{{ $dataOtlets->telp }}">
                                         @error('telp')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
-                                    <div class="form-group
+                                    <div
+                                        class="form-group
                                         @error('keterangan') is-invalid @enderror">
                                         <label>Keterangan</label>
                                         <input type="text" class="form-control" name="keterangan"
@@ -138,27 +147,32 @@
                                             </div>
                                         @enderror
                                     </div>
-                                    <div class="form-group
+                                    <div
+                                        class="form-group
                                         @error('npwp') is-invalid @enderror">
                                         <label>NPWP</label>
-                                        <input type="text" class="form-control" name="npwp" value="{{ $dataOtlets->npwp }}">
+                                        <input type="text" class="form-control" name="npwp"
+                                            value="{{ $dataOtlets->npwp }}">
                                         @error('npwp')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
-                                    <div class="form-group
+                                    <div
+                                        class="form-group
                                         @error('gol') is-invalid @enderror">
                                         <label>Gol</label>
-                                        <input type="text" class="form-control" name="gol" value="{{ $dataOtlets->gol }}">
+                                        <input type="text" class="form-control" name="gol"
+                                            value="{{ $dataOtlets->gol }}">
                                         @error('gol')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
-                                    <div class="form-group
+                                    <div
+                                        class="form-group
                                         @error('tgl_input') is-invalid @enderror">
                                         <label>Tanggal Input</label>
                                         <input type="date" class="form-control" name="tgl_input"
@@ -170,7 +184,8 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group
+                                    <div
+                                        class="form-group
                                         @error('set_harga') is-invalid @enderror">
                                         <label>Set Harga</label>
                                         <input type="text" class="form-control" name="set_harga"
@@ -182,7 +197,8 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group
+                                    <div
+                                        class="form-group
                                         @error('area_antaran') is-invalid @enderror">
                                         <label>Area Antaran</label>
                                         <input type="text" class="form-control" name="area_antaran"
@@ -194,7 +210,8 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group
+                                    <div
+                                        class="form-group
                                         @error('area_tagihan') is-invalid @enderror">
                                         <label>Area Tagihan</label>
                                         <input type="text" class="form-control" name="area_tagihan"
@@ -206,7 +223,8 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group
+                                    <div
+                                        class="form-group
                                         @error('type_customer') is-invalid @enderror">
                                         <label>Type Customer</label>
                                         <input type="text" class="form-control" name="type_customer"
@@ -218,7 +236,8 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group
+                                    <div
+                                        class="form-group
                                         @error('limit_kredit') is-invalid @enderror">
                                         <label>Limit Kredit</label>
                                         <input type="text" class="form-control" name="limit_kredit"
@@ -230,7 +249,8 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group
+                                    <div
+                                        class="form-group
                                         @error('limit_divisi') is-invalid @enderror">
                                         <label>Limit Divisi</label>
                                         <input type="text" class="form-control" name="limit_divisi"
@@ -242,7 +262,8 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group
+                                    <div
+                                        class="form-group
                                         @error('nama_npwp') is-invalid @enderror">
                                         <label>Nama NPWP</label>
                                         <input type="text" class="form-control" name="nama_npwp"
@@ -254,7 +275,8 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group
+                                    <div
+                                        class="form-group
                                         @error('alamat_npwp') is-invalid @enderror">
                                         <label>Alamat NPWP</label>
                                         <input type="text" class="form-control" name="alamat_npwp"
@@ -266,15 +288,19 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group
-                                        @error('ktp') is-invalid @enderror">
-                                        <label>KTP</label>
-                                        <input type="file" class="form-control" name="ktp" value="{{ $dataOtlets->ktp }}">
+                                    <div class="form-group">
+                                        <label>Image KTP</label>
+                                        <input type="file" class="form-control @error('ktp') is-invalid @enderror"
+                                            name="ktp">
                                         @error('ktp')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                         @enderror
+                                        @if ($dataOtlets->ktp)
+                                            <img src="{{ asset($dataOtlets->ktp) }}" alt="KTP Image"
+                                                class="img-thumbnail mt-2" width="150">
+                                        @endif
                                     </div>
 
 

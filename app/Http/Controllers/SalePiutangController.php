@@ -15,6 +15,15 @@ class SalePiutangController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     public function truncate()
+     {
+         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+         DB::table('sale_piutangs')->truncate();
+         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+         return redirect()->route('salesPiutang.index')->with('success', 'Semua data telah dihapus');
+     }
     public function index(Request $request)
     {
         $search = $request->input('search');

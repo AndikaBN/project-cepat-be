@@ -129,7 +129,7 @@
                                     </div>
                                 @enderror
                                 @if ($user->image_url)
-                                    <img src="{{ asset('storage/' . $user->image_url) }}" alt="User Image"
+                                    <img src="{{ asset($user->image_url) }}" alt="User Image"
                                         class="img-thumbnail mt-2" width="150">
                                 @endif
                             </div>

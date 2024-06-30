@@ -7,9 +7,18 @@ use App\Models\DataOtlet;
 use App\Imports\DataOtletImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\DataOtletExport;
+use App\Http\Requests\TruncateDataOtletRequest;
 
 class DataOtletController extends Controller
 {
+    public function truncate()
+    {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('data_otlets')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        return redirect()->route('dataOtlet.index')->with('success', 'Semua data telah dihapus');
+    }
     // index
     public function index(Request $request)
     {
