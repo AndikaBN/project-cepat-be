@@ -12,20 +12,20 @@ return new class extends Migration {
     {
         Schema::create('sale_piutangs', function (Blueprint $table) {
             $table->id();
-            $table->string('tanggal');
-            $table->string('nomor_nota');
-            $table->string('kode_customer');
-            $table->string('nama_customer');
-            $table->string('daerah');
-            $table->string('tagihan');
-            $table->string('antaran');
-            $table->integer('umur');
-            $table->string('kode_salesman');
-            $table->string('nama_salesman');
-            $table->decimal('total_nota', 15, 2);
-            $table->decimal('sisa_hutang', 15, 2);
-            $table->decimal('sisa_hutang_by_sales', 15, 2);
-            $table->string('persentase_pemberian_barang');
+            $table->string('tanggal')->nullable();
+            $table->string('nomor_nota')->nullable();
+            $table->string('kode_customer')->nullable();
+            $table->string('nama_customer')->nullable();
+            $table->string('daerah')->nullable();
+            $table->string('tagihan')->nullable();
+            $table->string('antaran')->nullable();
+            $table->integer('umur')->nullable();
+            $table->string('kode_salesman')->nullable();
+            $table->string('nama_salesman')->nullable();
+            $table->decimal('total_nota', 15, 2)->nullable();
+            $table->decimal('sisa_hutang', 15, 2)->nullable();
+            $table->decimal('sisa_hutang_by_sales', 15, 2)->nullable();
+            $table->string('persentase_pemberian_barang')->nullable();
             $table->timestamps();
         });
     }
