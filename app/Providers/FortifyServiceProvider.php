@@ -9,6 +9,8 @@ use App\Actions\Fortify\UpdateUserProfileInformation;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
@@ -49,6 +51,29 @@ class FortifyServiceProvider extends ServiceProvider
 
         Fortify::registerView(function () {
             return view('pages.auth.register');
+        });
+
+        Fortify::authenticateUsing(function (Request $request) {
+            $user = Auth::attempt($request->only('email', 'password'));
+
+            if ($user) {
+                switch (Auth::user()->role) {
+                    case 'owner':
+                        return redirect()->route('owner.dashboard');
+                    case 'kolektor':
+                        return redirect()->route('kolektor.dashboard');
+                    case 'inputer':
+                        return redirect()->route('inputer.dashboard');
+                    case 'gudang':
+                        return redirect()->route('gudang.dashboard');
+                    case 'marketing':
+                        return redirect()->route('marketing.dashboard');
+                    default:
+                        return redirect()->route('default.dashboard');
+                }
+            }
+
+            return false;
         });
     }
 }
