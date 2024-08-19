@@ -11,7 +11,11 @@ class TokoController extends Controller
     public function index(Request $request)
     {
 
-        $tokos = Toko::paginate(10);
+        $tokos = Toko::when($request->input('nama_toko'), function ($query, $nama_toko) {
+            $query->where('nama_toko', 'like', '%' . $nama_toko . '%')
+                ->orWhere('area', 'like', '%' . $nama_toko . '%');
+        })->get();
+
         return view('marketings.pages.tokos.index', compact('tokos'));
     }
 

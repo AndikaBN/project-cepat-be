@@ -52,28 +52,5 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::registerView(function () {
             return view('pages.auth.register');
         });
-
-        Fortify::authenticateUsing(function (Request $request) {
-            $user = Auth::attempt($request->only('email', 'password'));
-
-            if ($user) {
-                switch (Auth::user()->role) {
-                    case 'owner':
-                        return redirect()->route('owner.dashboard');
-                    case 'kolektor':
-                        return redirect()->route('kolektor.dashboard');
-                    case 'inputer':
-                        return redirect()->route('inputer.dashboard');
-                    case 'gudang':
-                        return redirect()->route('gudang.dashboard');
-                    case 'marketing':
-                        return redirect()->route('marketing.dashboard');
-                    default:
-                        return redirect()->route('default.dashboard');
-                }
-            }
-
-            return false;
-        });
     }
 }

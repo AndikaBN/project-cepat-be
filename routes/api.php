@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-});
+});   
 
 //get all user
 Route::middleware('auth:sanctum')->get('/users', [App\Http\Controllers\Api\AuthController::class, 'getUsers']);

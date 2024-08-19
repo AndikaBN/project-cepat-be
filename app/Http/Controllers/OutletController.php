@@ -18,7 +18,7 @@ class OutletController extends Controller
                 $query->where('name', 'like', '%' . $name . '%')
                     ->orWhere('type', 'like', '%' . $name . '%');
             })
-            ->paginate(10);
+            ->get();
 
         return view('owner.pages.outlets.index', compact('outlets'));
     }

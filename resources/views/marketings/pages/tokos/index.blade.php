@@ -73,19 +73,8 @@
                                                 </td>
                                             </tr>
                                         @endforeach
-
-                                        {{-- create pagination --}}
-                                        <tr>
-                                            <td colspan="5">
-                                                {{ $tokos->links() }}
-                                            </td>
-                                        </tr>
                                     </table>
                                 </div>
-
-                                {{-- create form import --}}
-
-                            </div>
                         </div>
                     </div>
                 </div>

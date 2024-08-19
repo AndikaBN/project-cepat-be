@@ -99,13 +99,7 @@
                                                 </td>
                                             </tr>
                                         @endforeach
-
-
-
                                     </table>
-                                </div>
-                                <div class="float-right">
-                                    {{ $orders->withQueryString()->links() }}
                                 </div>
                             </div>
                         </div>

@@ -16,14 +16,14 @@ class SalePiutangController extends Controller
      * Display a listing of the resource.
      */
 
-     public function truncate()
-     {
-         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-         DB::table('sale_piutangs')->truncate();
-         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+    public function truncate()
+    {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('sale_piutangs')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-         return redirect()->route('salesPiutang.index')->with('success', 'Semua data telah dihapus');
-     }
+        return redirect()->route('salesPiutang.index')->with('success', 'Semua data telah dihapus');
+    }
     public function index(Request $request)
     {
         $search = $request->input('search');
@@ -39,7 +39,7 @@ class SalePiutangController extends Controller
                     ->orWhere('kode_salesman', 'like', '%' . $search . '%')
                     ->orWhere('nama_salesman', 'like', '%' . $search . '%');
             })
-            ->paginate(10);
+            ->get();
 
         return view('owner.pages.sales.index', compact('piutangSales'));
     }
@@ -187,4 +187,3 @@ class SalePiutangController extends Controller
         return $export;
     }
 }
-

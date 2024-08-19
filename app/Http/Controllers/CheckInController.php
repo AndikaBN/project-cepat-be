@@ -15,7 +15,7 @@ class CheckInController extends Controller
         $checkins = CheckIn::selectRaw('user_id, DATE(created_at) as date, MAX(created_at) as latest_checkin')
             ->groupBy('user_id', 'date')
             ->orderBy('latest_checkin', 'desc')
-            ->paginate(10);
+            ->get();
 
         return view('owner.pages.checkins.index', compact('checkins'));
     }

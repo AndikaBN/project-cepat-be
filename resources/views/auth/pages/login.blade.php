@@ -1,6 +1,6 @@
 @extends('auth.layouts.app')
 
-@section('title', 'Login Admin Resto')
+@section('title', 'Login Admin Mitra')
 
 @push('style')
     <!-- CSS Libraries -->

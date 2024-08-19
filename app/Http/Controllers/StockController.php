@@ -26,7 +26,7 @@ class StockController extends Controller
                     ->orWhere('keterangan_isi_2', 'like', '%' . $search . '%')
                     ->orWhere('harga_dalam_kota', 'like', '%' . $search . '%');
             })
-            ->paginate(10);
+            ->get();
         return view('marketings.pages.stocks.index', compact('stocks'));
     }
 

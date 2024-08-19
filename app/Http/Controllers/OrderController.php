@@ -16,7 +16,7 @@ class OrderController extends Controller
                 $query->where('kode_order', 'like', '%' . $kode_order . '%')
                       ->orWhere('data_otlets_id', 'like', '%' . $kode_order . '%');
             })
-            ->paginate(10);
+            ->get();
         return view('inputers.pages.orders.index', compact('orders'));
     }
 

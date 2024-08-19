@@ -17,7 +17,7 @@ class TagihanController extends Controller
                 $query->where('nama_outlet', 'like', '%' . $nama_outlet . '%')
                     ->orWhere('nomor_nota', 'like', '%' . $nama_outlet . '%');
             })
-            ->paginate(10);
+            ->get();
         return view('owner.pages.tagihan.index', compact('tagihan'));
     }
 
