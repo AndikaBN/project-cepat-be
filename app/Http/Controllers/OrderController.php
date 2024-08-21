@@ -14,7 +14,11 @@ class OrderController extends Controller
         $orders = Order::with('stock')
             ->when($request->input('kode_order'), function ($query, $kode_order) {
                 $query->where('kode_order', 'like', '%' . $kode_order . '%')
-                      ->orWhere('data_otlets_id', 'like', '%' . $kode_order . '%');
+                    ->orWhere('data_otlets_id', 'like', '%' . $kode_order . '%')
+                    ->orWhere('stocks_id', 'like', '%' . $kode_order . '%')
+                    ->orWhere('kode_salesman', 'like', '%' . $kode_order . '%')
+                    ->orWhere('nama_salesman', 'like', '%' . $kode_order . '%')
+                ;
             })
             ->paginate(10);
         return view('inputers.pages.orders.index', compact('orders'));

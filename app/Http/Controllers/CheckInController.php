@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\CheckIn;
 use App\Models\User;
 use App\Models\Toko;
+use App\Models\Order;
+use App\Models\Tagihan;
 
 class CheckInController extends Controller
 {
@@ -44,19 +46,38 @@ class CheckInController extends Controller
     {
         $date = $request->input('date');
 
-        $query = CheckIn::where('user_id', $userId);
+        $query = CheckIn::where('user_id', $userId)
+            ->selectRaw('location_id, outlet_name, MIN(created_at) as first_checkin, MAX(created_at) as last_checkout, latitude, longitude')
+            ->whereDate('created_at', $date)
+            ->groupBy('location_id', 'outlet_name', 'latitude', 'longitude')
+            ->orderBy('first_checkin', 'asc');
 
-        if ($date) {
-            $query->whereDate('created_at', $date);
-        }
-
-        $checkins = $query->select('latitude', 'longitude', 'created_at')->get();
+        $checkins = $query->get();
         $user = User::find($userId);
-
         $tokos = Toko::select('latitude', 'longitude', 'nama_toko', 'area')->get();
+
+        // Tambahkan kolom urutan kunjungan
+        $checkins = $checkins->map(function ($checkin, $index) use ($date, $userId) {
+            $checkin->visit_order = $index + 1; // Urutan kunjungan
+
+            // Mengambil jumlah transaksi
+            $checkin->total_orders = Order::where('data_otlets_id', $checkin->location_id)
+                ->whereDate('created_at', $date)
+                ->count();
+
+            // Mengambil jumlah tagihan
+            $checkin->total_billing = Tagihan::where('user_id', $userId)
+                ->where('nama_outlet', $checkin->outlet_name)
+                ->whereDate('created_at', $date)
+                ->sum('jumlah_tagihan');
+
+            return $checkin;
+        });
 
         return view('owner.pages.checkins.maps', compact('checkins', 'user', 'date', 'tokos'));
     }
+
+
 
     public function viewMapsByUserId($userId)
     {

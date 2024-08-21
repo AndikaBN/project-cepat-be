@@ -7,8 +7,8 @@
     <title>Laravel Leaflet Maps</title>
     <style>
         #map {
-            width: 100%;
-            height: 500px;
+            width: 100vw;
+            height: 100vh;
         }
     </style>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
@@ -35,11 +35,29 @@
             checkins.forEach(function(checkin) {
                 // Create a marker for each check-in
                 var marker = L.marker([checkin.latitude, checkin.longitude]).addTo(map);
-                // Bind a popup to the marker displaying latitude and longitude
-                marker.bindPopup(`<b>Latitude:</b> ${checkin.latitude}<br><b>Longitude:</b> ${checkin.longitude}`);
+
+                // Extract the check-in and check-out times
+                var checkInTime = new Date(checkin.first_checkin).toLocaleTimeString();
+                var checkOutTime = new Date(checkin.last_checkout).toLocaleTimeString();
+
+                // Tambahkan informasi urutan kunjungan
+                var visitOrder = `Kunjungan ${checkin.visit_order}`;
+
+                // Bind a popup to the marker displaying check-in and check-out times with visit order
+                marker.bindPopup(`
+            <b>${visitOrder}</b><br>
+            <b>Outlet:</b> ${checkin.outlet_name}<br>
+            <b>Jam Check-in:</b> ${checkInTime}<br>
+            <b>Jam Check-out:</b> ${checkOutTime}<br>
+            
+            <b>Jumlah Transaksi:</b> ${checkin.total_orders}<br>
+            <b>Jumlah Tagihan:</b> Rp${checkin.total_billing.toLocaleString()}
+        `);
+
                 // Add the marker position to the latlngs array
                 latlngs.push([checkin.latitude, checkin.longitude]);
             });
+
             // Create a polyline connecting all the markers
             if (latlngs.length > 1) {
                 var polyline = L.polyline(latlngs, {
@@ -52,7 +70,9 @@
         function addTokoMarkers(tokos) {
             tokos.forEach(function(toko) {
                 // Create a marker for each toko
-                var marker = L.marker([toko.latitude, toko.longitude], { icon: redIcon }).addTo(map);
+                var marker = L.marker([toko.latitude, toko.longitude], {
+                    icon: redIcon
+                }).addTo(map);
                 // Bind a popup to the marker displaying toko information
                 marker.bindPopup(`<b>Nama Toko:</b> ${toko.nama_toko}<br><b>Area:</b> ${toko.area}`);
             });
