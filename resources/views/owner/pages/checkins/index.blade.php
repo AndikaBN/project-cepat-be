@@ -75,9 +75,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="float-right">
-                                    {{ $checkins->withQueryString()->links() }}
-                                </div>
+                                
                             </div>
                         </div>
                     </div>

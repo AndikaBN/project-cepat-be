@@ -20,7 +20,7 @@ class OrderController extends Controller
                     ->orWhere('nama_salesman', 'like', '%' . $kode_order . '%')
                 ;
             })
-            ->paginate(10);
+            ->get();
         return view('inputers.pages.orders.index', compact('orders'));
     }
 

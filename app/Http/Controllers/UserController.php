@@ -18,7 +18,7 @@ class UserController extends Controller
                 $query->where('name', 'like', '%' . $name . '%')
                     ->orWhere('email', 'like', '%' . $name . '%');
             })
-            ->paginate(10);
+            ->get();
         return view('owner.pages.users.index', compact('users'));
     }
 

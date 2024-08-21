@@ -88,9 +88,7 @@
                                         @endforeach
                                     </table>
                                 </div>
-                                <div class="float-right">
-                                    {{ $outlets->withQueryString()->links() }}
-                                </div>
+                               
                             </div>
                         </div>
                     </div>

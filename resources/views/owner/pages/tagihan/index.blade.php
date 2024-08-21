@@ -107,9 +107,7 @@
                                         @endforeach
                                     </table>
                                 </div>
-                                <div class="float-right">
-                                    {{ $tagihan->withQueryString()->links() }}
-                                </div>
+                                
                             </div>
                         </div>
                     </div>

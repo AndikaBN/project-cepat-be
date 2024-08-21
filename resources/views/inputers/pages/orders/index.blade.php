@@ -85,6 +85,59 @@
                                         <button class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus order ini?')">Hapus</button>
                                     </form>
                                 </div>
+<<<<<<< HEAD
+=======
+
+                                <div class="clearfix mb-3"></div>
+
+                                <div class="table-responsive">
+                                    <table class="table-striped table">
+
+                                        <tr>
+                                            <th>Kode Order</th>
+                                            <th>Kode Salesman</th>
+                                            <th>Nama Salesman</th>
+                                            <th>Nama Barang</th>
+                                            <th>Harga Dalam Kota</th>
+                                            <th>Quantity</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        @foreach ($orders as $order)
+                                            <tr>
+                                                <td>{{ $order->kode_order }}</td>
+                                                <td>{{ $order->kode_salesman }}</td>
+                                                <td>{{ $order->nama_salesman }}</td>
+                                                @if ($order->stock)
+                                                    <td>{{ $order->stock->nama_barang }}</td>
+                                                    <td>{{ $order->stock->harga_dalam_kota }}</td>
+                                                @else
+                                                    <td>Data tidak tersedia</td>
+                                                    <td>Data tidak tersedia</td>
+                                                @endif
+                                                <td>{{ $order->quantity }}</td>
+                                                <td>{{ $order->status }}</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-center">
+                                                        {{-- <a href='{{ route('orders.edit', $order->id) }}'
+                                                            class="btn btn-sm btn-info btn-icon">
+                                                            <i class="fas fa-edit"></i> Edit
+                                                        </a> --}}
+                                                        <form action="{{ route('orders.destroy', $order->id) }}"
+                                                            method="POST" class="ml-2">
+                                                            @method('DELETE')
+                                                            @csrf
+                                                            <button class="btn btn-sm btn-danger btn-icon confirm-delete">
+                                                                <i class="fas fa-times"></i> Delete
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </table>
+                                </div>
+>>>>>>> 7a43c307088b57c028345ed80753ca3e69b5d8a5
                             </div>
                         </div>
                     @endforeach

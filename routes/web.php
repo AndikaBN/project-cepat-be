@@ -52,7 +52,7 @@ Route::middleware(['auth', 'role:kolektor,owner'])->group(function () {
 // create route fot role marketing
 Route::middleware(['auth', 'role:marketing,owner'])->group(function () {
     Route::get('marketing', function () {
-        return view('marketing.pages.dashboard');
+        return view('marketings.pages.dashboard');
     })->name('marketing');
 
     Route::resource('stock', StockController::class);
