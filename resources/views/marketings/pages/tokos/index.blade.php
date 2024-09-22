@@ -31,6 +31,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
+                                <a href="{{ route('toko.export') }}" class="btn btn-primary">Export Data</a>
                                 <div class="float-right">
                                     <form method="GET" action="{{ route('toko.index') }}">
                                         <div class="input-group">
@@ -51,6 +52,7 @@
                                             <th>Latitude</th>
                                             <th>Longitude</th>
                                             <th>Area</th>
+                                            <th>Daerah</th>
                                             <th>Action</th>
                                         </tr>
                                         @foreach ($tokos as $toko)
@@ -59,6 +61,7 @@
                                                 <td>{{ $toko->latitude }}</td>
                                                 <td>{{ $toko->longitude }}</td>
                                                 <td>{{ $toko->area }}</td>
+                                                <td>{{ $toko->daerah }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <a href="{{ route('toko.edit', $toko->id) }}"
@@ -73,8 +76,29 @@
                                                 </td>
                                             </tr>
                                         @endforeach
+
+                                        {{-- create pagination --}}
+                                        <tr>
+                                            <td colspan="5">
+                                                {{ $tokos->links() }}
+                                            </td>
+                                        </tr>
                                     </table>
                                 </div>
+
+                                {{-- create form import --}}
+                                <div class="float-right">
+                                    <form action="{{ route('toko.import') }}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="input-group">
+                                            <input type="file" class="form-control" name="file">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary">Import</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

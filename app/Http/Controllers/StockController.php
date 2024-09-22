@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Stock;
+use App\Models\stock;
 use App\Imports\StockImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\StockExport;
@@ -26,7 +26,7 @@ class StockController extends Controller
                     ->orWhere('keterangan_isi_2', 'like', '%' . $search . '%')
                     ->orWhere('harga_dalam_kota', 'like', '%' . $search . '%');
             })
-            ->get();
+            ->paginate(10);
         return view('marketings.pages.stocks.index', compact('stocks'));
     }
 

@@ -58,6 +58,8 @@ Route::middleware(['auth', 'role:marketing,owner'])->group(function () {
     Route::resource('stock', StockController::class);
     Route::get('/stocks/truncate', [StockController::class, 'truncateTable'])->name('stocks.truncate');
     Route::resource('toko', TokoController::class);
+    Route::get('export/toko', [TokoController::class, 'export'])->name('toko.export');
+    Route::post('import/toko', [TokoController::class, 'import'])->name('toko.import');
     Route::get('export/stock', [StockController::class, 'export'])->name('stock.export');
     Route::post('import/stock', [StockController::class, 'import'])->name('stock.import');
 

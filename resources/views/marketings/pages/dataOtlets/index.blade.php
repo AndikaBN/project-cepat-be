@@ -54,20 +54,6 @@
                                     </form>
                                 </div>
 
-                                <div class="float-right" style="margin-right: 10px">
-                                    <form method="POST" action="{{ route('dataOtlet.import') }}"
-                                        enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="input-group">
-                                            <input type="file" class="form-control" name="file">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary"><i class="fas fa-upload"></i>
-                                                    Import</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-
                                 <div class="clearfix mb-3"></div>
 
                                 <div class="table-responsive">
@@ -119,11 +105,29 @@
                                                 </td>
                                             </tr>
                                         @endforeach
+
+                                        <tr>
+                                            <td colspan="9">
+                                                {{ $dataOtlets->links() }}
+                                            </td>
+                                        </tr>
                                     </table>
                                 </div>
 
                                 {{-- create form import --}}
-                                
+                                <div class="float-right">
+                                    <form method="POST" action="{{ route('dataOtlet.import') }}"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="input-group">
+                                            <input type="file" class="form-control" name="file">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary"><i class="fas fa-upload"></i>
+                                                    Import</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>

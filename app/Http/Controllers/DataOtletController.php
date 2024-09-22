@@ -43,7 +43,7 @@ class DataOtletController extends Controller
                     ->orWhere('nama_npwp', 'like', '%' . $search . '%')
                     ->orWhere('alamat_npwp', 'like', '%' . $search . '%');
             })
-            ->get();
+            ->paginate(10);
 
         return view('marketings.pages.dataOtlets.index', compact('dataOtlets'));
     }

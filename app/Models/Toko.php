@@ -14,5 +14,6 @@ class Toko extends Model
         'latitude',
         'longitude',
         'area',
+        'daerah'
     ];
 }

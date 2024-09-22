@@ -10,19 +10,55 @@ class OrderController extends Controller
 {
     //index
     public function index(Request $request)
-    {
-        $orders = Order::with('stock')
-            ->when($request->input('kode_order'), function ($query, $kode_order) {
-                $query->where('kode_order', 'like', '%' . $kode_order . '%')
-                    ->orWhere('data_otlets_id', 'like', '%' . $kode_order . '%')
-                    ->orWhere('stocks_id', 'like', '%' . $kode_order . '%')
-                    ->orWhere('kode_salesman', 'like', '%' . $kode_order . '%')
-                    ->orWhere('nama_salesman', 'like', '%' . $kode_order . '%')
-                ;
-            })
-            ->get();
-        return view('inputers.pages.orders.index', compact('orders'));
+{
+    // Ambil tahun dan bulan dari input atau gunakan tahun dan bulan saat ini
+    $year = $request->input('year', now()->year);
+    $month = $request->input('month', now()->month);
+    $daysInMonth = \Carbon\Carbon::create($year, $month)->daysInMonth;
+
+    // Query dengan filter nama customer dan kode order
+    $orders = Order::with('outlet', 'stock')
+        ->when($request->input('kode_order'), function ($query, $kode_order) {
+            $query->where('kode_order', 'like', '%' . $kode_order . '%')
+                  ->orWhere('data_otlets_id', 'like', '%' . $kode_order . '%');
+        })
+        ->when($request->input('day'), function ($query, $day) use ($month, $year) {
+            $query->whereYear('created_at', $year)
+                  ->whereMonth('created_at', $month)
+                  ->whereDay('created_at', $day);
+        }, function ($query) use ($month, $year) {
+            $query->whereYear('created_at', $year)
+                  ->whereMonth('created_at', $month);
+        })
+        ->get();
+
+    // Hitung total pembelian per customer
+    $customerTotals = $orders->groupBy('data_otlets_id')->map(function ($orders) {
+        return $orders->sum(function ($order) {
+            // Ensure harga_dalam_kota and quantity are numeric
+            $hargaDalamKota = floatval($order->harga_dalam_kota);
+            $quantity = floatval($order->quantity);
+
+            return $hargaDalamKota * $quantity; // Total amount per order
+        });
+    });
+
+    // Hitung total pembelian per salesman
+    $totalPurchasePerSalesman = [];
+    foreach ($orders->groupBy('nama_salesman') as $salesman => $salesOrders) {
+        $totalPurchasePerSalesman[$salesman] = $salesOrders->groupBy('data_otlets_id')->map(function ($customerOrders) use ($customerTotals) {
+            return $customerTotals->get($customerOrders->first()->data_otlets_id, 0);
+        })->sum();
     }
+
+    // Hitung total purchase amount keseluruhan
+    $totalPurchaseAmount = array_sum($totalPurchasePerSalesman);
+
+    return view('inputers.pages.orders.index', compact('orders', 'daysInMonth', 'month', 'year', 'customerTotals', 'totalPurchasePerSalesman', 'totalPurchaseAmount'));
+}
+
+
+
 
     public function create()
     {

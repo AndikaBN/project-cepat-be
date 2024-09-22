@@ -6,18 +6,23 @@ use Illuminate\Http\Request;
 use App\Models\CheckIn;
 use App\Models\User;
 use App\Models\Toko;
-use App\Models\Order;
-use App\Models\Tagihan;
+use Carbon\Carbon;
+
 
 class CheckInController extends Controller
 {
     // index
     public function index()
     {
-        $checkins = CheckIn::selectRaw('user_id, DATE(created_at) as date, MAX(created_at) as latest_checkin')
-            ->groupBy('user_id', 'date')
+        $checkins = CheckIn::selectRaw('user_id, created_at, updated_at, DATE(created_at) as date, MAX(created_at) as latest_checkin')
+            ->groupBy('user_id', 'date', 'created_at', 'updated_at')
             ->orderBy('latest_checkin', 'desc')
-            ->get();
+            ->paginate(10);
+
+        $checkins->transform(function ($checkin) {
+            $checkin->duration = Carbon::parse($checkin->created_at)->diffInMinutes(Carbon::parse($checkin->updated_at));
+            return $checkin;
+        });
 
         return view('owner.pages.checkins.index', compact('checkins'));
     }
@@ -45,38 +50,18 @@ class CheckInController extends Controller
     public function userCheckinLocations($userId, Request $request)
     {
         $date = $request->input('date');
+        $query = CheckIn::where('user_id', $userId);
+        if ($date) {
+            $query->whereDate('created_at', $date);
+        }
 
-        $query = CheckIn::where('user_id', $userId)
-            ->selectRaw('location_id, outlet_name, MIN(created_at) as first_checkin, MAX(created_at) as last_checkout, latitude, longitude')
-            ->whereDate('created_at', $date)
-            ->groupBy('location_id', 'outlet_name', 'latitude', 'longitude')
-            ->orderBy('first_checkin', 'asc');
-
-        $checkins = $query->get();
+        $checkins = $query->select('latitude', 'longitude', 'created_at', 'updated_at', 'outlet_name')->get();
         $user = User::find($userId);
-        $tokos = Toko::select('latitude', 'longitude', 'nama_toko', 'area')->get();
 
-        // Tambahkan kolom urutan kunjungan
-        $checkins = $checkins->map(function ($checkin, $index) use ($date, $userId) {
-            $checkin->visit_order = $index + 1; // Urutan kunjungan
-
-            // Mengambil jumlah transaksi
-            $checkin->total_orders = Order::where('data_otlets_id', $checkin->location_id)
-                ->whereDate('created_at', $date)
-                ->count();
-
-            // Mengambil jumlah tagihan
-            $checkin->total_billing = Tagihan::where('user_id', $userId)
-                ->where('nama_outlet', $checkin->outlet_name)
-                ->whereDate('created_at', $date)
-                ->sum('jumlah_tagihan');
-
-            return $checkin;
-        });
+        $tokos = Toko::select('latitude', 'longitude', 'nama_toko', 'area', 'daerah')->get();
 
         return view('owner.pages.checkins.maps', compact('checkins', 'user', 'date', 'tokos'));
     }
-
 
 
     public function viewMapsByUserId($userId)

@@ -29,14 +29,4 @@ class CheckIn extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-    public function orders()
-    {
-        return $this->hasMany(Order::class, 'data_otlets_id', 'data_otlets_id');
-    }
-    
-    public function tagihans()
-    {
-        return $this->hasMany(Tagihan::class, 'user_id', 'user_id');
-    }
 }

@@ -3,23 +3,43 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tagihan;
-
+use Carbon\Carbon; // Include Carbon for date handling
 use Illuminate\Http\Request;
 
 class TagihanController extends Controller
 {
     //index
-    public function index( Request $request)
-    {
+   public function index(Request $request)
+{
+    // Get the selected year or default to the current year
+    $year = $request->input('year', now()->year);
 
-        $tagihan = Tagihan::with('user')
-            ->when($request->input('nama_outlet'), function ($query, $nama_outlet) {
-                $query->where('nama_outlet', 'like', '%' . $nama_outlet . '%')
-                    ->orWhere('nomor_nota', 'like', '%' . $nama_outlet . '%');
-            })
-            ->get();
-        return view('owner.pages.tagihan.index', compact('tagihan'));
-    }
+    // Get the selected month or default to the current month
+    $month = $request->input('month', now()->month);
+
+    // Get the number of days in the selected month
+    $daysInMonth = Carbon::create($year, $month)->daysInMonth;
+
+    // Query the Tagihan model with the necessary filters
+    $tagihan = Tagihan::with('user')
+        ->when($request->input('nama_outlet'), function ($query, $nama_outlet) {
+            $query->where('nama_outlet', 'like', '%' . $nama_outlet . '%')
+                  ->orWhere('nomor_nota', 'like', '%' . $nama_outlet . '%');
+        })
+        ->when($request->input('day'), function ($query, $day) use ($month, $year) {
+            $query->whereYear('created_at', $year)
+                  ->whereMonth('created_at', $month)
+                  ->whereDay('created_at', $day);
+        }, function ($query) use ($month, $year) {
+            $query->whereYear('created_at', $year)
+                  ->whereMonth('created_at', $month);
+        })
+        ->get();
+
+    // Pass the tagihan data and daysInMonth to the view
+    return view('owner.pages.tagihan.index', compact('tagihan', 'daysInMonth', 'month', 'year'));
+}
+
 
     //create
     public function create()

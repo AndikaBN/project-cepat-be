@@ -23,7 +23,7 @@ class Order extends Model
 
     public function stock()
     {
-        return $this->belongsTo(Stock::class, 'stocks_id');
+        return $this->belongsTo(stock::class, 'stocks_id');
     }
 
     public function outlet()

@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TokosExport;
 use Illuminate\Http\Request;
 use App\Models\Toko;
+use App\Imports\TokosImport;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TokoController extends Controller
 {
@@ -11,11 +15,7 @@ class TokoController extends Controller
     public function index(Request $request)
     {
 
-        $tokos = Toko::when($request->input('nama_toko'), function ($query, $nama_toko) {
-            $query->where('nama_toko', 'like', '%' . $nama_toko . '%')
-                ->orWhere('area', 'like', '%' . $nama_toko . '%');
-        })->get();
-
+        $tokos = Toko::paginate(10);
         return view('marketings.pages.tokos.index', compact('tokos'));
     }
 
@@ -32,6 +32,7 @@ class TokoController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'area' => 'required|string|max:255',
+            'daerah' => 'required|string|max:255'
         ]);
 
         Toko::create([
@@ -39,6 +40,7 @@ class TokoController extends Controller
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'area' => $request->area,
+            'daerah' => $request->daerah,
         ]);
 
         return redirect()->route('toko.index')->with('success', 'Toko berhasil ditambahkan.');
@@ -53,10 +55,11 @@ class TokoController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama_toko' =>'required|string|max:255',
+            'nama_toko' => 'required|string|max:255',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'area' => 'required|string|max:255',
+            'daerah' => 'required|string|max:255',
         ]);
 
         $toko = Toko::find($id);
@@ -78,5 +81,23 @@ class TokoController extends Controller
         return redirect()->route('toko.index')->with('success', 'Toko berhasil dihapus.');
     }
 
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx',
+        ]);
 
+        Excel::import(new TokosImport, $request->file('file'));
+
+        return redirect()->back()->with('success', 'Data imported successfully!');
+    }
+
+    public function export()
+    {
+        $export = Excel::download(new TokosExport, 'toko_customer.xlsx');
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('tokos')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        return $export;
+    }
 }

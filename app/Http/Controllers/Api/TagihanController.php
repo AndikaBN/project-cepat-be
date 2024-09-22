@@ -63,18 +63,12 @@ class TagihanController extends Controller
     {
         //validate the request...
         $request->validate([
-            'user_id' => 'required',
-            'nama_outlet' => 'required',
-            'nomor_nota' => 'required',
             'jumlah_tagihan' => 'required|numeric',
             'status' => 'required'
         ]);
 
         //store the request...
         $tagihan = Tagihan::find($id);
-        $tagihan->user_id = $request->user_id;
-        $tagihan->nama_outlet = $request->nama_outlet;
-        $tagihan->nomor_nota = $request->nomor_nota;
         $tagihan->jumlah_tagihan = $request->jumlah_tagihan;
         $tagihan->status = $request->status;
         $tagihan->save();

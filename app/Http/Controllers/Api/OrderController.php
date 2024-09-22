@@ -23,14 +23,15 @@ class OrderController extends Controller
                 'nama_barang' => $order->nama_barang,
                 'harga_dalam_kota' => $order->harga_dalam_kota,
                 'quantity' => $order->quantity,
+                'status' => $order->status,
                 'created_at' => $order->created_at,
                 'updated_at' => $order->updated_at,
             ];
         });
 
         return response()->json([
-            'message' => 'success',
-            'data' => $orders,
+            'message' => 'Status update success',
+            'data' => $orders
         ], 200);
     }
 

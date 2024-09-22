@@ -48,8 +48,6 @@
 
                             <div class="card-body">
 
-                                
-
                                 {{-- create button export --}}
 
                                 <div class="float-right">
@@ -58,20 +56,6 @@
                                             <input type="text" class="form-control" placeholder="Search" name="search">
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary"><i class="fas fa-search"></i></button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-
-                                <div class="float-right" style="margin-right: 10px">
-                                    <form method="POST" action="{{ route('salesPiutang.import') }}"
-                                        enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="input-group">
-                                            <input type="file" class="form-control" name="file">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary"><i class="fas fa-upload"></i>
-                                                    Import</button>
                                             </div>
                                         </div>
                                     </form>
@@ -145,12 +129,27 @@
                                         @endforeach
 
                                         {{-- create pagination --}}
-                                        {{-- <tr>
+                                        <tr>
                                             <td colspan="9">
                                                 {{ $piutangSales->links() }}
                                             </td>
-                                        </tr> --}}
+                                        </tr>
                                     </table>
+                                </div>
+
+                                {{-- create form import --}}
+                                <div class="float-right">
+                                    <form method="POST" action="{{ route('salesPiutang.import') }}"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="input-group">
+                                            <input type="file" class="form-control" name="file">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary"><i class="fas fa-upload"></i>
+                                                    Import</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

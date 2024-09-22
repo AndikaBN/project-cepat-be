@@ -5,15 +5,13 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cookie;
 
 class RoleMiddleware
 {
     public function handle(Request $request, Closure $next, ...$roles)
     {
         if (!auth()->check()) {
-            return redirect()->route('/');
+            return redirect()->route('login');
         }
 
         foreach ($roles as $role) {
@@ -34,10 +32,6 @@ class RoleMiddleware
             }
         }
 
-        // Hapus cookie login saat user tidak memiliki akses
-        Auth::logout();
-        Cookie::queue(Cookie::forget('laravel_session'));
-
-        return abort(403, 'anda tidak memiliki akses');
+        return abort(403, 'Unauthorized');
     }
 }

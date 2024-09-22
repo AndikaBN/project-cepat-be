@@ -9,7 +9,6 @@
         .text-center {
             text-align: center;
         }
-
         #map {
             width: 100%;
             height: 90vh;
@@ -52,6 +51,10 @@
                         <div class="form-group">
                             <label for="modalArea">Area</label>
                             <input type="text" class="form-control" id="modalArea" name="area" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="modalDaerah">Daerah</label>
+                            <input type="text" class="form-control" id="modalDaerah" name="daerah" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan Toko</button>
                     </form>

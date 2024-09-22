@@ -24,6 +24,7 @@ class TokoController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'area' => 'required|string|max:255',
+            'daerah' => 'required|string|max:255',
         ]);
 
         $toko = Toko::create([
@@ -31,6 +32,7 @@ class TokoController extends Controller
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'area' => $request->area,
+            'daerah' => $request->daerah,
         ]);
 
         return response()->json(['success' => 'Toko berhasil ditambahkan.', 'toko' => $toko], 201);
@@ -51,6 +53,7 @@ class TokoController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'area' => 'required|string|max:255',
+            'daerah' => 'required|string|max:255',
         ]);
 
         $toko = Toko::findOrFail($id);
@@ -59,6 +62,7 @@ class TokoController extends Controller
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'area' => $request->area,
+            'daerah' => $request->daerah,
         ]);
 
         return response()->json(['success' => 'Toko berhasil diubah.', 'toko' => $toko]);

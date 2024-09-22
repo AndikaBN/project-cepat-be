@@ -53,7 +53,6 @@
                                             <tr>
                                                 <th>Nama Sales</th>
                                                 <th>Tanggal</th>
-                                                {{-- <th>Action</th> --}}
                                                 <th>View Maps</th>
                                             </tr>
                                         </thead>
@@ -75,7 +74,9 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                
+                                <div class="float-right">
+                                    {{ $checkins->withQueryString()->links() }}
+                                </div>
                             </div>
                         </div>
                     </div>
