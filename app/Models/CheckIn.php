@@ -18,6 +18,7 @@ class CheckIn extends Model
         'longitude',
         'data_otlets_id',
         'outlet_name',
+        'image'
     ];
 
     public function data_otlets()

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CheckIn;
+use Illuminate\Support\Facades\Storage;
 
 class CheckInController extends Controller
 {
@@ -20,9 +21,10 @@ class CheckInController extends Controller
             'longitude' => 'required',
             'data_otlets_id' => 'required',
             'outlet_name' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Validasi untuk gambar
         ]);
 
-        $checkin = CheckIn::create([
+        $checkinData = [
             'user_id' => $request->user_id,
             'location_id' => $request->location_id,
             'day' => $request->day,
@@ -31,14 +33,22 @@ class CheckInController extends Controller
             'longitude' => $request->longitude,
             'data_otlets_id' => $request->data_otlets_id,
             'outlet_name' => $request->outlet_name,
-        ]);
+        ];
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $path = $file->store('images/checkins', 'public');
+            $checkinData['image'] = $path;
+        }
+
+        $checkin = CheckIn::create($checkinData);
 
         return response()->json([
             'message' => 'Checkin created',
             'data' => $checkin,
-        ] , 200);
+        ], 200);
     }
-
 
     //api get checkin
     public function getCheckin()
@@ -48,7 +58,7 @@ class CheckInController extends Controller
         return response()->json([
             'message' => 'Success',
             'data' => $checkin,
-        ] , 200);
+        ], 200);
     }
 
     //api get checkin by id
@@ -59,13 +69,13 @@ class CheckInController extends Controller
         if (!$checkin) {
             return response()->json([
                 'message' => 'Checkin not found',
-            ] , 404);
+            ], 404);
         }
 
         return response()->json([
             'message' => 'Success',
             'data' => $checkin,
-        ] , 200);
+        ], 200);
     }
 
     //api update checkin
@@ -80,6 +90,7 @@ class CheckInController extends Controller
             'longitude' => 'required',
             'data_otlets_id' => 'required',
             'outlet_name' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Validasi untuk gambar
         ]);
 
         $checkin = CheckIn::find($id);
@@ -87,7 +98,7 @@ class CheckInController extends Controller
         if (!$checkin) {
             return response()->json([
                 'message' => 'Checkin not found',
-            ] , 404);
+            ], 404);
         }
 
         $checkin->location_id = $request->location_id;
@@ -97,12 +108,24 @@ class CheckInController extends Controller
         $checkin->longitude = $request->longitude;
         $checkin->data_otlets_id = $request->data_otlets_id;
         $checkin->outlet_name = $request->outlet_name;
+
+        // Handle image upload for update
+        if ($request->hasFile('image')) {
+            // Delete the old image if it exists
+            if ($checkin->image) {
+                Storage::disk('public')->delete($checkin->image);
+            }
+            $file = $request->file('image');
+            $path = $file->store('images/checkins', 'public');
+            $checkin->image = $path;
+        }
+
         $checkin->save();
 
         return response()->json([
             'message' => 'Checkin updated',
             'data' => $checkin,
-        ] , 200);
+        ], 200);
     }
 
     //api delete checkin
@@ -113,13 +136,18 @@ class CheckInController extends Controller
         if (!$checkin) {
             return response()->json([
                 'message' => 'Checkin not found',
-            ] , 404);
+            ], 404);
+        }
+
+        // Delete image if exists
+        if ($checkin->image) {
+            Storage::disk('public')->delete($checkin->image);
         }
 
         $checkin->delete();
 
         return response()->json([
             'message' => 'Checkin deleted',
-        ] , 200);
+        ], 200);
     }
 }

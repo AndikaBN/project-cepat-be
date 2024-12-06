@@ -35,7 +35,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="modalForm" method="POST" action="{{ route('toko.update', $toko->id) }}">
+                    <form id="modalForm" method="POST" action="{{ route('toko.update', $toko->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
@@ -57,6 +57,13 @@
                         <div class="form-group">
                             <label for="modalDaerah">Daerah</label>
                             <input type="text" class="form-control" id="modalDaerah" name="daerah" value="{{ $toko->daerah }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="modalImage">Gambar Toko</label>
+                            <input type="file" class="form-control-file" id="modalImage" name="image">
+                            @if ($toko->image)
+                                <img src="{{ asset($toko->image) }}" alt="Gambar Toko" class="img-fluid mt-3">
+                            @endif
                         </div>
                         <button type="submit" class="btn btn-primary">Update Toko</button>
                     </form>
@@ -93,6 +100,7 @@
 
         map.on('click', function(e) {
             const { lat, lng } = e.latlng;
+            marker.setLatLng(e.latlng);  // Update marker position
             document.getElementById('modalLatitude').value = lat;
             document.getElementById('modalLongitude').value = lng;
             $('#tokoModal').modal('show');
@@ -111,6 +119,7 @@
             document.getElementById('modalLongitude').value = marker.getLatLng().lng;
             document.getElementById('modalNamaToko').value = '{{ $toko->nama_toko }}';
             document.getElementById('modalArea').value = '{{ $toko->area }}';
+            document.getElementById('modalDaerah').value = '{{ $toko->daerah }}';
         });
     </script>
 </body>

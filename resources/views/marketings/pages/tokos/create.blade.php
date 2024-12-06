@@ -9,6 +9,7 @@
         .text-center {
             text-align: center;
         }
+
         #map {
             width: 100%;
             height: 90vh;
@@ -23,8 +24,7 @@
     <h1 class='text-center'>Tambah Toko</h1>
     <div id='map'></div>
     <!-- Modal Bootstrap -->
-    <div class="modal fade" id="tokoModal" tabindex="-1" role="dialog" aria-labelledby="tokoModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="tokoModal" tabindex="-1" role="dialog" aria-labelledby="tokoModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -34,7 +34,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="modalForm" method="POST" action="{{ route('toko.store') }}">
+                    <form id="modalForm" method="POST" action="{{ route('toko.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="modalLatitude">Latitude</label>
@@ -56,13 +56,16 @@
                             <label for="modalDaerah">Daerah</label>
                             <input type="text" class="form-control" id="modalDaerah" name="daerah" required>
                         </div>
+                        <div class="form-group">
+                            <label for="modalImage">Gambar</label>
+                            <input type="file" class="form-control" id="modalImage" name="image" accept="image/*">
+                        </div>
                         <button type="submit" class="btn btn-primary">Simpan Toko</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -77,10 +80,7 @@
         }).addTo(map);
 
         map.on('click', function(e) {
-            const {
-                lat,
-                lng
-            } = e.latlng;
+            const { lat, lng } = e.latlng;
             document.getElementById('modalLatitude').value = lat;
             document.getElementById('modalLongitude').value = lng;
             $('#tokoModal').modal('show');

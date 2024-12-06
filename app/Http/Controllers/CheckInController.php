@@ -7,7 +7,7 @@ use App\Models\CheckIn;
 use App\Models\User;
 use App\Models\Toko;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Storage;
 
 class CheckInController extends Controller
 {
@@ -33,14 +33,14 @@ class CheckInController extends Controller
         return view('owner.pages.checkins.maps');
     }
 
-    // function view maps
+    // function view maps by id
     public function viewMapsById($id)
     {
         $checkin = CheckIn::find($id);
         return view('owner.pages.checkins.maps', compact('checkin'));
     }
 
-    // function view maps
+    // function view maps by day
     public function viewMapsByDay($day)
     {
         $checkins = CheckIn::where('day', $day)->get();
@@ -62,7 +62,6 @@ class CheckInController extends Controller
 
         return view('owner.pages.checkins.maps', compact('checkins', 'user', 'date', 'tokos'));
     }
-
 
     public function viewMapsByUserId($userId)
     {
@@ -95,5 +94,84 @@ class CheckInController extends Controller
         $checkin->delete();
 
         return redirect()->route('checkin.index')->with('success', 'Data deleted successfully');
+    }
+
+    // method untuk menambah check-in
+    public function store(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'location_id' => 'required|string',
+            'day' => 'required|string',
+            'status' => 'required|in:checkin,checkout',
+            'latitude' => 'required|string',
+            'longitude' => 'required|string',
+            'data_otlets_id' => 'required|exists:data_otlets,id',
+            'outlet_name' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+
+        $checkinData = $request->only([
+            'user_id',
+            'location_id',
+            'day',
+            'status',
+            'latitude',
+            'longitude',
+            'data_otlets_id',
+            'outlet_name'
+        ]);
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $path = $file->store('images/checkins', 'public');
+            $checkinData['image'] = $path;
+        }
+
+        CheckIn::create($checkinData);
+
+        return redirect()->route('checkin.index')->with('success', 'Check-in created successfully');
+    }
+
+    // method untuk mengupdate check-in
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'location_id' => 'required|string',
+            'day' => 'required|string',
+            'status' => 'required|in:checkin,checkout',
+            'latitude' => 'required|string',
+            'longitude' => 'required|string',
+            'data_otlets_id' => 'required|exists:data_otlets,id',
+            'outlet_name' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+
+        $checkin = CheckIn::findOrFail($id);
+
+        $checkinData = $request->only([
+            'user_id',
+            'location_id',
+            'day',
+            'status',
+            'latitude',
+            'longitude',
+            'data_otlets_id',
+            'outlet_name'
+        ]);
+
+        if ($request->hasFile('image')) {
+            if ($checkin->image) {
+                Storage::disk('public')->delete($checkin->image);
+            }
+            $file = $request->file('image');
+            $path = $file->store('images/checkins', 'public');
+            $checkinData['image'] = $path;
+        }
+
+        $checkin->update($checkinData);
+
+        return redirect()->route('checkin.index')->with('success', 'Check-in updated successfully');
     }
 }
