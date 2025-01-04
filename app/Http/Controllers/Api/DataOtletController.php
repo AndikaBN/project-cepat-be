@@ -68,12 +68,10 @@ class DataOtletController extends Controller
         $dataOtlet->alamat_npwp = $request->alamat_npwp;
         $dataOtlet->save();
 
-        // Menyimpan gambar KTP
         if ($request->hasFile('ktp')) {
             $ktp = $request->file('ktp');
-            $ktpName = time() . '.' . $ktp->getClientOriginalExtension();
-            $ktp->move(public_path('img/ktp'), $ktpName);
-            $dataOtlet->ktp = 'img/ktp/' . $ktpName;
+            $path = $ktp->store('img/ktp');
+            $dataOtlet->ktp = $path;
             $dataOtlet->save();
         }
 
@@ -139,9 +137,8 @@ class DataOtletController extends Controller
         // Menyimpan gambar KTP
         if ($request->hasFile('ktp')) {
             $ktp = $request->file('ktp');
-            $ktpName = time() . '.' . $ktp->getClientOriginalExtension();
-            $ktp->move(public_path('img/ktp'), $ktpName);
-            $dataOtlet->ktp = 'img/ktp/' . $ktpName;
+            $path = $ktp->store('img/ktp');
+            $dataOtlet->ktp = $path;
             $dataOtlet->save();
         }
 

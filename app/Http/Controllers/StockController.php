@@ -113,17 +113,18 @@ class StockController extends Controller
         return redirect()->route('stock.index')->with('success', 'Data updated successfully');
     }
 
-    //import excel
+    // Import excel
     public function import(Request $request)
     {
         $file = $request->file('file');
-        $file_name = $file->getClientOriginalName();
-        $file->move('files', $file_name);
 
-        Excel::import(new StockImport, public_path('/files/' . $file_name));
+        $path = $file->store('files_stock');
+
+        Excel::import(new StockImport, storage_path('app/' . $path));
 
         return redirect()->route('stock.index')->with('success', 'Data imported successfully');
     }
+
 
     public function destroy($id)
     {

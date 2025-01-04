@@ -30,7 +30,7 @@ class TokoController extends Controller
 
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images', 'public');
+            $imagePath = $request->file('image')->store('images_toko');
         }
 
         $toko = Toko::create([
@@ -67,14 +67,15 @@ class TokoController extends Controller
         $toko = Toko::findOrFail($id);
 
         if ($request->hasFile('image')) {
-            // Hapus gambar lama jika ada
+
             if ($toko->image) {
-                Storage::disk('public')->delete($toko->image);
+                Storage::delete($toko->image); 
             }
-            // Simpan gambar baru
-            $imagePath = $request->file('image')->store('images', 'public');
+           
+            $imagePath = $request->file('image')->store('images'); 
             $toko->image = $imagePath;
         }
+
 
         $toko->update([
             'nama_toko' => $request->nama_toko,

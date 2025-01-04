@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -110,12 +111,11 @@ class DataOtletController extends Controller
         $dataOtlets->alamat_npwp = $request->alamat_npwp;
         $dataOtlets->save();
 
-        // save image ktp
+        // Menyimpan gambar KTP
         if ($request->hasFile('ktp')) {
             $ktp = $request->file('ktp');
-            $filename = $dataOtlets->id . '.' . $ktp->getClientOriginalExtension();
-            $ktp->move(public_path('img/ktp'), $filename);
-            $dataOtlets->ktp = 'img/ktp/' . $filename;
+            $path = $ktp->store('img/ktp');
+            $dataOtlets->ktp = $path;
             $dataOtlets->save();
         }
 
@@ -193,9 +193,8 @@ class DataOtletController extends Controller
         // save image ktp
         if ($request->hasFile('ktp')) {
             $ktp = $request->file('ktp');
-            $filename = $dataOtlets->id . '.' . $ktp->getClientOriginalExtension();
-            $ktp->move(public_path('img/ktp'), $filename);
-            $dataOtlets->ktp = 'img/ktp/' . $filename;
+            $path = $ktp->store('img/ktp');
+            $dataOtlets->ktp = $path;
             $dataOtlets->save();
         }
 
@@ -214,10 +213,12 @@ class DataOtletController extends Controller
     public function import(Request $request)
     {
         $file = $request->file('file');
-        $file_name = $file->getClientOriginalName();
-        $file->move('files', $file_name);
 
-        Excel::import(new DataOtletImport, public_path('/files/' . $file_name));
+        // Simpan file ke folder storage/app/files
+        $path = $file->store('files_data_otlet');
+
+        // Import file menggunakan path dari Storage
+        Excel::import(new DataOtletImport, storage_path('app/' . $path));
 
         return redirect()->route('dataOtlet.index')->with('success', 'Data imported successfully');
     }
@@ -231,6 +232,7 @@ class DataOtletController extends Controller
         DB::table('data_otlets')->truncate();
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
         return $export;
     }
 }

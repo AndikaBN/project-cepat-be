@@ -35,10 +35,9 @@ class CheckInController extends Controller
             'outlet_name' => $request->outlet_name,
         ];
 
-        // Handle image upload
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $path = $file->store('images/checkins', 'public');
+            $path = $file->store('images/checkins');
             $checkinData['image'] = $path;
         }
 
@@ -57,7 +56,7 @@ class CheckInController extends Controller
 
         return response()->json([
             'message' => 'Success',
-            'data' => $checkin,
+            'data' => CheckIn::all(),
         ], 200);
     }
 
@@ -90,7 +89,7 @@ class CheckInController extends Controller
             'longitude' => 'required',
             'data_otlets_id' => 'required',
             'outlet_name' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Validasi untuk gambar
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
 
         $checkin = CheckIn::find($id);
@@ -101,6 +100,7 @@ class CheckInController extends Controller
             ], 404);
         }
 
+        $checkin->user_id = $request->user_id;
         $checkin->location_id = $request->location_id;
         $checkin->day = $request->day;
         $checkin->status = $request->status;
@@ -109,24 +109,25 @@ class CheckInController extends Controller
         $checkin->data_otlets_id = $request->data_otlets_id;
         $checkin->outlet_name = $request->outlet_name;
 
-        // Handle image upload for update
         if ($request->hasFile('image')) {
-            // Delete the old image if it exists
             if ($checkin->image) {
-                Storage::disk('public')->delete($checkin->image);
+                Storage::delete($checkin->image);
             }
+
             $file = $request->file('image');
-            $path = $file->store('images/checkins', 'public');
+            $path = $file->store('images/checkins'); 
+
             $checkin->image = $path;
         }
 
         $checkin->save();
 
         return response()->json([
-            'message' => 'Checkin updated',
+            'message' => 'Checkin updated successfully',
             'data' => $checkin,
         ], 200);
     }
+
 
     //api delete checkin
     public function deleteCheckin($id)

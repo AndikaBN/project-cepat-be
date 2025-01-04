@@ -16,14 +16,14 @@ class SalePiutangController extends Controller
      * Display a listing of the resource.
      */
 
-     public function truncate()
-     {
-         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-         DB::table('sale_piutangs')->truncate();
-         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+    public function truncate()
+    {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('sale_piutangs')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-         return redirect()->route('salesPiutang.index')->with('success', 'Semua data telah dihapus');
-     }
+        return redirect()->route('salesPiutang.index')->with('success', 'Semua data telah dihapus');
+    }
     public function index(Request $request)
     {
         $search = $request->input('search');
@@ -166,10 +166,10 @@ class SalePiutangController extends Controller
     public function import(Request $request)
     {
         $file = $request->file('file');
-        $file_name = $file->getClientOriginalName();
-        $file->move('files', $file_name);
 
-        Excel::import(new SalePiutangImport, public_path('/files/' . $file_name));
+        $path = $file->store('files_sale_piutang');
+
+        Excel::import(new SalePiutangImport, storage_path('app/' . $path));
 
         return redirect()->route('salesPiutang.index')->with('success', 'Data imported successfully');
     }
@@ -187,4 +187,3 @@ class SalePiutangController extends Controller
         return $export;
     }
 }
-
