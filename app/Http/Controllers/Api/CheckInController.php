@@ -37,8 +37,8 @@ class CheckInController extends Controller
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $path = $file->store('images/checkins');
-            $checkinData['image'] = $path;
+            $path = $file->move(public_path('images/checkins'), $file->getClientOriginalName());
+            $checkinData['image'] = 'images/checkins/' . $file->getClientOriginalName();
         }
 
         $checkin = CheckIn::create($checkinData);
@@ -111,11 +111,11 @@ class CheckInController extends Controller
 
         if ($request->hasFile('image')) {
             if ($checkin->image) {
-                Storage::delete($checkin->image);
+            Storage::disk('public')->delete($checkin->image);
             }
 
             $file = $request->file('image');
-            $path = $file->store('images/checkins'); 
+            $path = $file->store('images/checkins', 'public'); 
 
             $checkin->image = $path;
         }
